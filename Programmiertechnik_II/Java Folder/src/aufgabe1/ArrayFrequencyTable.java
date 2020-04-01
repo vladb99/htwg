@@ -21,7 +21,8 @@ public class ArrayFrequencyTable extends AbstractFrequencyTable {
 
     @Override
     public final void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        size = 0;
+        fqTable = new Word[DefaultSize];
     }
 
     @Override
