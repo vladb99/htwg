@@ -18,18 +18,36 @@ public abstract class AbstractFrequencyTable implements FrequencyTable {
 
     @Override
     public void addAll(FrequencyTable fq) {
-        // Ihr Code:
-
+        for(int i = 0; i < fq.size(); i++) {
+            Word word = fq.get(i);
+            add(word.getWord(), word.getFrequency());
+        }
     }
 
     @Override
     public void collectMostFrequent(FrequencyTable fq) {
-        // Ihr Code:
+        fq.clear();
+        Word firstWord = get(0);
+        fq.add(firstWord.getWord(), firstWord.getFrequency());
+        for(int j = 1; j < size(); j++) {
+            Word otherWord = get(j);
+            if (otherWord.getFrequency() == firstWord.getFrequency()) {
+                fq.add(otherWord.getWord(), otherWord.getFrequency());
+            } else {
+                break;
+            }
+        }
     }
 
     @Override
     public void collectLeastFrequent(FrequencyTable fq) {
-        // Ihr Code:
+        fq.clear();
+        for(int j = 0; j < size(); j++) {
+            Word word = get(j);
+            if (word.getFrequency() == 1) {
+                fq.add(word.getWord(), word.getFrequency());
+            }
+        }
     }
 
     /**
@@ -39,7 +57,17 @@ public abstract class AbstractFrequencyTable implements FrequencyTable {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("");
-        // Ihr Code:
+        s.append("{");
+        for(int i = 0; i < size(); i++) {
+            Word word = get(i);
+            s.append(word.getWord())
+                    .append(":")
+                    .append(word.getFrequency())
+                    .append(", ");
+        }
+        s.append("}")
+                .append(" size = ")
+                .append(size());
 
         return s.toString();
     }

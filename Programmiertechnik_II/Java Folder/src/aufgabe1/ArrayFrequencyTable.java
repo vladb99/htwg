@@ -1,5 +1,7 @@
 package aufgabe1;
 
+import java.util.Arrays;
+
 /**
  *
  * @author oliverbittel
@@ -16,7 +18,7 @@ public class ArrayFrequencyTable extends AbstractFrequencyTable {
 
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return size;
     }
 
     @Override
@@ -27,21 +29,50 @@ public class ArrayFrequencyTable extends AbstractFrequencyTable {
 
     @Override
     public void add(String w, int f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean fqSummed = false;
+
+        if(fqTable.length == size) {
+            fqTable = Arrays.copyOf(fqTable, 2*size);
+        }
+
+        for (int i = 0; i < size; i++) {
+            if(w.equals(fqTable[i].getWord())) {
+                fqSummed = true;
+                fqTable[i].addFrequency(f);
+            }
+        }
+
+        if(!fqSummed) {
+            fqTable[size] = new Word(w, f);
+            size++;
+        }
+
+        for (int i = size - 1; i > 0; i--) {
+            if(fqTable[i].getFrequency() > fqTable[i - 1].getFrequency()) {
+                Word temp = fqTable[i];
+                fqTable[i] = fqTable[i - 1];
+                fqTable[i - 1] = temp;
+            }
+        }
     }
 
     @Override
     public void add(String w) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        add(w, 1);
     }
 
     @Override
     public Word get(int pos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return fqTable[pos];
     }
 
     @Override
     public int get(String w) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (int i = 0; i < size; i++) {
+            if (w.equals(fqTable[i].getWord())) {
+                return fqTable[i].getFrequency();
+            }
+        }
+        return 0;
     }
 }
