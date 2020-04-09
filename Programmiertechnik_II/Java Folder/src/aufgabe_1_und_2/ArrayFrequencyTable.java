@@ -1,4 +1,4 @@
-package aufgabe1;
+package aufgabe_1_und_2;
 
 import java.util.Arrays;
 
@@ -54,11 +54,6 @@ public class ArrayFrequencyTable extends AbstractFrequencyTable {
                 fqTable[i - 1] = temp;
             }
         }
-    }
-
-    @Override
-    public void add(String w) {
-        add(w, 1);
     }
 
     @Override

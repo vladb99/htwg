@@ -1,6 +1,4 @@
-package Kapitel2;
-
-import Kapitel2.List;
+package Kapitel_2;
 
 public class LinkedList implements List {
     private Node head;

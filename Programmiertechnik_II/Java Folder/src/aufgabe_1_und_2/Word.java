@@ -1,4 +1,4 @@
-package aufgabe1;
+package aufgabe_1_und_2;
 
 /**
  * Klasse fÃ¼r WÃ¶rter mit ihren HÃ¤ufigkeiten.

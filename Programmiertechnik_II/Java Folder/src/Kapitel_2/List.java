@@ -1,4 +1,4 @@
-package Kapitel2;
+package Kapitel_2;
 
 public interface List {
     void add(int x);

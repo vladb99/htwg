@@ -1,4 +1,4 @@
-package aufgabe1;
+package aufgabe_1_und_2;
 
 /**
  *

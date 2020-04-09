@@ -1,7 +1,6 @@
-package aufgabe1;
+package aufgabe_1_und_2;
 
 import java.io.*;
-import java.net.URL;
 
 /**
  *
