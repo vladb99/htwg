@@ -66,10 +66,8 @@ public class ArrayFrquencyTable_Test {
         FrequencyTable tab = new ArrayFrequencyTable();
 
         long start = System.nanoTime(); // aktuelle Zeit in nsec
-        URL url = ArrayFrquencyTable_Test.class.getResource("Kafka_Der_Prozess.txt");
-        File file = new File(url.getPath());
         LineNumberReader in;
-        in = new LineNumberReader(new FileReader(file));
+        in = new LineNumberReader(new FileReader("Kafka_Der_Prozess.txt"));
         String line;
 
         // Text einlesen und HÃ¤figkeiten aller WÃ¶rter bestimmen:
@@ -78,8 +76,6 @@ public class ArrayFrquencyTable_Test {
             for (String w: wf) {
                 if (w.length() == 0 || w.length() == 1)
                     continue;
-                //System.out.println(w);
-                // Ihr Code:
                 tab.add(w);
             }
         }
