@@ -114,6 +114,8 @@ public class Evaluator {
     private static void doReduceKlValKl() {
         Object[] old = stack;
         stack[top - 2] = stack[top - 1];
+        stack[top] = null;
+        stack[top - 1] = null;
         top -= 2;
     }
 
@@ -125,6 +127,8 @@ public class Evaluator {
         } else {
             stack[top - 2] = Math.pow((double)stack[top - 2], (double)stack[top]);
         }
+        stack[top] = null;
+        stack[top - 1] = null;
         top -= 2;
     }
 
