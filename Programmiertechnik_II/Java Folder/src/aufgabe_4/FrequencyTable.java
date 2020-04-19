@@ -12,9 +12,9 @@ public interface FrequencyTable<T> {
     void clear();
     void add(T d, int f);
     void add(T d);
-    void addAll(FrequencyTable<T> fq);
+    void addAll(FrequencyTable<? extends T> fq);
     Element<T> get(int pos);
     int get(T d);
-    void collectMostFrequent(FrequencyTable<T> fq);
-    void collectLeastFrequent(FrequencyTable<T> fq);
+    void collectMostFrequent(FrequencyTable<? super T> fq);
+    void collectLeastFrequent(FrequencyTable<? super T> fq);
 }
