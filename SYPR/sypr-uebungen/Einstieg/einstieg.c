@@ -3,8 +3,8 @@
  *
  * Das erste C-Programm gibt einen Text aus.
  *
- * Autor: ...
- * Erstellt am: ...
+ * Autor: vladb
+ * Erstellt am: 23.04.2020
  */
 
 #include <stdio.h>
@@ -19,7 +19,7 @@ int main(void)
     char vorname[8];
     scanf("%s", vorname);
 
-    printf("%ss %d. C-Programm funktioniert!\n", vorname, anzahl + 1);
+    printf("%sss %d. C-Programm funktioniert!\n", vorname, anzahl + 1);
     
     return 0;
 }
