@@ -19,7 +19,7 @@ int main(void)
     char vorname[8];
     scanf("%s", vorname);
 
-    printf("%sss %d. C-Programm funktioniert!\n", vorname, anzahl + 1);
+    printf("%sss %d. C-Programm funktioniert nicht!\n", vorname, anzahl + 1);
     
     return 0;
 }
