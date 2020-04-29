@@ -22,6 +22,6 @@ int main(void)
 
     printf("%ss %d. C-Programm funktioniert nicht!\n", vorname, anzahl + 1);
     
-    free(vorname);
+    //free(vorname);
     return 0;
 }
