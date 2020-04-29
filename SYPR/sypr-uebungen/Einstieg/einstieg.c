@@ -8,6 +8,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(void)
 {
@@ -16,10 +17,11 @@ int main(void)
     scanf("%d", &anzahl);
 
     printf("Vorname eingeben: ");
-    char vorname[8];
+    char *vorname = (char*) malloc(8);
     scanf("%s", vorname);
 
-    printf("%sss %d. C-Programm funktioniert nicht!\n", vorname, anzahl + 1);
+    printf("%ss %d. C-Programm funktioniert nicht!\n", vorname, anzahl + 1);
     
+    free(vorname);
     return 0;
 }
