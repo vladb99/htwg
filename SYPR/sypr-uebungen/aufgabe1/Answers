@@ -1,0 +1,5 @@
+1. Nein, sie sind nicht in der Reihenfolge wie im Source Code. Hängt vom Compiler ab.
+
+2. Es gibt Lücken. Das ist wegen alignment. Compiler lässt Lücken in 4 oder 8 Byte. Aus Beobachtung passiert das immer, wenn die Variable davor einen größeren Platzbedarf als die darauffolgende hat.
+
+3. 108 Byte
