@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 int main(void) {
 
@@ -19,9 +20,9 @@ int main(void) {
     signed char byteSC = -1;
     unsigned char byteUC = 0xff;
 
-    _Bool boolean = 1;
+    bool boolean = 1;
 
-    char* s = "Hallo";
+    char* s = (char*) "Hallo";
 
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %d\n", (void*) &numI, sizeof(numI), "int", "numI", numI);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %hd\n", (void*) &numSI, sizeof(numSI), "short int", "numSI", numSI);
