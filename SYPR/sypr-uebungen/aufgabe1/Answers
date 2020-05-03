@@ -2,4 +2,19 @@
 
 2. Es gibt Lücken. Das ist wegen alignment. Compiler lässt Lücken in 4 oder 8 Byte. Aus Beobachtung passiert das immer, wenn die Variable davor einen größeren Platzbedarf als die darauffolgende hat.
 
-3. 108 Byte
+3. 96 Byte
+
+1. Ja, die Variablen haben die gleiche Reihenfolge im Hauptspeicher. Die erste definierte Variable "numI" hat die größte Adresse und die letzte definierte Variable "s" die kleinste.
+
+2. Die Variablen liegen nicht direkt hintereinander. Es gibt Lücken zwischen:
+- "s" und "boolean" (4 Byte)
+- "numD" und "numF" (4 Byte)
+- "numULI" und "numUSI" (2 Byte)
+- "numLI" und "numSI" (2 Byte)
+Ich glaube es hängt daran, dass jedes Datenelement eine Adresse haben soll, die ein vielfaches von einer zweier Potenz ist.
+Somit können vielleicht die Daten besser organisiert und schneller auf sie zugegriffen werden.
+
+3.		7ffed1ffb98c - 7ffed1ffb930 = 5C
+		5C + 4 = 60 (Hex) -> 96 (Dec)
+
+		Antwort: 96 Byte
