@@ -32,7 +32,7 @@ int main(void) {
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %lu\n", (void*) &numULI, sizeof(numULI), "unsigned long int", "numULI", numULI);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %llu\n", (void*) &numULLI, sizeof(numULLI), "unsigned long long int", "numULLI", numULLI);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %f\n", (void*) &numF, sizeof(numF), "float", "numF", numF);
-    printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %lg\n", (void*) &numD, sizeof(numD), "double", "numS", numD);
+    printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %lg\n", (void*) &numD, sizeof(numD), "double", "numD", numD);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %Lg\n", (void*) &numLD, sizeof(numLD), "long double", "numLD", numLD);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %c\n", (void*) &sign, sizeof(sign), "char", "sign", sign);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %d\n", (void*) &byteSC, sizeof(byteSC), "signed char", "byteSC", byteSC);
