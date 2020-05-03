@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-int main(void) {
+int main(void)
+{
 
     int numI = 115;
     short int numSI = 115;
@@ -41,13 +42,20 @@ int main(void) {
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %d\n", (void*) &boolean, sizeof(boolean), "boolean", "boolean", boolean);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %s\n", (void*) &s, sizeof(s), "char*", "s", s);
 
-    if (sizeof(int) == 4 && sizeof(long int) == 4 && sizeof(char*) == 4) {
+    if (sizeof(int) == 4 && sizeof(long int) == 4 && sizeof(char*) == 4)
+    {
         printf("%s\n", "ILP32");
-    } else if(sizeof(int) == 4 && sizeof(long int) == 8 && sizeof(char*) == 8) {
+    }
+    else if (sizeof(int) == 4 && sizeof(long int) == 8 && sizeof(char*) == 8)
+    {
         printf("%s\n", "LP64");
-    } else if(sizeof(int) == 4 && sizeof(long int) == 4 && sizeof(long long int) == 8 &&sizeof(char*) == 8) {
+    }
+    else if (sizeof(int) == 4 && sizeof(long int) == 4 && sizeof(long long int) == 8 && sizeof(char*) == 8)
+    {
         printf("%s\n", "LLP64");
-    } else {
+    }
+    else
+    {
         printf("%s\n", "Anderes");
     }
 
