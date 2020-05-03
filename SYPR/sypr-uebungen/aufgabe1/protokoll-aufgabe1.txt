@@ -1,0 +1,82 @@
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe1$ make clean
+rm -f aufgabe1 aufgabe1.o
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe1$ make aufgabe1
+gcc -g -fno-stack-protector -W -Wall -std=c11 -pedantic    aufgabe1.c   -o aufgabe1
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe1$ ./aufgabe1
+Adresse: 0x7fff7913945c, Platzbedarf: 4, Typ: int, Name: numI, Wert: 115
+Adresse: 0x7fff7913945a, Platzbedarf: 2, Typ: short int, Name: numSI, Wert: 115
+Adresse: 0x7fff79139450, Platzbedarf: 8, Typ: long int, Name: numLI, Wert: 115
+Adresse: 0x7fff79139448, Platzbedarf: 8, Typ: long long int, Name: numLLI, Wert: 115
+Adresse: 0x7fff79139444, Platzbedarf: 4, Typ: unsigned int, Name: numUI, Wert: 4294967295
+Adresse: 0x7fff79139442, Platzbedarf: 2, Typ: unsigned short int, Name: numUSI, Wert: 65535
+Adresse: 0x7fff79139438, Platzbedarf: 8, Typ: unsigned long int, Name: numULI, Wert: 68719476735
+Adresse: 0x7fff79139430, Platzbedarf: 8, Typ: unsigned long long int, Name: numULLI, Wert: 68719476735
+Adresse: 0x7fff7913942c, Platzbedarf: 4, Typ: float, Name: numF, Wert: 3.140000
+Adresse: 0x7fff79139420, Platzbedarf: 8, Typ: double, Name: numD, Wert: 3.14
+Adresse: 0x7fff79139410, Platzbedarf: 16, Typ: long double, Name: numLD, Wert: 3.14
+Adresse: 0x7fff7913940f, Platzbedarf: 1, Typ: char, Name: sign, Wert: c
+Adresse: 0x7fff7913940e, Platzbedarf: 1, Typ: signed char, Name: byteSC, Wert: -1
+Adresse: 0x7fff7913940d, Platzbedarf: 1, Typ: unsigned char, Name: byteUC, Wert: 255
+Adresse: 0x7fff7913940c, Platzbedarf: 1, Typ: boolean, Name: boolean, Wert: 1
+Adresse: 0x7fff79139400, Platzbedarf: 8, Typ: char*, Name: s, Wert: Hallo
+LP64
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe1$ ./aufgabe1 | sort
+Adresse: 0x7ffda2ba8270, Platzbedarf: 8, Typ: char*, Name: s, Wert: Hallo
+Adresse: 0x7ffda2ba827c, Platzbedarf: 1, Typ: boolean, Name: boolean, Wert: 1
+Adresse: 0x7ffda2ba827d, Platzbedarf: 1, Typ: unsigned char, Name: byteUC, Wert: 255
+Adresse: 0x7ffda2ba827e, Platzbedarf: 1, Typ: signed char, Name: byteSC, Wert: -1
+Adresse: 0x7ffda2ba827f, Platzbedarf: 1, Typ: char, Name: sign, Wert: c
+Adresse: 0x7ffda2ba8280, Platzbedarf: 16, Typ: long double, Name: numLD, Wert: 3.14
+Adresse: 0x7ffda2ba8290, Platzbedarf: 8, Typ: double, Name: numD, Wert: 3.14
+Adresse: 0x7ffda2ba829c, Platzbedarf: 4, Typ: float, Name: numF, Wert: 3.140000
+Adresse: 0x7ffda2ba82a0, Platzbedarf: 8, Typ: unsigned long long int, Name: numULLI, Wert: 68719476735
+Adresse: 0x7ffda2ba82a8, Platzbedarf: 8, Typ: unsigned long int, Name: numULI, Wert: 68719476735
+Adresse: 0x7ffda2ba82b2, Platzbedarf: 2, Typ: unsigned short int, Name: numUSI, Wert: 65535
+Adresse: 0x7ffda2ba82b4, Platzbedarf: 4, Typ: unsigned int, Name: numUI, Wert: 4294967295
+Adresse: 0x7ffda2ba82b8, Platzbedarf: 8, Typ: long long int, Name: numLLI, Wert: 115
+Adresse: 0x7ffda2ba82c0, Platzbedarf: 8, Typ: long int, Name: numLI, Wert: 115
+Adresse: 0x7ffda2ba82ca, Platzbedarf: 2, Typ: short int, Name: numSI, Wert: 115
+Adresse: 0x7ffda2ba82cc, Platzbedarf: 4, Typ: int, Name: numI, Wert: 115
+LP64
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe1$ ./aufgabe1 | sort -r
+LP64
+Adresse: 0x7ffd2d839acc, Platzbedarf: 4, Typ: int, Name: numI, Wert: 115
+Adresse: 0x7ffd2d839aca, Platzbedarf: 2, Typ: short int, Name: numSI, Wert: 115
+Adresse: 0x7ffd2d839ac0, Platzbedarf: 8, Typ: long int, Name: numLI, Wert: 115
+Adresse: 0x7ffd2d839ab8, Platzbedarf: 8, Typ: long long int, Name: numLLI, Wert: 115
+Adresse: 0x7ffd2d839ab4, Platzbedarf: 4, Typ: unsigned int, Name: numUI, Wert: 4294967295
+Adresse: 0x7ffd2d839ab2, Platzbedarf: 2, Typ: unsigned short int, Name: numUSI, Wert: 65535
+Adresse: 0x7ffd2d839aa8, Platzbedarf: 8, Typ: unsigned long int, Name: numULI, Wert: 68719476735
+Adresse: 0x7ffd2d839aa0, Platzbedarf: 8, Typ: unsigned long long int, Name: numULLI, Wert: 68719476735
+Adresse: 0x7ffd2d839a9c, Platzbedarf: 4, Typ: float, Name: numF, Wert: 3.140000
+Adresse: 0x7ffd2d839a90, Platzbedarf: 8, Typ: double, Name: numD, Wert: 3.14
+Adresse: 0x7ffd2d839a80, Platzbedarf: 16, Typ: long double, Name: numLD, Wert: 3.14
+Adresse: 0x7ffd2d839a7f, Platzbedarf: 1, Typ: char, Name: sign, Wert: c
+Adresse: 0x7ffd2d839a7e, Platzbedarf: 1, Typ: signed char, Name: byteSC, Wert: -1
+Adresse: 0x7ffd2d839a7d, Platzbedarf: 1, Typ: unsigned char, Name: byteUC, Wert: 255
+Adresse: 0x7ffd2d839a7c, Platzbedarf: 1, Typ: boolean, Name: boolean, Wert: 1
+Adresse: 0x7ffd2d839a70, Platzbedarf: 8, Typ: char*, Name: s, Wert: Hallo
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe1$ make CC="g++ -fno-stack-protector" STD=c++11 clean aufgabe1
+rm -f aufgabe1 aufgabe1.o
+g++ -fno-stack-protector -W -Wall -std=c++11 -pedantic    aufgabe1.c   -o aufgabe1
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe1$ cppcheck --enable=all --std=c11 aufgabe1.c
+Checking aufgabe1.c ...
+[aufgabe1.c:44]: (warning) Logical conjunction always evaluates to false: sizeof(int) == 4 && sizeof(long) == 4.
+[aufgabe1.c:48]: (warning) Logical conjunction always evaluates to false: sizeof(int) == 4 && sizeof(long) == 4.
+(information) Cppcheck cannot find all the include files (use --check-config for details)
+
+Antworten:
+1. Ja, die Variablen haben die gleiche Reihenfolge im Hauptspeicher. Die erste definierte Variable "numI" hat die größte Adresse und die letzte definierte Variable "s" die kleinste.
+
+2. Die Variablen liegen nicht direkt hintereinander. Es gibt Lücken zwischen:
+- "s" und "boolean" (4 Byte)
+- "numD" und "numF" (4 Byte)
+- "numULI" und "numUSI" (2 Byte)
+- "numLI" und "numSI" (2 Byte)
+Ich glaube es hängt daran, dass jedes Datenelement eine Adresse haben soll, die ein vielfaches von einer zweier Potenz ist.
+Somit können vielleicht die Daten besser organisiert und schneller auf sie zugegriffen werden.
+
+3.		7ffed1ffb98c - 7ffed1ffb930 = 5C
+		5C + 4 = 60 (Hex) -> 96 (Dec)
+
+		Antwort: 96 Byte
