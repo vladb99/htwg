@@ -1,0 +1,14 @@
+Feedback Abgabe Aufgabe 1 8.5. 9.39 Uhr
+
+Die Lösung ist in Ordnung.
+
+Wenn Sie es ganz genau nehmen, sollten Sie unsigned char mit %hhu und
+sigend char mit %hhd ausgeben.
+
+Zur Begründung der Lücken: die Hardware greift immer auf ganze Wörter zu,
+verwendet also bei LP64 nur durch 8 teilbare Adressen.
+Damit eine Variable immer mit einem Wortzugriff gelesen und geschrieben
+werden kann (long double mit 2), legt man Variable immer auf Adressen, 
+die durch sizeof Variable teilbar sind. numD und numULLI brauchen also 
+z.B. eine durch 8 teilbare Adresse. Weil numF dazwischen nur 4 Byte belegt,
+bleiben 4 Byte frei, usw.

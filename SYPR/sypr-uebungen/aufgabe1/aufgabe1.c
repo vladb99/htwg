@@ -37,8 +37,8 @@ int main(void)
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %lg\n", (void*) &numD, sizeof(numD), "double", "numD", numD);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %Lg\n", (void*) &numLD, sizeof(numLD), "long double", "numLD", numLD);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %c\n", (void*) &sign, sizeof(sign), "char", "sign", sign);
-    printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %d\n", (void*) &byteSC, sizeof(byteSC), "signed char", "byteSC", byteSC);
-    printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %u\n", (void*) &byteUC, sizeof(byteUC), "unsigned char", "byteUC", byteUC);
+    printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %hhd\n", (void*) &byteSC, sizeof(byteSC), "signed char", "byteSC", byteSC);
+    printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %hhu\n", (void*) &byteUC, sizeof(byteUC), "unsigned char", "byteUC", byteUC);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %d\n", (void*) &boolean, sizeof(boolean), "boolean", "boolean", boolean);
     printf("Adresse: %p, Platzbedarf: %zu, Typ: %s, Name: %s, Wert: %s\n", (void*) &s, sizeof(s), "char*", "s", s);
 
