@@ -98,11 +98,11 @@ public class Evaluator {
     }
 
     private static boolean reduce() {
-        if (top - 2 > -1 && stack[top - 2] == KL_AUF && isVal(stack[top - 1]) && stack[top] == KL_ZU &&
+        if (top > 1 && stack[top - 2] == KL_AUF && isVal(stack[top - 1]) && stack[top] == KL_ZU &&
                 (token == KL_ZU || isOp(token) || token == DOLLAR)) { // 4. Regel
             doReduceKlValKl();
             return true;
-        } else if (top - 2 > -1 && isVal(stack[top - 2]) && isOp(stack[top - 1]) && isVal(stack[top]) &&
+        } else if (top > 1 && isVal(stack[top - 2]) && isOp(stack[top - 1]) && isVal(stack[top]) &&
                         (token == KL_ZU || token == DOLLAR || (isOp(token) &&
                             (token == PLUS || stack[top - 1] == POWER || token == stack[top - 1]) )) ) { // 8. und 9. Regel
             doReduceValOpVal();
@@ -133,7 +133,7 @@ public class Evaluator {
     }
 
     private static boolean accept() {
-        if (top - 1 > -1 && stack[top - 1] == DOLLAR && isVal(stack[top]) && token == DOLLAR) { // 5. Regel
+        if (top > 0 && stack[top - 1] == DOLLAR && isVal(stack[top]) && token == DOLLAR) { // 5. Regel
             return true;
         }
         return false;
