@@ -5,11 +5,11 @@
 
 int main(void)
 {
-    char a[] = "halli";
-    const char *s = "hallo";
+    char a[] = "hallo";
+    const char *s = "halli";
     char *t = NULL;
 
-    printf("%d", strcmp(a, s)); // ASCII difference
+    //printf("%d", strcmp(a, s)); // ASCII difference
 
     if (strcmp(a, s) < 0)
     {
