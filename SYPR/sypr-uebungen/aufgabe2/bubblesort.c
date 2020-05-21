@@ -5,17 +5,16 @@
 
 int main(int argc, char *argv[])
 {
-    srand((unsigned int) time(NULL));
-
-    int n = atoi(argv[1]);
-    
     if (argc != 2)
     {
         printf("Aufruf: ./bubblesort Anzahl\n");
         return 1;
     }
 
+    srand((unsigned int) time(NULL));
+    int n = atoi(argv[1]);
     int *a = (int*) calloc((size_t) n, sizeof (int));
+    
     if (a == NULL)
     {
         printf("Speicherreservierung fehlgeschlagen!\n");
@@ -26,7 +25,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < n; ++i)
     {
-        if (scanf("%d", &a[i]) != 1)
+        if (scanf("%i", &a[i]) != 1)
         {
             a[i] = rand();
             printf("%d\n", a[i]);
