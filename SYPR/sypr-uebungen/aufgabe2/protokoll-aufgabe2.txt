@@ -1,0 +1,90 @@
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ make clean
+rm -f bubblesort bubblesort.o
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ make bubblesort
+gcc -g -W -Wall -Wvla -std=c11 -pedantic    bubblesort.c   -o bubblesort
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ ./bubblesort 1000 < /dev/null | tail -1000 > out.txt
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ sort -n out.txt | diff - out.txt
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time java Bubblesort 1000 < /dev/null > /dev/null
+
+real	0m0,221s
+user	0m0,237s
+sys	0m0,020s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time java Bubblesort 10000 < /dev/null > /dev/null
+
+real	0m1,086s
+user	0m0,787s
+sys	0m0,073s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time java Bubblesort 100000 < /dev/null > /dev/null
+
+real	0m49,251s
+user	0m35,071s
+sys	0m0,249s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ 
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ 
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./bubblesort 1000 < /dev/null > /dev/null
+
+real	0m0,009s
+user	0m0,007s
+sys	0m0,000s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./bubblesort 10000 < /dev/null > /dev/null
+
+real	0m0,988s
+user	0m0,488s
+sys	0m0,000s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./bubblesort 100000 < /dev/null > /dev/null
+
+real	1m21,740s
+user	0m58,092s
+sys	0m0,004s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ 
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ 
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ make "CC=gcc -g -O2" clean all
+rm -f bubblesort bubblesort.o
+gcc -g -O2 -W -Wall -Wvla -std=c11 -pedantic   -c -o bubblesort.o bubblesort.c
+gcc -g -O2   bubblesort.o   -o bubblesort
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./bubblesort 1000 < /dev/null > /dev/null
+
+real	0m0,006s
+user	0m0,004s
+sys	0m0,000s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./bubblesort 10000 < /dev/null > /dev/null
+
+real	0m0,271s
+user	0m0,224s
+sys	0m0,000s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./bubblesort 100000 < /dev/null > /dev/null
+
+real	0m38,891s
+user	0m27,367s
+sys	0m0,008s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ cppcheck --enable=all --std=c11 bubblesort.c
+Checking bubblesort.c ...
+(information) Cppcheck cannot find all the include files (use --check-config for details)
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ make CC="g++ -fno-stack-protector" STD=c++11 clean bubblesort
+rm -f bubblesort bubblesort.o
+g++ -fno-stack-protector -W -Wall -Wvla -std=c++11 -pedantic    bubblesort.c   -o bubblesort
+
+
+
+Automatisierter Test:
+
+Was liefert die obige Befehlsfolge, wenn Ihr bubblesort richtig sortiert hat?
+Es werden 1000 zufällige Zahlen sortiert und in out.txt gespeichert.
+Diese Datei dient als Eingabe für sort, das die Zahlen nochmal sortiert.
+Dabei werden die Unterschiede zwischen out.txt und der Ausgabe von sort berechnet.
+Wenn bubblesort richtig sortiert hat, sollte kein Unterschied ausgegeben werden.
+
+Laufzeitmessung:
+
+Wächst die Ausführungszeit tatsächlich quadratisch mit der Feldgröße?
+Es hängt von der zu sortierenden Liste ab, aber es sieht sehr nach exponentiellem Wachstum.
+
+Ist das Java-Programm oder das C-Programm schneller? Können Sie sich den Unterschied erklären?
+Tedenziell würde ich sagen, dass das C-Programm schneller ist. Für 1000 und 10000 Zahlen ist C der deutliche Gewinner, aber für 10000 Zahlen ist das Java Programm schneller. Das liegt vielleicht daran, da ich nicht malloc sondern calloc verwendet habe. Das Letztere benötigt wegen der Initialiesierung mehr Zeit. 
+Java hat zum Beispiel das 'Array index bound checking'. Dieses überprüft ob ein Index valid ist, was Zeit kostet. In C kann eigentlich jeder Index verwendet werden. Die Korrektheit ist aber dem Programmierer überlassen.
+
+Ist das optimierte Programm erkennbar schneller?
+Ja.
