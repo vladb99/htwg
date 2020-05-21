@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
     if (argc != 2) 
     {
-        printf("Aufruf: ./bubblesort Anzahl");
+        printf("Aufruf: ./bubblesort Anzahl\n");
         return 1;
     }
 
