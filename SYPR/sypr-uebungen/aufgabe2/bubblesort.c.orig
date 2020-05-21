@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     srand((unsigned int) time(NULL));
     int n = atoi(argv[1]);
     int *a = (int*) calloc((size_t) n, sizeof (int));
-
+    
     if (a == NULL)
     {
         printf("Speicherreservierung fehlgeschlagen!\n");
@@ -36,8 +36,7 @@ int main(int argc, char *argv[])
     {
         for (int j = 0; j < i - 1; ++j)
         {
-            if (a[j] > a[j + 1])
-            {
+            if (a[j] > a[j + 1]) {
                 int tmp = a[j + 1];
                 a[j + 1] = a[j];
                 a[j] = tmp;
@@ -47,8 +46,7 @@ int main(int argc, char *argv[])
 
     printf("Sortierte Zahlenfolge: \n");
 
-    for (int i = 0; i < n; ++i)
-    {
+    for (int i = 0; i < n; ++i) {
         printf("%d\n", a[i]);
     }
 
