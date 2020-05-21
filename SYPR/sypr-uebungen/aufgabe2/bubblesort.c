@@ -6,13 +6,13 @@ int main(int argc, char *argv[])
 {
     srand((unsigned int) time(NULL));
 
-    if (argc != 2) 
+    int n = atoi(argv[1]);
+
+    if (argc != 2 || n == 0)
     {
         printf("Aufruf: ./bubblesort Anzahl\n");
         return 1;
     }
-
-    int n = atoi(argv[1]);
 
     int *a = (int*) calloc((size_t) n, sizeof (int));
     if (a == NULL)
