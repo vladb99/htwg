@@ -1,0 +1,22 @@
+Automatisierter Test:
+
+Was liefert die obige Befehlsfolge, wenn Ihr bubblesort richtig sortiert hat?
+Es werden 1000 zufällige Zahlen sortiert und in out.txt gespeichert.
+Diese Datei dient als Eingabe für sort, das die Zahlen nochmal sortiert.
+Dabei werden die Unterschiede zwischen out.txt und der Ausgabe von sort berechnet.
+Wenn bubblesort richtig sortiert hat, sollte kein Unterschied ausgegeben werden.
+
+Laufzeitmessung:
+
+Wächst die Ausführungszeit tatsächlich quadratisch mit der Feldgröße?
+Es hängt von der zu sortierenden Liste ab, aber es sieht sehr nach exponentiellem Wachstum.
+
+Ist das Java-Programm oder das C-Programm schneller? Können Sie sich den Unterschied erklären?
+Tedenziell würde ich sagen, dass das C-Programm schneller ist. Für 1000 und 10000 Zahlen ist C der deutliche Gewinner, aber für 10000 Zahlen ist das Java Programm schneller. Das liegt vielleicht daran, da ich nicht malloc sondern calloc verwendet habe. Das Letztere benötigt wegen der Initialiesierung mehr Zeit. 
+Java hat zum Beispiel das 'Array index bound checking'. Dieses überprüft ob ein Index valid ist, was Zeit kostet. In C kann eigentlich jeder Index verwendet werden. Die Korrektheit ist aber dem Programmierer überlassen.
+
+Ist das optimierte Programm erkennbar schneller?
+Ja.
+
+
+
