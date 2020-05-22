@@ -1,0 +1,34 @@
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./for_random 100000000 < /dev/null > /dev/null
+
+real	0m15,966s
+user	0m11,122s
+sys		0m0,793s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./for_iterative 100000000 < /dev/null > /dev/null
+
+real	0m3,319s
+user	0m2,044s
+sys		0m0,271s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./for_random 10000 < /dev/null > /dev/null
+
+real	0m0,004s
+user	0m0,002s
+sys		0m0,000s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$ time ./for_iterative 10000 < /dev/null > /dev/null
+
+real	0m0,004s
+user	0m0,001s
+sys		0m0,000s
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$
+vl161bra@ct-sypr-ss20-10:~/z-drive/S2/SYPR/sypr-uebungen/aufgabe2$
+
+Protokoll:
+
+Welche der beiden Schleifen ist bei sehr großem n schneller?
+Die zweite Schleife ist schneller.
+
+Erklären Sie, wie der Laufzeitunterschied zwischen den beiden Schleifen zustandekommt:
+Bei der ersten Schleife wird der Modulo zwischen einer zufällingen Zahl und der Länge der Liste berechnet. Dabei ist der Rest gleichzeitig der Index und der Initialisierungswert. Auf dieser Weise wird auf das Array zufällig zugegriffen.
+
+In der zweiten Schleife ist es ähnlich, wobei der Rest nur der Initialisierungswert ist. Die Liste wird aber iterativ aufsteigend initialisiert.
+
+Ich glaube es liegt an der Funktionsweise des Prozessors. Die CPU erkennt wenn man in einem vorhersagbaren Muster auf den Speicher zugreift und lädt somit vorab den zukünftigen Speicherort in den Cache. Auf dieser Weise ist die Zugriffsgeschwindigkeit schneller. Das würde auch erklären warum bei kleinere Arraygrößen keinen großen Unterschied gibt, da das gesamte Array auf einmal geholt wird.
