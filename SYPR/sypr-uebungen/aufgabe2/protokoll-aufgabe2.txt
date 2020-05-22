@@ -88,3 +88,20 @@ Java hat zum Beispiel das 'Array index bound checking'. Dieses überprüft ob ei
 
 Ist das optimierte Programm erkennbar schneller?
 Ja.
+
+Manueller Test:
+
+Verhält sich das C-Programm bei 'allen Eingaben wie das Java-Programm?
+Nein. Zum Beispiel beim Aufruf ./bubblesort text' verhält sich das Programm wie beim './bubblesort 0'. In java würde es einen Error geben. Außerdem bei einer Mischung wie '123text' wird beim C-Programm 123 als die Feldgröße interpretiert. 
+
+Funktioniert die Fehlerbehandlung bei Speicherreservierung und Einlesen?
+Ja. Bei zu großen oder negativen Zahl kommt einen Speicherreservierungfehler. Wenn beim Einlesen eine Falscheingabe wie einen String eingegeben wird, dann werden nur zufällige Zahlen generiert und als Eingabe gelesen.
+
+Meldet valgrind Fehler?
+Nein.
+
+Meldet cppcheck Probleme?
+Nein.
+
+Lässt sich Ihr Programm auch mit g++ ohne Fehlermeldungen und Warnungen übersetzen?
+Ja.
