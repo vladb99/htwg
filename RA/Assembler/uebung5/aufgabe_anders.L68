@@ -1,0 +1,46 @@
+0000100A Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 26.05.2020 09:03:40
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :‚‚
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000  6000 0008                  8      BRA    START
+00001004                             9      
+00001004  =00002000                 10  ADR1    EQU     $2000
+00001004  =00003000                 11  ADR2    EQU     $3000
+00001004= 0032                      12  KONST   DC.W    50
+00001006                            13  ERG     DS.L    1
+0000100A                            14  
+0000100A                            15  START:                  ; first instruction of program
+0000100A  327C 2000                 16      MOVE.W  #ADR1,  A1
+0000100E  347C 3000                 17      MOVE.W  #ADR2,  A2
+00001012  3211                      18      MOVE.W  (A1),   D1
+00001014  D292                      19      ADD.L   (A2),   D1
+00001016  D2B8 1004                 20      ADD.L   KONST,  D1
+0000101A  21C1 1006                 21      MOVE.L  D1,     ERG
+0000101E                            22  
+0000101E                            23  * Put program code here
+0000101E                            24  
+0000101E  FFFF FFFF                 25      SIMHALT             ; halt simulator
+00001022                            26  
+00001022                            27  * Put variables and constants here
+00001022                            28  
+00001022                            29      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADR1                2000
+ADR2                3000
+ERG                 1006
+KONST               1004
+START               100A
