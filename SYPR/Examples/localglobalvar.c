@@ -1,6 +1,14 @@
-int function(int param);
+/*
+ * localglobalvar.c
+ *
+ * Beispiel-Programm lokale und globale Variablen
+ *
+ * Autor: H.Drachenfels
+ * Erstellt am: 25.2.2015 / 10.11.2017 (C11)
+ */
 
-int global = 1; // 3
+#include "function.h"
+#include "global.h"
 
 int main(void)
 {
@@ -12,11 +20,3 @@ int main(void)
     return 0;
 }
 
-int function(int param)
-{
-    static int private_global = 1;
-    int local = param + 1; // 4
-    private_global++; // 3
-    global = param + 2; // 5
-    return local + private_global; //4 + 3 = 7
-}
