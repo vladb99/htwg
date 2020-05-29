@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    printf("%s", sb);
+    printf("%s\n", sb);
 
     for (int i = 0; i < n; ++i)
     {
