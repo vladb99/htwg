@@ -4,3 +4,12 @@ Die zufällige Zahl r liegt zwischen 0 (inkl.) und n (excl.) d.h. die Anzahl Zif
 Aus diesem Grund reicht die Anzahl Ziffern vom n aus.
 Außerdem muss noch eine Position für '\0' reserviert werden.
 
+Verhält sich das C-Programm bei allen Eingaben wie das Java-Programm?
+
+Meldet valgrind Fehler?
+Nein.
+
+Meldet cppcheck Probleme?
+Nein.
+
+Lässt sich Ihr Programm auch mit g++ ohne Fehlermeldungen und Warnungen übersetzen?
