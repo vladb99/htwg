@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     int m = strlen(argv[1]) + 1;
 
     if (n < 1) {
-        printf("Anzahl muss mindestens 1 sein");
+        printf("Anzahl muss mindestens 1 sein\n");
         return 1;
     }
 
