@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
         printf("Speicherallokierungsfehler\n");
         return 1;
     }
-    strcat(sb, arrayString[0]);
+    strcpy(sb, arrayString[0]);
     for (int i = 1; i < n; ++i)
     {
         if (strcmp(arrayString[i], arrayString[i - 1]) == 0)
