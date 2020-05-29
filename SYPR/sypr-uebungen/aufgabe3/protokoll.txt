@@ -1,0 +1,6 @@
+Warum ist das ein sinnvoller Wert?
+'m = strlen(argv[1]) + 1' ist ein sinvoller Wert weil somit genug Platz für die Länge einer Zahl reserviert wird.
+Die zufällige Zahl r liegt zwischen 0 (inkl.) und n (excl.) d.h. die Anzahl Ziffern vom r wird nie größer als die vom n.
+Aus diesem Grund reicht die Anzahl Ziffern vom n aus.
+Außerdem muss noch eine Position für '\0' reserviert werden.
+
