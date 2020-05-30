@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-void bubblesort(int size, char *list[]);
+void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const void*, const void*));
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    //char **arrayString = (char**) malloc(n * sizeof (char*));
     char *arrayString = (char*) malloc(n * m * sizeof (char));
     if (arrayString == NULL)
     {
@@ -35,17 +34,14 @@ int main(int argc, char *argv[])
     for (int i = 0; i < n; ++i)
     {
         int r = rand() % n;
-        sprintf(&arrayString[i * m], "%d", r);
-        for (int j = 0; j < m; ++j)
-        {
-            printf("%c", arrayString[i * m + j]);
-        }
+        sprintf(arrayString + i * m, "%d", r);
+        printf("%s", arrayString + i * m);
         printf(" ");
     }
     printf("\n");
-    /*
-    bubblesort(n, arrayString);
     
+    bubblesort(arrayString, n, m, strcmp);
+    /*
     printf("\nSortiertes Feld:\n");
     char *sb = (char*) malloc(n * m * sizeof(char));
     if (sb == NULL)
@@ -80,15 +76,15 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void bubblesort(int size, char *list[])
+void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const void*, const void*))
 {
-    for (int i = size; i > 1; --i) {
-        for (int j = 0; j < i - 1; ++j) {
-            if (strcmp(list[j], list[j + 1]) > 0) {
-                char *tmp = list[j + 1];
-                list[j + 1] = list[j];
-                list[j] = tmp;
-            }
+    for (int i = count; i > 1; --i) {
+        int *lhs = ptr + i * size;
+        int *rhs = ptr + (i - 1) * size;
+        if (cmp(lhs, rhs) > 0) {
+            void *tmp = rhs;
+            memcpy(rhs, lhs, size);
+            memcpy(lhs, tmp, size);
         }
     }
 }
