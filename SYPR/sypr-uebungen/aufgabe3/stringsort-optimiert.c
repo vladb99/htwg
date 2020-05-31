@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
     {
         int r = rand() % n;
         sprintf(arrayString + i * m, "%d", r);
-        //printf("%lu", sizeof(arrayString + i * m));
         printf("%s", arrayString + i * m);
         printf(" ");
     }
@@ -77,8 +76,8 @@ void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const char*, co
     for (int i = count; i > 1; --i) {
         for (int j = 0; j < i - 1; ++j)
         {
-            char *lhs = ptr + j * size;
-            char *rhs = ptr + (j + 1) * size;
+            char *lhs = ((char*) ptr) + j * size;
+            char *rhs = ((char*) ptr) + (j + 1) * size;
 
             if (cmp(lhs, rhs) > 0) {
                 memcpy(tmp, rhs, size);
