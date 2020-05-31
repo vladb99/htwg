@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const void*, const void*));
+void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const char*, const char*));
 
 int main(int argc, char *argv[])
 {
@@ -35,13 +35,14 @@ int main(int argc, char *argv[])
     {
         int r = rand() % n;
         sprintf(arrayString + i * m, "%d", r);
+        //printf("%lu", sizeof(arrayString + i * m));
         printf("%s", arrayString + i * m);
         printf(" ");
     }
     printf("\n");
     
     bubblesort(arrayString, n, m, strcmp);
-    /*
+    
     printf("\nSortiertes Feld:\n");
     char *sb = (char*) malloc(n * m * sizeof(char));
     if (sb == NULL)
@@ -49,42 +50,42 @@ int main(int argc, char *argv[])
         printf("Speicherallokierungsfehler\n");
         return 1;
     }
-    strcpy(sb, arrayString[0]);
+    strcpy(sb, arrayString);
     for (int i = 1; i < n; ++i)
     {
-        if (strcmp(arrayString[i], arrayString[i - 1]) == 0)
+        if (strcmp(arrayString + i * m, arrayString + (i - 1) * m) == 0)
         {
-            strcat(sb, "*");
+           strcat(sb, "*");
         }
         else
         {
             strcat(sb, " ");
-            strcat(sb, arrayString[i]);
+            strcat(sb, arrayString + i * m);
         }
     }
 
     printf("%s\n", sb);
 
-    for (int i = 0; i < n; ++i)
-    {
-        free(arrayString[i]);
-    }
-
     free(sb);
-    */
     free(arrayString);
     return 0;
 }
 
-void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const void*, const void*))
+void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const char*, const char*))
 {
+    char* tmp = malloc(size);
     for (int i = count; i > 1; --i) {
-        int *lhs = ptr + i * size;
-        int *rhs = ptr + (i - 1) * size;
-        if (cmp(lhs, rhs) > 0) {
-            void *tmp = rhs;
-            memcpy(rhs, lhs, size);
-            memcpy(lhs, tmp, size);
+        for (int j = 0; j < i - 1; ++j)
+        {
+            char *lhs = ptr + j * size;
+            char *rhs = ptr + (j + 1) * size;
+
+            if (cmp(lhs, rhs) > 0) {
+                memcpy(tmp, rhs, size);
+                memcpy(rhs, lhs, size);
+                memcpy(lhs, tmp, size);
+            }
         }
     }
+    free(tmp);
 }
