@@ -35,8 +35,7 @@ int main(int argc, char *argv[])
     {
         int r = rand() % n;
         sprintf(arrayString + i * m, "%d", r);
-        printf("%s", arrayString + i * m);
-        printf(" ");
+        printf("%s ", arrayString + i * m);
     }
     printf("\n");
     
