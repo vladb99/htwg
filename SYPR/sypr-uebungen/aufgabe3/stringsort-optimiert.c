@@ -18,7 +18,8 @@ int main(int argc, char *argv[])
     int n = atoi(argv[1]);
     int m = strlen(argv[1]) + 1;
 
-    if (n < 1) {
+    if (n < 1)
+    {
         printf("Anzahl muss mindestens 1 sein\n");
         return 1;
     }
@@ -38,9 +39,9 @@ int main(int argc, char *argv[])
         printf("%s ", arrayString + i * m);
     }
     printf("\n");
-    
+
     bubblesort(arrayString, n, m, strcmp);
-    
+
     printf("\nSortiertes Feld:\n");
     char *sb = (char*) malloc(n * m * sizeof(char));
     if (sb == NULL)
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
     {
         if (strcmp(arrayString + i * m, arrayString + (i - 1) * m) == 0)
         {
-           strcat(sb, "*");
+            strcat(sb, "*");
         }
         else
         {
@@ -72,13 +73,15 @@ int main(int argc, char *argv[])
 void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const char*, const char*))
 {
     char* tmp = malloc(size);
-    for (int i = count; i > 1; --i) {
+    for (int i = count; i > 1; --i)
+    {
         for (int j = 0; j < i - 1; ++j)
         {
             char *lhs = ((char*) ptr) + j * size;
             char *rhs = ((char*) ptr) + (j + 1) * size;
 
-            if (cmp(lhs, rhs) > 0) {
+            if (cmp(lhs, rhs) > 0)
+            {
                 memcpy(tmp, rhs, size);
                 memcpy(rhs, lhs, size);
                 memcpy(lhs, tmp, size);

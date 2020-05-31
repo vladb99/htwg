@@ -18,7 +18,8 @@ int main(int argc, char *argv[])
     int n = atoi(argv[1]);
     int m = strlen(argv[1]) + 1;
 
-    if (n < 1) {
+    if (n < 1)
+    {
         printf("Anzahl muss mindestens 1 sein\n");
         return 1;
     }
@@ -31,7 +32,7 @@ int main(int argc, char *argv[])
     }
 
     printf("Unsortiertes Feld:\n");
-    for (int i = 0; i < n; ++i) 
+    for (int i = 0; i < n; ++i)
     {
         int r = rand() % n;
 
@@ -52,7 +53,7 @@ int main(int argc, char *argv[])
     }
 
     bubblesort(n, arrayString);
-    
+
     printf("\nSortiertes Feld:\n");
     char *sb = (char*) malloc(n * m * sizeof(char));
     if (sb == NULL)
@@ -88,9 +89,12 @@ int main(int argc, char *argv[])
 
 void bubblesort(int size, char *list[])
 {
-    for (int i = size; i > 1; --i) {
-        for (int j = 0; j < i - 1; ++j) {
-            if (strcmp(list[j], list[j + 1]) > 0) {
+    for (int i = size; i > 1; --i)
+    {
+        for (int j = 0; j < i - 1; ++j)
+        {
+            if (strcmp(list[j], list[j + 1]) > 0)
+            {
                 char *tmp = list[j + 1];
                 list[j + 1] = list[j];
                 list[j] = tmp;
