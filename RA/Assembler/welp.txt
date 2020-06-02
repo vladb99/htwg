@@ -1,0 +1,2 @@
+https://simpledevcode.wordpress.com/2016/12/15/mini-guide-to-68000-assembly-programming/
+https://lux.dmcs.p.lodz.pl/pn/asembler_68000/asm.html

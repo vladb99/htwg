@@ -1,0 +1,79 @@
+00002000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 02.06.2020 11:12:40
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00002000                             7      ORG     $2000
+00002000                             8  START:
+00002000  43F9 00002500              9      LEA     ANFANG, A1      
+00002006  45F9 00002800             10      LEA     RESULT, A2
+0000200C  47F9 00002810             11      LEA     ERGEB,  A3      ;Adressen jeweils in Adressregistern laden
+00002012                            12         
+00002012  3039 0000205A             13      MOVE.W  K1,     D0      
+00002018  3239 0000205C             14      MOVE.W  K2,     D1      ;K1 und K2 in D0 und D1 laden
+0000201E  D240                      15      ADD.W   D0,     D1      ;D0 mit D1 addieren und Ergebnis in D1 speichern
+00002020  3241                      16      MOVE.W  D1,     A1   ;D1 in die
+00002022                            17  
+00002022  4282                      18      CLR.L   D2
+00002024  D441                      19      ADD.W   D1,     D2
+00002026                            20      
+00002026  363C 00C7                 21      MOVE.W  #199,   D3
+0000202A                            22      
+0000202A                            23  LOOP:
+0000202A                            24      ;MOVE.W  #1,     D2       ;Lade die Konstante 1 in Register D2
+0000202A  5241                      25      ADD.W   #1,     D1
+0000202C  D481                      26      ADD.L   D1,     D2
+0000202E  32C1                      27      MOVE.W  D1,     (A1)+
+00002030  5343                      28      SUB.W   #1,     D3
+00002032  6AF6                      29      BPL     LOOP
+00002034                            30  
+00002034  2482                      31      MOVE.L  D2,     (A2)
+00002036  43F9 00002500             32      LEA     ANFANG, A1
+0000203C                            33  
+0000203C  363C 0063                 34      MOVE.W  #99,    D3
+00002040  4281                      35      CLR.L   D1
+00002042                            36      
+00002042                            37  MOD2:
+00002042  4280                      38      CLR.L   D0
+00002044  3019                      39      MOVE.W  (A1)+,  D0
+00002046  80FC 0002                 40      DIVU    #2,     D0      ;D0 durch zwei teilen. Der Quotient wird im Lower-Word und der Rest im Higher-Word gespeichert.
+0000204A  4240                      41      CLR.W   D0              ;Quotient löschen
+0000204C  4840                      42      SWAP    D0              ;Higher-Word mit Lower-Word tauschen, also Rest im Lower-Byte schieben
+0000204E  6600 0004                 43      BNE     SKIP            ;Springe wenn D0 nicht 0 ist
+00002052  5241                      44      ADD.W   #1,     D1      ;Addiere D1 um 1
+00002054                            45  SKIP:
+00002054  5343                      46      SUB.W   #1,     D3      ;Subtrahiere 1 vom D3
+00002056  6AEA                      47      BPL     MOD2            ;Springe wenn nicht negativ
+00002058  3681                      48      MOVE.W  D1,     (A3)    ;Anzahl der ohne Rest durch 2 teilbaren Zahlen in ERGEB schieben
+0000205A                            49              
+0000205A                            50          
+0000205A  =00002500                 51  ANFANG  EQU     $2500
+0000205A  =00002800                 52  RESULT  EQU     $2800
+0000205A  =00002810                 53  ERGEB   EQU     $2810
+0000205A                            54  
+0000205A= 2000                      55  K1      DC.W    $2000
+0000205C= 4000                      56  K2      DC.W    $4000
+0000205E                            57  
+0000205E                            58       END    START        
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ANFANG              2500
+ERGEB               2810
+K1                  205A
+K2                  205C
+LOOP                202A
+MOD2                2042
+RESULT              2800
+SKIP                2054
+START               2000
