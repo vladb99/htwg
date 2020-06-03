@@ -6,25 +6,21 @@ import java.util.Random;
 
 public class PythagorasBaum {
     private static double leanAngle = 30;
-    private static double limit = 5;
-    private static double colorLimit = 6;
+    private static double limit = 7;
+    private static double colorLimit = 8;
     private static Color tree = new Color(102, 65, 32);
     private static Color leaf = new Color(0, 204, 0);
     private static final Random random = new Random();
 
     public static void main(String[] args) {
-        Point2D a = new Point2D.Double(0,-600);
-        Point2D b = new Point2D.Double(200, -600);
+        Point2D a = new Point2D.Double(-200,-800);
+        Point2D b = new Point2D.Double(200, -800);
 
-        StdDraw.setXscale(-1200, 1200);
-        StdDraw.setYscale(-1200, 1200);
+        StdDraw.setXscale(-2000, 2000);
+        StdDraw.setYscale(-2000, 2000);
         StdDraw.setPenColor(tree);
 
-        drawTree(a, b);
-    }
-
-    private static void drawTree(Point2D a, Point2D b) {
-        drawTree(a, b, false);
+        drawTree(a, b, true);
     }
 
     private static void drawTree(Point2D a, Point2D b, boolean r) {
@@ -90,22 +86,18 @@ public class PythagorasBaum {
         );
     }
 
-
     private static void drawLine(Point2D p1, Point2D p2) {
         StdDraw.line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
     }
 
     private static Point2D rotatePoint(Point2D center, Point2D p, double angle)
     {
-        // translate point back to origin:
         double x = p.getX() - center.getX();
         double y = p.getY() - center.getY();
 
-        // rotate point
         double xnew = x * Math.cos(angle) - y * Math.sin(angle);
         double ynew = x * Math.sin(angle) + y * Math.cos(angle);
 
-        // translate point back:
         x = xnew + center.getX();
         y = ynew + center.getY();
         return new Point2D.Double(x, y);
