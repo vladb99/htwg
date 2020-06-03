@@ -1,0 +1,2 @@
+Wie lautet die Adresse der letzten belegten Speicherzelle?
+$2690
