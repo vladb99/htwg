@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
         printf("%s ", arrayString[i]);
     }
 
-    bubblesort(n, arrayString);
+    //bubblesort(n, arrayString);
 
     printf("\nSortiertes Feld:\n");
     char *sb = (char*) malloc(n * m * sizeof(char));

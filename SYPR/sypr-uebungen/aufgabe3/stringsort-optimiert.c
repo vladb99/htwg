@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     }
     printf("\n");
 
-    bubblesort(arrayString, n, m, (int (*)(const void *, const void *)) strcmp);
+    //bubblesort(arrayString, n, m, (int (*)(const void *, const void *)) strcmp);
 
     printf("\nSortiertes Feld:\n");
     char *sb = (char*) malloc(n * m * sizeof(char));
@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     strcpy(sb, arrayString);
+    printf("%s\n", sb);
     for (int i = 1; i < n; ++i)
     {
         if (strcmp(arrayString + i * m, arrayString + (i - 1) * m) == 0)
@@ -72,21 +73,22 @@ int main(int argc, char *argv[])
 
 void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const void*, const void*))
 {
-    void* tmp = malloc(size);
+    //void* tmp = malloc(size);
     for (int i = count; i > 1; --i)
     {
         for (int j = 0; j < i - 1; ++j)
         {
-            void *lhs = ((char*) ptr) + j * size;
-            void *rhs = ((char*) ptr) + (j + 1) * size;
+            void *lhs = ((char* ) ptr) + j * size;
+            void *rhs = ((char* ) ptr) + (j + 1) * size;
 
             if (cmp(lhs, rhs) > 0)
             {
-                memcpy(tmp, rhs, size);
+                //memcpy(tmp, rhs, size);
+                void *tmp = rhs;
                 memcpy(rhs, lhs, size);
                 memcpy(lhs, tmp, size);
             }
         }
     }
-    free(tmp);
+    //free(tmp);
 }
