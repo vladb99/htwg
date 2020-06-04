@@ -74,7 +74,7 @@ user	0m6,162s
 sys	0m0,004s
 
 
-FRAGEN:
+Antworten:
 
 Warum ist das ein sinnvoller Wert?
 'm = strlen(argv[1]) + 1' ist ein sinvoller Wert weil somit genug Platz für die Länge einer Zahl reserviert wird.

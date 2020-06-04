@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const char*, const char*));
+void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const void*, const void*));
 
 int main(int argc, char *argv[])
 {
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     }
     printf("\n");
 
-    bubblesort(arrayString, n, m, strcmp);
+    bubblesort(arrayString, n, m, (int (*)(const void *, const void *)) strcmp);
 
     printf("\nSortiertes Feld:\n");
     char *sb = (char*) malloc(n * m * sizeof(char));
@@ -70,15 +70,15 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const char*, const char*))
+void bubblesort(void *ptr, size_t count, size_t size, int (*cmp)(const void*, const void*))
 {
-    char* tmp = malloc(size);
+    void* tmp = malloc(size);
     for (int i = count; i > 1; --i)
     {
         for (int j = 0; j < i - 1; ++j)
         {
-            char *lhs = ((char*) ptr) + j * size;
-            char *rhs = ((char*) ptr) + (j + 1) * size;
+            void *lhs = ((char*) ptr) + j * size;
+            void *rhs = ((char*) ptr) + (j + 1) * size;
 
             if (cmp(lhs, rhs) > 0)
             {
