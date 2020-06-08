@@ -1,0 +1,70 @@
+0000105C Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 08.06.2020 22:00:39
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000= 5A 79 6B 6C 75 73 ...      8  String      DC.B    'Zykluszeit',       0
+00001010                             9      ORG    $1010
+00001010                            10  Zielfeld    DS.B    11      
+00001050                            11      ORG    $1050
+00001050  143C 0002                 12      MOVE.B  #2, D2
+00001054  143C 0003                 13      MOVE.B  #3, D2 
+00001058  143C 0004                 14      MOVE.B  #4, D2            
+0000105C                            15  START:
+0000105C  41F8 1000                 16      LEA     $1000,      A0
+00001060  43F8 1010                 17      LEA     Zielfeld,   A1
+00001064                            18      
+00001064  1018                      19      MOVE.B  (A0)+,      D0
+00001066  B03C 0000                 20      CMP.B   #0,         D0
+0000106A  6700 004E                 21      BEQ     SKIP    
+0000106E                            22  LOOP:
+0000106E  B03C 0058                 23      CMP.B   #$58,       D0
+00001072  6700 002E                 24      BEQ     XYZ
+00001076  B03C 0059                 25      CMP.B   #$59,       D0
+0000107A  6700 0026                 26      BEQ     XYZ
+0000107E  B03C 005A                 27      CMP.B   #$5A,       D0
+00001082  6700 001E                 28      BEQ     XYZ
+00001086  B03C 0078                 29      CMP.B   #$78,       D0
+0000108A  6700 0016                 30      BEQ     XYZ
+0000108E  B03C 0079                 31      CMP.B   #$79,       D0
+00001092  6700 000E                 32      BEQ     XYZ
+00001096  B03C 007A                 33      CMP.B   #$7A,       D0
+0000109A  6700 0006                 34      BEQ     XYZ
+0000109E  6000 000A                 35      BRA     NOT_XYZ
+000010A2                            36  XYZ:    
+000010A2  0400 0017                 37      SUB.B   #23,        D0
+000010A6  6000 0004                 38      BRA     CHECK
+000010AA                            39  NOT_XYZ:
+000010AA  5600                      40      ADD.B   #3,         D0
+000010AC                            41  CHECK:
+000010AC  12C0                      42      MOVE.B  D0,         (A1)+
+000010AE  1018                      43      MOVE.B  (A0)+,      D0
+000010B0  B03C 0000                 44      CMP.B   #0,         D0
+000010B4  6700 0004                 45      BEQ     SKIP
+000010B8  60B4                      46      BRA     LOOP
+000010BA                            47  SKIP:
+000010BA  12FC 0000                 48      MOVE.B  #0,         (A1)+
+000010BE                            49  
+000010BE                            50      END    START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CHECK               10AC
+LOOP                106E
+NOT_XYZ             10AA
+SKIP                10BA
+START               105C
+STRING              1000
+XYZ                 10A2
+ZIELFELD            1010
