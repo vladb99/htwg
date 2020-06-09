@@ -1,57 +1,59 @@
-0000105C Starting Address
+00001050 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 08.06.2020 22:00:39
+Created On: 09.06.2020 14:40:05
 
 00000000                             1  *-----------------------------------------------------------
-00000000                             2  * Title      :
-00000000                             3  * Written by :
-00000000                             4  * Date       :
-00000000                             5  * Description:
+00000000                             2  * Title      :  Aufgabe02
+00000000                             3  * Written by :  Vlad Bratulescu - 299874
+00000000                             4  * Date       :  09.06.2020
+00000000                             5  * Description:  Verschluesseln eines Zeichenstrings mit Hilfe der "Caesar-Chiffre"
 00000000                             6  *-----------------------------------------------------------
-00001000                             7      ORG    $1000
-00001000= 5A 79 6B 6C 75 73 ...      8  String      DC.B    'Zykluszeit',       0
-00001010                             9      ORG    $1010
-00001010                            10  Zielfeld    DS.B    11      
-00001050                            11      ORG    $1050
-00001050  143C 0002                 12      MOVE.B  #2, D2
-00001054  143C 0003                 13      MOVE.B  #3, D2 
-00001058  143C 0004                 14      MOVE.B  #4, D2            
-0000105C                            15  START:
-0000105C  41F8 1000                 16      LEA     $1000,      A0
-00001060  43F8 1010                 17      LEA     Zielfeld,   A1
-00001064                            18      
-00001064  1018                      19      MOVE.B  (A0)+,      D0
-00001066  B03C 0000                 20      CMP.B   #0,         D0
-0000106A  6700 004E                 21      BEQ     SKIP    
-0000106E                            22  LOOP:
-0000106E  B03C 0058                 23      CMP.B   #$58,       D0
-00001072  6700 002E                 24      BEQ     XYZ
-00001076  B03C 0059                 25      CMP.B   #$59,       D0
-0000107A  6700 0026                 26      BEQ     XYZ
-0000107E  B03C 005A                 27      CMP.B   #$5A,       D0
-00001082  6700 001E                 28      BEQ     XYZ
-00001086  B03C 0078                 29      CMP.B   #$78,       D0
-0000108A  6700 0016                 30      BEQ     XYZ
-0000108E  B03C 0079                 31      CMP.B   #$79,       D0
-00001092  6700 000E                 32      BEQ     XYZ
-00001096  B03C 007A                 33      CMP.B   #$7A,       D0
-0000109A  6700 0006                 34      BEQ     XYZ
-0000109E  6000 000A                 35      BRA     NOT_XYZ
-000010A2                            36  XYZ:    
-000010A2  0400 0017                 37      SUB.B   #23,        D0
-000010A6  6000 0004                 38      BRA     CHECK
-000010AA                            39  NOT_XYZ:
-000010AA  5600                      40      ADD.B   #3,         D0
-000010AC                            41  CHECK:
-000010AC  12C0                      42      MOVE.B  D0,         (A1)+
-000010AE  1018                      43      MOVE.B  (A0)+,      D0
-000010B0  B03C 0000                 44      CMP.B   #0,         D0
-000010B4  6700 0004                 45      BEQ     SKIP
-000010B8  60B4                      46      BRA     LOOP
-000010BA                            47  SKIP:
-000010BA  12FC 0000                 48      MOVE.B  #0,         (A1)+
-000010BE                            49  
-000010BE                            50      END    START
+00001050                             7     ORG     $1050                    ; Anfang vom Objektcode
+00001050                             8  START:
+00001050  41F9 00001000              9      LEA     String,     A0          ; Adresse vom String in A0 laden
+00001056  43F9 00001010             10      LEA     Zielfeld,   A1          ; Adresse vom Zielfeld in A1 laden
+0000105C                            11         
+0000105C  1018                      12      MOVE.B  (A0)+,      D0          ; Das erste Zeichen (Byte) vom String in Register D0 laden. Pointer zeigt danach auf den naechsten Buchstaben
+0000105E  B03C 0000                 13      CMP.B   #0,         D0          ; Vergleiche Buchstabe mit '0'. Wenn das erste Zeichen den ASCII-Code '0' hat, heisst es dass der String leer ist
+00001062  6700 004A                 14      BEQ     SKIP                    ; Wenn String leer ist, dann springe zu SKIP
+00001066                            15                                      ; Wenn nicht leer dann gehe zu LOOP
+00001066                            16  LOOP:                               ; for (i = 0; i < String.length; i++) in etwa
+00001066  B03C 0058                 17      CMP.B   #$58,       D0          ; Wenn der Buchstabe X
+0000106A  6700 0030                 18      BEQ     XYZ
+0000106E  B03C 0059                 19      CMP.B   #$59,       D0          ; oder Y
+00001072  6700 0028                 20      BEQ     XYZ
+00001076  B03C 005A                 21      CMP.B   #$5A,       D0          ; oder Z
+0000107A  6700 0020                 22      BEQ     XYZ
+0000107E  B03C 0078                 23      CMP.B   #$78,       D0          ; oder x
+00001082  6700 0018                 24      BEQ     XYZ
+00001086  B03C 0079                 25      CMP.B   #$79,       D0          ; oder y
+0000108A  6700 0010                 26      BEQ     XYZ
+0000108E  B03C 007A                 27      CMP.B   #$7A,       D0          ; oder z ist
+00001092  6700 0008                 28      BEQ     XYZ                     ; dann springe zu XYZ
+00001096                            29                                      ; Wenn anderer Buchstabe dann gehe zu NOT_XYZ
+00001096                            30  NOT_XYZ:                            
+00001096  5600                      31      ADD.B   #3,         D0          ; ASCII-Code des Zeichens um 3 inkrementieren und im D0 ablegen
+00001098  6000 0006                 32      BRA     CHECK                   ; Springe zu CHECK
+0000109C                            33      
+0000109C                            34  XYZ:                                ; Sonderfall da Sprung vom Ende zum Anfang des Alphabets 
+0000109C  0400 0017                 35      SUB.B   #23,        D0          ; ASCII-Code des Zeichens um 23 dekrementieren
+000010A0                            36      
+000010A0                            37  CHECK:                              ; Ueberprueft ob String-Ende erreicht wurde
+000010A0  12C0                      38      MOVE.B  D0,         (A1)+       ; Den geaenderten ASCII-Code im Zielfeld ablegen und dessen Pointer um 1 Byte inkrementieren 
+000010A2  1018                      39      MOVE.B  (A0)+,      D0          ; Der naechste Buchstabe vom String holen
+000010A4  B03C 0000                 40      CMP.B   #0,         D0          ; Vergleiche den Buchstaben mit '0'
+000010A8  6700 0004                 41      BEQ     SKIP                    ; Wenn String-Ende erreicht wurde, springe zu SKIP
+000010AC  60B8                      42      BRA     LOOP                    ; Wenn String-Ende nicht erreicht wurde, springe zu LOOP
+000010AE                            43      
+000010AE                            44  SKIP:
+000010AE  12FC 0000                 45      MOVE.B  #0,         (A1)+       ; Eine '0' wird am Ende des Strings im Zielfeld abgelegt, um das String-Ende zu symbolisieren
+000010B2                            46      
+00001000                            47      ORG     $1000                   ; Startadresse vom String
+00001000= 5A 79 6B 6C 75 73 ...     48  String      DC.B    'Zykluszeit',0  ; String 'Zykluszeit' definieren. '0' steht am Ende des Strings  
+00001010                            49      ORG     $1010                   ; Startadresse vom Zielfeld
+00001010                            50  Zielfeld    DS.B    11              ; Es werden 11 Bytes reserviert. 11 weil 'Zykluszeit' 10 Buchstaben hat und 1 Byte fuer das String-Ende '0'
+0000101B                            51                                      ; Darausfolgt, dass das Programm nur fuer ein String mit der Groesse <= 10 richtig funktioniert
+0000101B                            52      END    START
 
 No errors detected
 No warnings generated
@@ -60,11 +62,11 @@ No warnings generated
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
-CHECK               10AC
-LOOP                106E
-NOT_XYZ             10AA
-SKIP                10BA
-START               105C
+CHECK               10A0
+LOOP                1066
+NOT_XYZ             1096
+SKIP                10AE
+START               1050
 STRING              1000
-XYZ                 10A2
+XYZ                 109C
 ZIELFELD            1010
