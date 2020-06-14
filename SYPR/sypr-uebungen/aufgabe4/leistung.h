@@ -20,7 +20,5 @@ typedef struct leistung leistung;
 
 bool leistung_einlesen(struct leistung *l);
 void ausgeben(const struct leistung *l);
-static void ausgeben_benotet(int note);
-static void ausgeben_unbenotet(char status);
 
 #endif
