@@ -1,0 +1,1 @@
+Wieviel Byte Speicher benötigt eine Variabel vom Typ leistung?
