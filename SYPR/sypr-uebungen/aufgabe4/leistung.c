@@ -5,6 +5,9 @@
 #include "leistung.h"
 #include "spo3_ain2.h"
 
+static void ausgeben_benotet(int note);
+static void ausgeben_unbenotet(char status);
+
 bool leistung_einlesen(struct leistung *l)
 {
     if (scanf("%20s %d", l->modulname, &(l->n)) == 2)
