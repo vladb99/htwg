@@ -1,4 +1,11 @@
-//doc
+/*
+ * spo3_ain2.c
+ * 
+ * Implementiert aus der Header Datei
+ * 
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 12.06.2020
+ */
 
 #include <stdio.h>
 #include <stdlib.h>

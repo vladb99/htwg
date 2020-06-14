@@ -1,4 +1,11 @@
-//doc nicht vergessen
+/*
+ * spo3_ain2.h
+ * 
+ * Definiert Methoden und symbolische Konstanten
+ * 
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 12.06.2020
+ */
 
 #include <stdbool.h>
 

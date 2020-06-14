@@ -1,3 +1,12 @@
+/*
+ * leistung.c
+ * 
+ * Implementiert die Einlesen- und Ausgabefunktion
+ * 
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 12.06.2020
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

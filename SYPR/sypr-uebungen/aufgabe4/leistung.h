@@ -1,3 +1,12 @@
+/*
+ * leistung.h
+ * 
+ * Definiert eine Leistung als struct und Methoden, die die Leistung einlesen und ausgeben
+ * 
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 12.06.2020
+ */
+
 #include <stdbool.h>
 
 #ifndef LEISTUNG_H
