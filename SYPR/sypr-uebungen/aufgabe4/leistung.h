@@ -12,6 +12,8 @@
 #ifndef LEISTUNG_H
 #define LEISTUNG_H
 
+#define STR_EVALUATE(x) #x
+#define STRINGIFY(x) STR_EVALUATE(x)
 #define FELD_GROESSE 20
 
 enum leistungsart {benotet, unbenotet};

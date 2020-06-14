@@ -19,7 +19,8 @@ static void ausgeben_unbenotet(char status);
 
 bool leistung_einlesen(struct leistung *l)
 {
-    if (scanf("%20s %d", l->modulname, &(l->n)) == 2)
+    // Aufgabe ohne Zusatz: if (scanf("%20s %d", l->modulname, &(l->n)) == 2)
+    if (scanf("%" STRINGIFY(FELD_GROESSE) "s %d", l->modulname, &(l->n)) == 2)
     {
         l->art = benotet;
     }
