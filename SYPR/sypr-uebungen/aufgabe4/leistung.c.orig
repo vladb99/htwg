@@ -1,8 +1,8 @@
 /*
  * leistung.c
- *
+ * 
  * Implementiert die Einlesen- und Ausgabefunktion
- *
+ * 
  * Autor: Vlad Bratulescu
  * Erstellt am: 12.06.2020
  */
@@ -47,8 +47,7 @@ void ausgeben(const struct leistung *l)
     if (ist_ain2_modul(l->modulname))
     {
         printf("%-*s\t", FELD_GROESSE, l->modulname);
-        if (l->art == benotet)
-        {
+        if (l->art == benotet) {
             printf("L\t");
             ausgeben_benotet(l->n);
         }
@@ -66,7 +65,7 @@ void ausgeben(const struct leistung *l)
 
 static void ausgeben_benotet(int note)
 {
-    if (ist_spo_note(note))
+    if (ist_spo_note(note)) 
     {
         int vk = note / 10;
         int nk = note % 10;
@@ -82,14 +81,14 @@ static void ausgeben_unbenotet(char status)
 {
     switch (status)
     {
-    case 'B':
-        printf("bestanden\n");
-        break;
-    case 'N':
-        printf("nicht bestanden\n");
-        break;
-    default:
-        printf("Fehler: %c\n", status);
-        break;
+        case 'B':
+            printf("bestanden\n");
+            break;
+        case 'N':
+            printf("nicht bestanden\n");
+            break;
+        default:
+            printf("Fehler: %c\n", status);
+            break;
     }
 }
