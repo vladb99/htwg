@@ -1,6 +1,8 @@
 package aufgabe_4;
 
-public abstract class Card {
+import java.util.Comparator;
+
+public abstract class Card implements Comparable<Card> {
     public enum Suit {
         DIAMONDS, HEARTS, CLUBS, SPADES;
     }
@@ -35,5 +37,13 @@ public abstract class Card {
             return false;
         Card c = (Card) o;
         return suit == c.suit && rank == c.rank;
+    }
+
+    public int compareTo(Card c)
+    {
+        int i = suit.compareTo(c.suit);
+        if (i != 0) return i;
+
+        return rank.compareTo(c.rank);
     }
 }
