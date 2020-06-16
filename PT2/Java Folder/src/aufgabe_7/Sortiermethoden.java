@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,24 +32,29 @@ public class Sortiermethoden {
     private static void test4()
     {
         long start = System.nanoTime(); // aktuelle Zeit in nsec
+        int anz = 100000;
 
-        List<Card> cardTab = new LinkedList<>();
+        //List<Card> cardTab = new LinkedList<>();
+        Card[] cardTab = new Card[anz];
+
 
         Random rand = new Random();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < anz; i++) {
             if (rand.nextInt() % 2 == 0) {
                 RedCard c = new RedCard();
-                cardTab.add(c);
+                //cardTab.add(c);
+                cardTab[i] = c;
             } else {
                 BlackCard c = new BlackCard();
-                cardTab.add(c);
+                //cardTab.add(c);
+                cardTab[i] = c;
             }
         }
 
-        //System.out.println(cardTab);
-        hybrid_quicksort(cardTab, true);
-        //Arrays.sort(cardTab.toArray());
-        //System.out.println(cardTab);
+        //System.out.println(Arrays.asList(cardTab));
+        hybrid_quicksort(cardTab, false);
+        //Arrays.sort(cardTab);
+        //System.out.println(Arrays.asList(cardTab));
 
 
         long end = System.nanoTime();
@@ -61,8 +67,8 @@ public class Sortiermethoden {
         start = System.nanoTime(); // aktuelle Zeit in nsec
 
         //System.out.println(cardTab);
-        hybrid_quicksort(cardTab, true);
-        //Arrays.sort(cardTab.toArray());
+        hybrid_quicksort(cardTab, false);
+        //Arrays.sort(cardTab);
         //System.out.println(cardTab);
 
         end = System.nanoTime();
@@ -76,10 +82,10 @@ public class Sortiermethoden {
      */
     private static void test1_2()
     {
-        List<Integer> a = new LinkedList<>();
+        Integer[] a = new Integer[M];
         for (int i = 0; i < M; ++i)
         {
-            a.add((int)(Math.random() * M));
+            a[i] = (int)(Math.random() * M);
         }
         System.out.println(a);
         hybrid_quicksort(a, true);
@@ -93,7 +99,6 @@ public class Sortiermethoden {
     private static void test3() throws IOException {
         List<String> tab = new LinkedList<>();
 
-        long start = System.nanoTime(); // aktuelle Zeit in nsec
         LineNumberReader in;
         in = new LineNumberReader(new FileReader("Kafka_Der_Prozess.txt"));
         String line;
@@ -107,12 +112,16 @@ public class Sortiermethoden {
                 tab.add(w);
             }
         }
-        System.out.println(tab);
-        hybrid_quicksort(tab, true);
-        System.out.println(tab);
+        String[] list = new String[tab.size()];
 
-        long end = System.nanoTime();
-        double elapsedTime = (double)(end-start)/1.0e06; // Zeit in msec
+        for (int i = 0; i < tab.size(); i++)
+        {
+            list[i] = tab.get(i);
+        }
+
+        System.out.println(tab);
+        hybrid_quicksort(list, true);
+        System.out.println(Arrays.asList(list));
     }
 
     /**
@@ -121,9 +130,9 @@ public class Sortiermethoden {
      * @param threeMedStrat, wenn true dann QuickSort mit 3-Median
      * @param <T>, generischer Typ
      */
-    private static <T extends Comparable<? super T>> void hybrid_quicksort(List<T> list, boolean threeMedStrat)
+    private static <T extends Comparable<T>> void hybrid_quicksort(T[] list, boolean threeMedStrat)
     {
-        hybrid_quicksort(list, 0, list.size() - 1, threeMedStrat);
+        hybrid_quicksort(list, 0, list.length - 1, threeMedStrat);
     }
 
     /**
@@ -131,9 +140,9 @@ public class Sortiermethoden {
      * @param list, die zu sortierende Liste
      * @param <T>, generischer Typ
      */
-    private static <T extends Comparable<? super T>> void insertionSort(List<T> list)
+    private static <T extends Comparable<T>> void insertionSort(T[] list)
     {
-        insertionSort(list, 0, list.size() - 1);
+        insertionSort(list, 0, list.length - 1);
     }
 
     /**
@@ -144,7 +153,7 @@ public class Sortiermethoden {
      * @param threeMedStrat, wenn true dann QuickSort mit 3-Median
      * @param <T>, generischer Typ
      */
-    private static <T extends Comparable<? super T>> void hybrid_quicksort(List<T> list, int li, int re, boolean threeMedStrat)
+    private static <T extends Comparable<T>> void hybrid_quicksort(T[] list, int li, int re, boolean threeMedStrat)
     {
         /*if (re > li)
         {
@@ -197,7 +206,7 @@ public class Sortiermethoden {
      * @param <T>, generischer Typ
      * @return Index vom Pivotelement
      */
-    private static <T extends Comparable<? super T>> int partition(List<T> list, int li, int re, boolean threeMedStrat)
+    private static <T extends Comparable<T>> int partition(T[] list, int li, int re, boolean threeMedStrat)
     {
         if (threeMedStrat)
         {
@@ -206,18 +215,19 @@ public class Sortiermethoden {
             swap(list, re, mid);
         }
 
-        T v = list.get(re);
+        T v = list[re];
+
         int i = li-1;
         int j = re;
         while (true) {
-            do i++; while (list.get(i).compareTo(v) < 0);
-            do j--; while (j >= li && list.get(j).compareTo(v) > 0);
+            do i++; while (list[i].compareTo(v) < 0);
+            do j--; while (j >= li && list[j].compareTo(v) > 0);
             if (i >= j)
                 break;
             swap(list, i, j);
         }
-        list.set(re, list.get(i));
-        list.set(i, v);
+        list[re] = list[i];
+        list[i] = v;
         return i;
     }
 
@@ -229,11 +239,11 @@ public class Sortiermethoden {
      * @param mid, Index vom mittleren Element
      * @param <T>, generischer Typ
      */
-    private static <T extends Comparable<? super T>> void getMedian(List<T> list, int li, int re, int mid)
+    private static <T extends Comparable<T>> void getMedian(T[] list, int li, int re, int mid)
     {
-        T liElm = list.get(li);
-        T reElm = list.get(re);
-        T midElm = list.get(mid);
+        T liElm = list[li];
+        T reElm = list[re];
+        T midElm = list[mid];
 
         if (reElm.compareTo(liElm) < 0)
         {
@@ -256,10 +266,10 @@ public class Sortiermethoden {
      * @param j, Index vom zweiten Element
      * @param <T>, generischer Typ
      */
-    private static <T> void swap(List<T> list, int i, int j) {
-        T t = list.get(i);
-        list.set(i, list.get(j));
-        list.set(j, t);
+    private static <T> void swap(T[] list, int i, int j) {
+        T t = list[i];
+        list[i] = list[j];
+        list[j] = t;
     }
 
     /**
@@ -269,16 +279,16 @@ public class Sortiermethoden {
      * @param re, Index vom rechten Element
      * @param <T>, generischer Typ
      */
-    private static <T extends Comparable<? super T>> void insertionSort(List<T> list, int li, int re)
+    private static <T extends Comparable<T>> void insertionSort(T[] list, int li, int re)
     {
         for (int i = li + 1; i <= re; i++) {
-            T v = list.get(i);
+            T v = list[i];
             int j = i - 1;
-            while (j >= li && list.get(j).compareTo(v) > 0) {
-                list.set(j + 1, list.get(j));
+            while (j >= li && list[j].compareTo(v) > 0) {
+                list[j + 1] = list[j];
                 j--;
             }
-            list.set(j + 1, v);
+            list[j + 1] = v;
         }
     }
 }
