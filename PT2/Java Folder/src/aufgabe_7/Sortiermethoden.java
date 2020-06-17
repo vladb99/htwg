@@ -21,20 +21,19 @@ public class Sortiermethoden {
     private static final int M = 1000;
 
     public static void main(String[] args) throws IOException {
-        //test1_2();
-        //test3();
-        test4();
+        //test1_2(true);
+        //test3(true);
+        test4(true);
     }
 
     /**
      *  Implementiert den vierten Test. Erstellt eine Liste mit gemischten Karten und sortiert dann die Liste zwei Mal
      */
-    private static void test4()
+    private static void test4(boolean threeMedStrat)
     {
         long start = System.nanoTime(); // aktuelle Zeit in nsec
-        int anz = 100000;
+        int anz = 10000;
 
-        //List<Card> cardTab = new LinkedList<>();
         Card[] cardTab = new Card[anz];
 
 
@@ -42,19 +41,17 @@ public class Sortiermethoden {
         for (int i = 0; i < anz; i++) {
             if (rand.nextInt() % 2 == 0) {
                 RedCard c = new RedCard();
-                //cardTab.add(c);
                 cardTab[i] = c;
             } else {
                 BlackCard c = new BlackCard();
-                //cardTab.add(c);
                 cardTab[i] = c;
             }
         }
 
-        //System.out.println(Arrays.asList(cardTab));
-        hybrid_quicksort(cardTab, false);
+        System.out.println(Arrays.asList(cardTab));
+        hybrid_quicksort(cardTab, threeMedStrat);
         //Arrays.sort(cardTab);
-        //System.out.println(Arrays.asList(cardTab));
+        System.out.println(Arrays.asList(cardTab));
 
 
         long end = System.nanoTime();
@@ -67,7 +64,7 @@ public class Sortiermethoden {
         start = System.nanoTime(); // aktuelle Zeit in nsec
 
         //System.out.println(cardTab);
-        hybrid_quicksort(cardTab, false);
+        hybrid_quicksort(cardTab, threeMedStrat);
         //Arrays.sort(cardTab);
         //System.out.println(cardTab);
 
@@ -80,23 +77,23 @@ public class Sortiermethoden {
     /**
      * Implementiert Tests 1 und 2. Erstellt eine Liste mit zufälligen Zahlen und sortiert diese
      */
-    private static void test1_2()
+    private static void test1_2(boolean threeMedStrat)
     {
         Integer[] a = new Integer[M];
         for (int i = 0; i < M; ++i)
         {
             a[i] = (int)(Math.random() * M);
         }
-        System.out.println(a);
-        hybrid_quicksort(a, true);
-        System.out.println(a);
+        System.out.println(Arrays.asList(a));
+        hybrid_quicksort(a, threeMedStrat);
+        System.out.println(Arrays.asList(a));
     }
 
     /**
      * Implementiert Test 3. Erstellt eine Liste mit allen Wörtern aus der .txt Datei und sortiert diese
      * @throws IOException
      */
-    private static void test3() throws IOException {
+    private static void test3(boolean threeMedStrat) throws IOException {
         List<String> tab = new LinkedList<>();
 
         LineNumberReader in;
@@ -120,7 +117,7 @@ public class Sortiermethoden {
         }
 
         System.out.println(tab);
-        hybrid_quicksort(list, true);
+        hybrid_quicksort(list, threeMedStrat);
         System.out.println(Arrays.asList(list));
     }
 
@@ -136,16 +133,6 @@ public class Sortiermethoden {
     }
 
     /**
-     * Insertionsort
-     * @param list, die zu sortierende Liste
-     * @param <T>, generischer Typ
-     */
-    private static <T extends Comparable<T>> void insertionSort(T[] list)
-    {
-        insertionSort(list, 0, list.length - 1);
-    }
-
-    /**
      * QuickSort ohne Endrekursion
      * @param list, die zu sortierende Liste
      * @param li, Index vom linken Element
@@ -155,20 +142,6 @@ public class Sortiermethoden {
      */
     private static <T extends Comparable<T>> void hybrid_quicksort(T[] list, int li, int re, boolean threeMedStrat)
     {
-        /*if (re > li)
-        {
-            if (re - li < N)
-            {
-                insertionSort(list, li, re);
-            }
-            else
-            {
-                int i = partition(list, li, re);
-                hybrid_quicksort(list, li, i-1);
-                hybrid_quicksort(list, i+1, re);
-            }
-        }
-         */
         while (re > li)
         {
             if (re - li < N)
@@ -178,11 +151,6 @@ public class Sortiermethoden {
             }
             else
             {
-                /*
-                int i = partition(list, li, re);
-                hybrid_quicksort(list, li, i-1);
-                li = i + 1;
-                 */
                 int i = partition(list, li, re, threeMedStrat);
                 if (i-li < re-i) {
                     hybrid_quicksort(list, li, i-1, threeMedStrat);
@@ -211,7 +179,7 @@ public class Sortiermethoden {
         if (threeMedStrat)
         {
             int mid = (li + re) / 2;
-            getMedian(list, li, re, mid);
+            moveMedian(list, li, re, mid);
             swap(list, re, mid);
         }
 
@@ -239,7 +207,7 @@ public class Sortiermethoden {
      * @param mid, Index vom mittleren Element
      * @param <T>, generischer Typ
      */
-    private static <T extends Comparable<T>> void getMedian(T[] list, int li, int re, int mid)
+    private static <T extends Comparable<T>> void moveMedian(T[] list, int li, int re, int mid)
     {
         T liElm = list[li];
         T reElm = list[re];
