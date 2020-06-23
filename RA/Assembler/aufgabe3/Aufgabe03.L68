@@ -1,0 +1,75 @@
+00001050 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 23.06.2020 17:25:55
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001050                             7      ORG    $1050
+00001050                             8  START:                  
+00001050  41F9 00001000              9      LEA     String1,    A0
+00001056  43F9 00001010             10      LEA     String2,    A1
+0000105C  45F9 00001020             11      LEA     String3,    A2
+00001062  47F9 00001030             12      LEA     summe,      A3
+00001068                            13      
+00001068  4242                      14      CLR     D2
+0000106A                            15  
+0000106A  6000 0014                 16      BRA     CHECK
+0000106E                            17      
+0000106E                            18  LOOP:
+0000106E  B200                      19      CMP.B   D0,         D1
+00001070  6D00 000A                 20      BLT     D1_LESS
+00001074                            21      
+00001074                            22  D1_GREATER_EQUAL:
+00001074  14C0                      23      MOVE.B  D0,         (A2)+
+00001076  D440                      24      ADD     D0,         D2
+00001078  6000 0006                 25      BRA     CHECK
+0000107C                            26  
+0000107C                            27  D1_LESS:
+0000107C  14C1                      28      MOVE.B  D1,         (A2)+
+0000107E  D441                      29      ADD     D1,         D2
+00001080                            30  
+00001080                            31  CHECK:
+00001080  1018                      32      MOVE.B  (A0)+,      D0
+00001082  1219                      33      MOVE.B  (A1)+,      D1
+00001084                            34  
+00001084  B03C 0000                 35      CMP.B   #0,         D0
+00001088  6700 000C                 36      BEQ     SKIP
+0000108C  B23C 0000                 37      CMP.B   #0,         D1
+00001090  6700 0004                 38      BEQ     SKIP
+00001094  60D8                      39      BRA     LOOP
+00001096                            40  
+00001096                            41  SKIP:
+00001096  14FC 0000                 42      MOVE.B  #0,         (A2)+
+0000109A  36C2                      43      MOVE    D2,         (A3)+
+0000109C                            44      
+00001000                            45      ORG     $1000 
+00001000= 53 74 75 64 69 65 ...     46  String1     DC.B    'Studierender', 0
+00001010                            47      ORG     $1010
+00001010= 49 6E 66 6F 72 6D ...     48  String2     DC.B    'Informatiker', 0
+00001020                            49      ORG     $1020
+00001020                            50  String3     DS.B    13
+0000102D  =00001030                 51  summe       EQU     $1030
+0000102D                            52  
+0000102D                            53      END    START       
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CHECK               1080
+D1_GREATER_EQUAL    1074
+D1_LESS             107C
+LOOP                106E
+SKIP                1096
+START               1050
+STRING1             1000
+STRING2             1010
+STRING3             1020
+SUMME               1030
