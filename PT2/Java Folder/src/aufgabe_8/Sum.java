@@ -3,12 +3,11 @@ package aufgabe_8;
 import java.util.Map;
 
 public class Sum extends CompoundExpression {
-    private Expression exp1;
-    private Expression exp2;
 
     public Sum(Expression a, Expression b) {
         this.exp1 = a;
         this.exp2 = b;
+        this.symbol = '+';
     }
 
     @Override

@@ -1,7 +1,10 @@
 package aufgabe_8;
 
+import java.awt.*;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Testprogramm für Aufgabe 8 (Bäume für arithmetische Ausdrücke).
@@ -45,7 +48,11 @@ public class ExpressionTreeApplication {
                 );
 		
 		// Audruck e4 = a + (b + c)
-		Expression e4 = null;	// Vorsicht: Sie müssen e4 noch definieren.
+		Expression e4
+                = new Sum(
+                        a,
+                        new Sum(b, c)
+                );
 
         // Belegung alle Variablen als Map:
         Map<String, Double> varBel = new TreeMap<>();
@@ -72,5 +79,6 @@ public class ExpressionTreeApplication {
         System.out.println(e1);		// ((a * a) + (b * b))
         System.out.println(e2);		// ((n * (n + 1.0)) / 2.0)
         System.out.println(e3);		// (((a + b) + c) / 3.0)
+        System.out.println(e4);
     }
 }

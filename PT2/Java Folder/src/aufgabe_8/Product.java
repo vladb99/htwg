@@ -4,12 +4,10 @@ import java.util.Map;
 
 public class Product extends CompoundExpression {
 
-    private Expression exp1;
-    private Expression exp2;
-
     public Product(Expression a, Expression b) {
         this.exp1 = a;
         this.exp2 = b;
+        this.symbol = '*';
     }
 
     @Override
