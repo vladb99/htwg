@@ -1,60 +1,59 @@
 00001050 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 23.06.2020 17:25:55
+Created On: 23.06.2020 19:15:30
 
 00000000                             1  *-----------------------------------------------------------
-00000000                             2  * Title      :
-00000000                             3  * Written by :
-00000000                             4  * Date       :
-00000000                             5  * Description:
+00000000                             2  * Title      :  Aufgabe03
+00000000                             3  * Written by :  Vlad Bratulescu - 299874
+00000000                             4  * Date       :  23.06.2020
+00000000                             5  * Description:  Dritte Aufgabe in REAR Übung
 00000000                             6  *-----------------------------------------------------------
-00001050                             7      ORG    $1050
+00001050                             7      ORG    $1050                        ; Anfang vom Objektcode
 00001050                             8  START:                  
-00001050  41F9 00001000              9      LEA     String1,    A0
+00001050  41F9 00001000              9      LEA     String1,    A0              
 00001056  43F9 00001010             10      LEA     String2,    A1
 0000105C  45F9 00001020             11      LEA     String3,    A2
-00001062  47F9 00001030             12      LEA     summe,      A3
+00001062  47F9 00001030             12      LEA     summe,      A3              ; Adressen jeweils in den Adressregistern laden
 00001068                            13      
-00001068  4242                      14      CLR     D2
-0000106A                            15  
-0000106A  6000 0014                 16      BRA     CHECK
-0000106E                            17      
-0000106E                            18  LOOP:
-0000106E  B200                      19      CMP.B   D0,         D1
-00001070  6D00 000A                 20      BLT     D1_LESS
-00001074                            21      
-00001074                            22  D1_GREATER_EQUAL:
-00001074  14C0                      23      MOVE.B  D0,         (A2)+
-00001076  D440                      24      ADD     D0,         D2
-00001078  6000 0006                 25      BRA     CHECK
-0000107C                            26  
-0000107C                            27  D1_LESS:
-0000107C  14C1                      28      MOVE.B  D1,         (A2)+
-0000107E  D441                      29      ADD     D1,         D2
-00001080                            30  
-00001080                            31  CHECK:
-00001080  1018                      32      MOVE.B  (A0)+,      D0
-00001082  1219                      33      MOVE.B  (A1)+,      D1
-00001084                            34  
-00001084  B03C 0000                 35      CMP.B   #0,         D0
-00001088  6700 000C                 36      BEQ     SKIP
-0000108C  B23C 0000                 37      CMP.B   #0,         D1
-00001090  6700 0004                 38      BEQ     SKIP
-00001094  60D8                      39      BRA     LOOP
-00001096                            40  
-00001096                            41  SKIP:
-00001096  14FC 0000                 42      MOVE.B  #0,         (A2)+
-0000109A  36C2                      43      MOVE    D2,         (A3)+
-0000109C                            44      
-00001000                            45      ORG     $1000 
-00001000= 53 74 75 64 69 65 ...     46  String1     DC.B    'Studierender', 0
-00001010                            47      ORG     $1010
-00001010= 49 6E 66 6F 72 6D ...     48  String2     DC.B    'Informatiker', 0
-00001020                            49      ORG     $1020
-00001020                            50  String3     DS.B    13
-0000102D  =00001030                 51  summe       EQU     $1030
-0000102D                            52  
-0000102D                            53      END    START       
+00001068  4242                      14      CLR     D2                          ; Register D2 initialisieren
+0000106A  6000 0014                 15      BRA     CHECK                       ; Springe nach CHECK
+0000106E                            16      
+0000106E                            17  LOOP:                                   ; for (i = 0; i < String1.length; i++) in etwa
+0000106E  B200                      18      CMP.B   D0,         D1              ; Buchstabe aus D0 wird mit dem aus D1 vergliechen
+00001070  6D00 000A                 19      BLT     D1_LESS                     ; Wenn D1 kleiner ist, dann springe nach D1_LESS
+00001074                            20      
+00001074                            21  D1_GREATER_EQUAL:
+00001074  14C0                      22      MOVE.B  D0,         (A2)+           ; Buchstabe aus D0 in String3 ablegen und dessen Pointer um 1 Byte inkrementieren
+00001076  D440                      23      ADD     D0,         D2              ; der kleinere Buchstaben zu Gesamtsumme D2 addieren
+00001078  6000 0006                 24      BRA     CHECK                       ; Springe nach CHECK
+0000107C                            25  
+0000107C                            26  D1_LESS:
+0000107C  14C1                      27      MOVE.B  D1,         (A2)+           ; Buchstabe aus D1 in String3 ablegen und dessen Pointer um 1 Byte inkrementieren
+0000107E  D441                      28      ADD     D1,         D2              ; der kleinere Buchstaben zu Gesamtsumme D2 addieren 
+00001080                            29  
+00001080                            30  CHECK:                                  ; Prüft ob String-Ende erreicht wurde
+00001080  1018                      31      MOVE.B  (A0)+,      D0              ; Buchstabe vom String1 holen und Pointer inkrementieren
+00001082  1219                      32      MOVE.B  (A1)+,      D1              ; Buchstabe vom String2 holen und Pointer inkrementieren
+00001084                            33  
+00001084  B03C 0000                 34      CMP.B   #0,         D0              ; Hier werden die Buchstaben mit 0 vergliechen,
+00001088  6700 000C                 35      BEQ     SKIP                        ; um zu schauen ob String-Ende erreicht wurde. Wenn ja, dann springe nach SKIP
+0000108C  B23C 0000                 36      CMP.B   #0,         D1              ; sonst mach weiter mit der Schleife
+00001090  6700 0004                 37      BEQ     SKIP                        ; Da das Programm annimmt, dass beide Strings gleich lang sind,
+00001094  60D8                      38      BRA     LOOP                        ; würde nur einen Check auf String-Ende reichen.
+00001096                            39                                          ; Hier werden aber beide Buchstaben geprüft, wenn Buchstabe aus D0 nicht 0 ist
+00001096                            40  SKIP:
+00001096  14FC 0000                 41      MOVE.B  #0,         (A2)+           ; Eine 0 wird am Ende vom String3 abgelegt, um das String-Ende zu symbolisieren
+0000109A  36C2                      42      MOVE    D2,         (A3)+           ; Die Gesamtsumme der kleineren Buchstaben in die Adresse ablegen, auf die A3 zeigt
+0000109C                            43      
+00001000                            44      ORG     $1000                       ; Startadresse vom String1 
+00001000= 53 74 75 64 69 65 ...     45  String1     DC.B    'Studierender', 0   ; String 'Studierender' definieren. 0 steht am Ende des Strings
+00001010                            46      ORG     $1010                       ; Startadresse vom String2
+00001010= 49 6E 66 6F 72 6D ...     47  String2     DC.B    'Informatiker', 0   ; String 'Informatiker' definieren. 0 steht am Ende des Strings
+00001020                            48      ORG     $1020                       ; Startadresse vom String3
+00001020                            49  String3     DS.B    13                  ; Es werden 13 Bytes reserviert. 13 weil String1 und String2 jeweils 12 Buchstaben haben und 1 Byte für das String-Ende '0'
+0000102D  =00001030                 50  summe       EQU     $1030               ; Symbolische Adresse mit $1030 initialisieren
+0000102D                            51  
+0000102D                            52      END    START       
 
 No errors detected
 No warnings generated
