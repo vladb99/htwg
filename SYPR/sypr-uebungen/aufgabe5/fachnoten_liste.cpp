@@ -23,7 +23,7 @@ bool fachnoten_liste::iterator::operator!=(const iterator& i) const
     return this->current != i.current;
 }
 
-fachnote& fachnoten_liste::iterator::operator*() const
+fachnote* fachnoten_liste::iterator::operator*() const
 {
     return this->current->n;
 }

@@ -27,7 +27,7 @@ public:
         explicit iterator(element*);
     public:
         bool operator!=(const iterator&) const;
-        fachnote& operator*() const;
+        fachnote* operator*() const;
         iterator& operator++();
 
         friend class fachnoten_liste;
