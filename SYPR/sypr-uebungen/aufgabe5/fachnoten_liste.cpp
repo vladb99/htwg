@@ -1,3 +1,13 @@
+/*
+ * fachnoten_liste.cpp
+ *
+ * Implementiert die verkette Liste mit den eingebetetten Klassen
+ * element und iterator.
+ *
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 28.06.2020
+ */
+
 #include "fachnoten_liste.h"
 #include "fachnote.h"
 

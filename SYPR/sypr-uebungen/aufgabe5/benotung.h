@@ -1,3 +1,12 @@
+/*
+ * benotung.h
+ *
+ * Definiert eine Benotung mit einer int note
+ *
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 28.06.2020
+ */
+
 #ifndef BENOTUNG_H
 #define BENOTUNG_H
 

@@ -1,3 +1,13 @@
+/*
+ * fachnote.h
+ *
+ * Definiert eine Fachnote mit einem Fachnamen und 
+ * einer Variable note vom Typ Benotung
+ *
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 28.06.2020
+ */
+
 #ifndef FACHNOTE_H
 #define FACHNOTE_H
 

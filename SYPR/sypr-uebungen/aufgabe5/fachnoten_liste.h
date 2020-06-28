@@ -1,3 +1,12 @@
+/*
+ * fachnoten_liste.h
+ *
+ * Definiert eine verkette Liste von fachnote*
+ *
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 28.06.2020
+ */
+
 #ifndef FACHNOTEN_LISTE_H
 #define FACHNOTEN_LISTE_H
 

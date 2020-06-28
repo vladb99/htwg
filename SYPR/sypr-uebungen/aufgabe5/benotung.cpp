@@ -1,3 +1,12 @@
+/*
+ * benotung.cpp
+ *
+ * Implementiert die Benotung mit zwei statische Membervariablen.
+ *
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 28.06.2020
+ */
+
 #include "benotung.h"
 #include <stdexcept>
 #include <string>

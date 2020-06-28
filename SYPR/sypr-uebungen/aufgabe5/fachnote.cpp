@@ -1,3 +1,12 @@
+/*
+ * fachnote.cpp
+ *
+ * Implementiert die Fachnote
+ *
+ * Autor: Vlad Bratulescu
+ * Erstellt am: 28.06.2020
+ */
+
 #include "fachnote.h"
 #include <stdexcept>
 
