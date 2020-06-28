@@ -14,7 +14,7 @@ public:
     explicit benotung(int n);
 
     int int_value() const;
-    bool ist_bestanden();
+    bool ist_bestanden() const;
 
     friend bool operator==(const benotung&, const benotung&);
 };

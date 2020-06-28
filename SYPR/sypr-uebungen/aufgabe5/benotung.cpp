@@ -20,7 +20,7 @@ int benotung::int_value() const
     return this->note;
 }
 
-bool benotung::ist_bestanden()
+bool benotung::ist_bestanden() const
 {
     return this->note <= 40;
 }

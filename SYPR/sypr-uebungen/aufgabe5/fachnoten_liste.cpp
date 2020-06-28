@@ -25,7 +25,7 @@ bool fachnoten_liste::iterator::operator!=(const iterator& i) const
 
 fachnote& fachnoten_liste::iterator::operator*() const
 {
-    return *this->current->n;
+    return this->current->n;
 }
 
 fachnoten_liste::iterator& fachnoten_liste::iterator::operator++()
