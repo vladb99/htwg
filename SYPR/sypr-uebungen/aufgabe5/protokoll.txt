@@ -1,0 +1,4 @@
+Welche Memberfunktionen erzeugt der Compiler zusätzlich implizit in benotung? Implementiert er die in diesem Fall korrekt?
+Copy- und Move-Konstruktoren, Destruktor, sowie Copy- und Move-Zuweisungen ergänzt der Compiler automatisch.
+Ja, er implementiert sie korrekt, da keine der fünf explizit implementiert wurde. (Rule of five)
+
