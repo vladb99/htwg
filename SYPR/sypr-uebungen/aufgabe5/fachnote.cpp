@@ -1,4 +1,5 @@
 #include "fachnote.h"
+#include <stdexcept>
 
 fachnote::fachnote(const std::string &f, const benotung &b)
 : fach(f), note(b)
