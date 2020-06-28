@@ -44,8 +44,8 @@ fachnoten_liste::~fachnoten_liste()
     while (e != nullptr)
     {
         element *x = e;
-        e = e->next;
         function(e->n);
+        e = e->next;
         delete x;
     }
 }
