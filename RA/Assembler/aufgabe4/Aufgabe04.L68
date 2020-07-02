@@ -1,0 +1,72 @@
+00001050 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 02.07.2020 19:48:47
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001050                             7      ORG    $1050
+00001050                             8  START:
+00001050  303C 0013                  9      MOVE    #19,        D0  ;19 weil sub 1 in loop 1
+00001054                            10      
+00001054                            11  LOOP1:
+00001054  5340                      12      SUBI    #1,         D0
+00001056  B03C 0001                 13      CMP.B   #1,         D0
+0000105A  6700 0030                 14      BEQ     SKIP
+0000105E                            15  
+0000105E  123C 00FF                 16      MOVE.B  #$FF,       D1
+00001062  3400                      17      MOVE    D0,         D2
+00001064  5342                      18      SUBI    #1,         D2
+00001066                            19      
+00001066  41F9 00001000             20      LEA     String,     A0
+0000106C  43F9 00001020             21      LEA     ZIEL,       A1
+00001072                            22      
+00001072                            23  LOOP2:
+00001072  5201                      24      ADDI.B  #1,         D1
+00001074  B441                      25      CMP     D1,         D2
+00001076  67DC                      26      BEQ     LOOP1
+00001078                            27      
+Line 28 ERROR: Invalid syntax
+00001078                            28      MOVE.B  +(A0),      D3
+00001078  1810                      29      MOVE.B  (A0),       D4
+0000107A                            30  
+0000107A  B843                      31      CMP     D3,         D4    
+0000107C  6C00 0008                 32      BGE     ELSE
+00001080                            33      
+00001080  12C4                      34      MOVE.B  D4,         (A1)+
+00001082  1283                      35      MOVE.B  D3,         (A1)
+00001084                            36      
+00001084  60EC                      37      BRA     LOOP2
+00001086                            38      
+00001086                            39  ELSE
+00001086  12C3                      40      MOVE.B  D3,         (A1)+
+00001088  1284                      41      MOVE.B  D4,         (A1)
+0000108A                            42     
+0000108A  60E6                      43      BRA     LOOP2
+0000108C                            44      
+0000108C                            45  SKIP:
+0000108C                            46      
+0000108C                            47      
+00001000                            48      ORG     $1000
+00001000= 52 65 63 68 6E 65 ...     49  String      DC.B    'Rechnerarchitektur', 0
+00001020                            50      ORG     $1020
+00001020= 52 65 63 68 6E 65 ...     51  ZIEL        DC.B    'Rechnerarchitektur', 0
+00001033                            52      END    START
+
+1 error detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ELSE                1086
+LOOP1               1054
+LOOP2               1072
+SKIP                108C
+START               1050
+STRING              1000
+ZIEL                1020
