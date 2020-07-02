@@ -1,72 +1,67 @@
 00001050 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 02.07.2020 19:48:47
+Created On: 02.07.2020 21:09:56
 
 00000000                             1  *-----------------------------------------------------------
-00000000                             2  * Title      :
-00000000                             3  * Written by :
-00000000                             4  * Date       :
-00000000                             5  * Description:
+00000000                             2  * Title      :  Aufgabe04
+00000000                             3  * Written by :  Vlad Bratulescu - 299874
+00000000                             4  * Date       :  02.06.2020
+00000000                             5  * Description:  Vierte Aufgabe in REAR Übung
 00000000                             6  *-----------------------------------------------------------
-00001050                             7      ORG    $1050
+00001050                             7      ORG    $1050                        ; Anfang vom Objektcode  
 00001050                             8  START:
-00001050  303C 0013                  9      MOVE    #19,        D0  ;19 weil sub 1 in loop 1
-00001054                            10      
-00001054                            11  LOOP1:
-00001054  5340                      12      SUBI    #1,         D0
-00001056  B03C 0001                 13      CMP.B   #1,         D0
-0000105A  6700 0030                 14      BEQ     SKIP
-0000105E                            15  
-0000105E  123C 00FF                 16      MOVE.B  #$FF,       D1
-00001062  3400                      17      MOVE    D0,         D2
-00001064  5342                      18      SUBI    #1,         D2
-00001066                            19      
-00001066  41F9 00001000             20      LEA     String,     A0
-0000106C  43F9 00001020             21      LEA     ZIEL,       A1
-00001072                            22      
-00001072                            23  LOOP2:
-00001072  5201                      24      ADDI.B  #1,         D1
-00001074  B441                      25      CMP     D1,         D2
-00001076  67DC                      26      BEQ     LOOP1
-00001078                            27      
-Line 28 ERROR: Invalid syntax
-00001078                            28      MOVE.B  +(A0),      D3
-00001078  1810                      29      MOVE.B  (A0),       D4
-0000107A                            30  
-0000107A  B843                      31      CMP     D3,         D4    
-0000107C  6C00 0008                 32      BGE     ELSE
-00001080                            33      
-00001080  12C4                      34      MOVE.B  D4,         (A1)+
-00001082  1283                      35      MOVE.B  D3,         (A1)
-00001084                            36      
-00001084  60EC                      37      BRA     LOOP2
-00001086                            38      
-00001086                            39  ELSE
-00001086  12C3                      40      MOVE.B  D3,         (A1)+
-00001088  1284                      41      MOVE.B  D4,         (A1)
-0000108A                            42     
-0000108A  60E6                      43      BRA     LOOP2
-0000108C                            44      
-0000108C                            45  SKIP:
-0000108C                            46      
-0000108C                            47      
-00001000                            48      ORG     $1000
-00001000= 52 65 63 68 6E 65 ...     49  String      DC.B    'Rechnerarchitektur', 0
-00001020                            50      ORG     $1020
-00001020= 52 65 63 68 6E 65 ...     51  ZIEL        DC.B    'Rechnerarchitektur', 0
-00001033                            52      END    START
+00001050  45F9 00001020              9      LEA     ZIEL,       A2              ; Adresse vom ZIEL in Adressregister laden
+00001056  303C 0013                 10      MOVE    #19,        D0              ; Konstante 19 in D0 laden
+0000105A                            11                                          ; 19 weil die Dekrementierung der Laufvariable von LOOP1 am Anfang geschieht
+0000105A                            12  LOOP1:                                  ; for (i = String.length; i > 1; --i)
+0000105A  41F9 00001000             13      LEA     String,     A0              ; Adresse vom String in Adressregister laden       
+00001060  5340                      14      SUBI    #1,         D0              ; Laufvariable um 1 dekrementieren
+00001062  B03C 0001                 15      CMP.B   #1,         D0              ; (i > 1) ?
+00001066  6700 0020                 16      BEQ     SKIP                        ; Wenn i gleich 1, springe zu SKIP
+0000106A                            17  
+0000106A  123C 00FF                 18      MOVE.B  #$FF,       D1              ; Konstante FF in D1 laden. FF weil die inkrementierung der Laufvariable von LOOP2 am Anfang geschieht
+0000106E  3400                      19      MOVE    D0,         D2              ; D0 in D2 laden
+00001070  5342                      20      SUBI    #1,         D2              ; i - 1
+00001072                            21         
+00001072                            22  LOOP2:                                  ; for (j = 0; j < i - 1; ++j)
+00001072  5201                      23      ADDI.B  #1,         D1              ; Laufvariable um 1 inkrementieren
+00001074  B441                      24      CMP     D1,         D2              ; (j < i - 1) ?
+00001076  67E2                      25      BEQ     LOOP1                       ; wenn j glecih i - 1, spring zu LOOP1
+00001078                            26      
+00001078  1618                      27      MOVE.B  (A0)+,      D3              ; 1. Buchstabe in D3 laden und den Pointer um ein Byte inkrementieren
+0000107A  1810                      28      MOVE.B  (A0),       D4              ; 2. Buchstabe in D4 laden
+0000107C                            29  
+0000107C  B843                      30      CMP     D3,         D4              ; Nummerische Codes der Buchstaben vergleichen
+0000107E  6CF2                      31      BGE     LOOP2                       ; wenn 2. Buchstabe größer oder gleich ist, dass springe zu LOOP2
+00001080                            32  
+00001080  3248                      33      MOVE    A0,         A1              ; Adresse von A0 in A1 kopieren
+00001082  1304                      34      MOVE.B  D4,         -(A1)           ; Pointer aus A1 zuerst dekrementieren und dann D4 dort laden
+00001084  1083                      35      MOVE.B  D3,         (A0)            ; D3 in die Adresse laden auf die A0 zeigt
+00001086                            36         
+00001086  60EA                      37      BRA     LOOP2                       ; Springe zu LOOP2
+00001088                            38      
+00001088                            39  SKIP:                                   ; Sortierte String nach ZIEL kopieren
+00001088  14D8                      40      MOVE.B  (A0)+,      (A2)+           ; Buchstabe vom A0 in A2 laden und dann beide Pointer inkrementieren
+0000108A  0C10 0000                 41      CMP.B   #0,         (A0)            ; String-Ende erreicht?
+0000108E  66F8                      42      BNE     SKIP                        ; Wenn nein dann springe zurück zu SKIP
+00001090  14BC 0000                 43      MOVE.B  #0,         (A2)            ; Eine 0 wird am Ende vom ZIEL abgelegt, um das String-Ende zu symbolisieren 
+00001094                            44      
+00001000                            45      ORG     $1000                       ; Startadresse vom String
+00001000= 52 65 63 68 6E 65 ...     46  String DC.B 'Rechnerarchitektur', 0     ; String wird definiert. 0 steht am Ende des Strings
+00001020                            47      ORG     $1020                       ; Startadresse vom Ziel
+00001020                            48  ZIEL        DS.B    19                  ; Es werden 19 Bytes reserviert. 19 weil String 18 Buchstaben hat und noch 1 Byte für das String-Ende
+00001033                            49      END    START
 
-1 error detected
+No errors detected
 No warnings generated
 
 
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
-ELSE                1086
-LOOP1               1054
+LOOP1               105A
 LOOP2               1072
-SKIP                108C
+SKIP                1088
 START               1050
 STRING              1000
 ZIEL                1020
