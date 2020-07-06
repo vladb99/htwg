@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -32,9 +33,11 @@ public class HaeufigkeitsanalyseEinesDeutschenTextes {
 			for (String w: wf) {
 				if (w.length() == 0 || w.length() == 1) 
 					continue;
-				System.out.println(w);
-				// Ihr Code:
-				// ...
+				if (!haeufigkeit.containsKey(w)) {
+					haeufigkeit.put(w, 1);
+				} else {
+					haeufigkeit.put(w, haeufigkeit.get(w) + 1);
+				}
 			}
 		}
 		
@@ -42,8 +45,10 @@ public class HaeufigkeitsanalyseEinesDeutschenTextes {
 	}
 	
 	public static void printTop100(Map<String,Integer> h) {
-		// Ihr Code:
-		// ...
+		h.entrySet().stream()
+				.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+				.limit(100)
+				.forEach(System.out::println);
 	}
 	
 }
