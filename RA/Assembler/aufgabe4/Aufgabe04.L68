@@ -1,18 +1,18 @@
 00001050 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 02.07.2020 21:09:56
+Created On: 05.07.2020 11:47:07
 
 00000000                             1  *-----------------------------------------------------------
 00000000                             2  * Title      :  Aufgabe04
 00000000                             3  * Written by :  Vlad Bratulescu - 299874
-00000000                             4  * Date       :  02.06.2020
+00000000                             4  * Date       :  02.07.2020
 00000000                             5  * Description:  Vierte Aufgabe in REAR Übung
 00000000                             6  *-----------------------------------------------------------
 00001050                             7      ORG    $1050                        ; Anfang vom Objektcode  
 00001050                             8  START:
 00001050  45F9 00001020              9      LEA     ZIEL,       A2              ; Adresse vom ZIEL in Adressregister laden
-00001056  303C 0013                 10      MOVE    #19,        D0              ; Konstante 19 in D0 laden
-0000105A                            11                                          ; 19 weil die Dekrementierung der Laufvariable von LOOP1 am Anfang geschieht
+00001056  303C 0013                 10      MOVE    #19,        D0              ; Konstante 19 in D0 laden. 19 weil die Dekrementierung der Laufvariable von LOOP1 am Anfang geschieht
+0000105A                            11                                          ; Implementierung des Bubblesorts Algorithmus
 0000105A                            12  LOOP1:                                  ; for (i = String.length; i > 1; --i)
 0000105A  41F9 00001000             13      LEA     String,     A0              ; Adresse vom String in Adressregister laden       
 00001060  5340                      14      SUBI    #1,         D0              ; Laufvariable um 1 dekrementieren
@@ -22,7 +22,7 @@ Created On: 02.07.2020 21:09:56
 0000106A  123C 00FF                 18      MOVE.B  #$FF,       D1              ; Konstante FF in D1 laden. FF weil die inkrementierung der Laufvariable von LOOP2 am Anfang geschieht
 0000106E  3400                      19      MOVE    D0,         D2              ; D0 in D2 laden
 00001070  5342                      20      SUBI    #1,         D2              ; i - 1
-00001072                            21         
+00001072                            21                                          ; LOOP2 schiebt den größten Wert nach hinten
 00001072                            22  LOOP2:                                  ; for (j = 0; j < i - 1; ++j)
 00001072  5201                      23      ADDI.B  #1,         D1              ; Laufvariable um 1 inkrementieren
 00001074  B441                      24      CMP     D1,         D2              ; (j < i - 1) ?
@@ -33,11 +33,11 @@ Created On: 02.07.2020 21:09:56
 0000107C                            29  
 0000107C  B843                      30      CMP     D3,         D4              ; Nummerische Codes der Buchstaben vergleichen
 0000107E  6CF2                      31      BGE     LOOP2                       ; wenn 2. Buchstabe größer oder gleich ist, dass springe zu LOOP2
-00001080                            32  
+00001080                            32                                          ; wenn 1. Buchstabe größer ist, dann tausche die Werte
 00001080  3248                      33      MOVE    A0,         A1              ; Adresse von A0 in A1 kopieren
 00001082  1304                      34      MOVE.B  D4,         -(A1)           ; Pointer aus A1 zuerst dekrementieren und dann D4 dort laden
 00001084  1083                      35      MOVE.B  D3,         (A0)            ; D3 in die Adresse laden auf die A0 zeigt
-00001086                            36         
+00001086                            36      
 00001086  60EA                      37      BRA     LOOP2                       ; Springe zu LOOP2
 00001088                            38      
 00001088                            39  SKIP:                                   ; Sortierte String nach ZIEL kopieren

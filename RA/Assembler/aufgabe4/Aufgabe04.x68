@@ -1,14 +1,14 @@
 *-----------------------------------------------------------
 * Title      :  Aufgabe04
 * Written by :  Vlad Bratulescu - 299874
-* Date       :  02.06.2020
+* Date       :  02.07.2020
 * Description:  Vierte Aufgabe in REAR Übung
 *-----------------------------------------------------------
     ORG    $1050                        ; Anfang vom Objektcode  
 START:
     LEA     ZIEL,       A2              ; Adresse vom ZIEL in Adressregister laden
-    MOVE    #19,        D0              ; Konstante 19 in D0 laden
-                                        ; 19 weil die Dekrementierung der Laufvariable von LOOP1 am Anfang geschieht
+    MOVE    #19,        D0              ; Konstante 19 in D0 laden. 19 weil die Dekrementierung der Laufvariable von LOOP1 am Anfang geschieht
+                                        ; Implementierung des Bubblesorts Algorithmus
 LOOP1:                                  ; for (i = String.length; i > 1; --i)
     LEA     String,     A0              ; Adresse vom String in Adressregister laden       
     SUBI    #1,         D0              ; Laufvariable um 1 dekrementieren
@@ -18,7 +18,7 @@ LOOP1:                                  ; for (i = String.length; i > 1; --i)
     MOVE.B  #$FF,       D1              ; Konstante FF in D1 laden. FF weil die inkrementierung der Laufvariable von LOOP2 am Anfang geschieht
     MOVE    D0,         D2              ; D0 in D2 laden
     SUBI    #1,         D2              ; i - 1
-       
+                                        ; LOOP2 schiebt den größten Wert nach hinten
 LOOP2:                                  ; for (j = 0; j < i - 1; ++j)
     ADDI.B  #1,         D1              ; Laufvariable um 1 inkrementieren
     CMP     D1,         D2              ; (j < i - 1) ?
@@ -29,11 +29,11 @@ LOOP2:                                  ; for (j = 0; j < i - 1; ++j)
 
     CMP     D3,         D4              ; Nummerische Codes der Buchstaben vergleichen
     BGE     LOOP2                       ; wenn 2. Buchstabe größer oder gleich ist, dass springe zu LOOP2
-
+                                        ; wenn 1. Buchstabe größer ist, dann tausche die Werte
     MOVE    A0,         A1              ; Adresse von A0 in A1 kopieren
     MOVE.B  D4,         -(A1)           ; Pointer aus A1 zuerst dekrementieren und dann D4 dort laden
     MOVE.B  D3,         (A0)            ; D3 in die Adresse laden auf die A0 zeigt
-       
+    
     BRA     LOOP2                       ; Springe zu LOOP2
     
 SKIP:                                   ; Sortierte String nach ZIEL kopieren
@@ -47,6 +47,7 @@ String DC.B 'Rechnerarchitektur', 0     ; String wird definiert. 0 steht am Ende
     ORG     $1020                       ; Startadresse vom Ziel
 ZIEL        DS.B    19                  ; Es werden 19 Bytes reserviert. 19 weil String 18 Buchstaben hat und noch 1 Byte für das String-Ende
     END    START
+
 
 
 *~Font name~Courier New~
