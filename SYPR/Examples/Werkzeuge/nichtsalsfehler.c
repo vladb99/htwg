@@ -12,7 +12,7 @@
 int main(void)
 {
     int *p1 = (int*) malloc(sizeof (int));
-    int *p2 = (int*) malloc(2 * sizeof (int));
+    int *p2 = (int*) malloc(3 * sizeof (int));
     int *p3 = (int*) calloc(1, sizeof (int));
 
     for (int i = 0; i < 3; ++i)
