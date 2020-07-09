@@ -23,8 +23,8 @@ int main(void)
     *p1 = p2[0];
     *p3 = *p1 ? p2[0] : p2[1];
 
+    free(p1);
     free(p2);
-    free(p3);
     *p3 = 0;
     free(p3);
 
