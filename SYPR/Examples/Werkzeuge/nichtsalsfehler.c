@@ -15,7 +15,7 @@ int main(void)
     int *p2 = (int*) malloc(2 * sizeof (int));
     int *p3 = (int*) calloc(1, sizeof (int));
 
-    for (int i = 1; i < 3; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         p2[i] = 0;
     }
