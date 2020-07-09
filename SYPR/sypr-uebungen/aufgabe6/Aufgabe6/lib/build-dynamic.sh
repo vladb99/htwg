@@ -1,6 +1,6 @@
 #!/bin/sh
 for s in benotung.cpp fachnote.cpp fachnoten_liste.cpp ; do
-	compile_command="g++ -g -c -W -Wall -Weffc++ -Wold-style-cast -std=c++11 $s"
+	compile_command="g++ -g -c -W -fpic -Wall -Weffc++ -Wold-style-cast -std=c++11 $s"
 	echo $compile_command
 	eval $compile_command
 	if [ $? -ne 0 ] ; then
@@ -8,7 +8,7 @@ for s in benotung.cpp fachnote.cpp fachnoten_liste.cpp ; do
 		exit 1
 	fi
 done
-link_command="g++ -shared -fpic -o libaufgabe6.so benotung.o fachnote.o fachnoten_liste.o"
+link_command="g++ -shared -o libaufgabe6.so benotung.o fachnote.o fachnoten_liste.o"
 echo $link_command
 eval $link_command
 if [ $? -ne 0 ] ; then
