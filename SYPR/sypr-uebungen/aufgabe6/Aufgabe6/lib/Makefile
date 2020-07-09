@@ -32,7 +32,6 @@ LIBTYPE = a
 #---------------------------------------- Standardziele
 .PHONY: all clean
 
-#all: $(TARGET)
 all: $(TARGET).$(LIBTYPE)
 
 clean:
