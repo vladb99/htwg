@@ -1,0 +1,2 @@
+hallo.o: hallo.c gruss.h
+gruss.o: gruss.c gruss.h
