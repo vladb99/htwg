@@ -8,8 +8,8 @@
 #----------------------------------- Kommando-Variablen
 CXX = g++
 CXXFLAGS = -g -W -Wall -Weffc++ -Wold-style-cast -std=$(STD) -fpic
-CPPFLAGS = -I $(LIBDIR)
-LDFLAGS = -L $(LIBDIR)
+CPPFLAGS = -I$(LIBDIR)
+LDFLAGS = -L$(LIBDIR)
 TEST = -l $(LIBDIR)
 RM = rm -f
 STD = c++11
@@ -25,9 +25,9 @@ HEADERS = \
 	$(LIBDIR)/fachnoten_liste.h \
 	$(LIBDIR)/benotung.h \
 	$(LIBDIR)/fachnote.h
-LIBS = \
-	$(LIBDIR)/libaufgabe6.*
 LIBDIR = ../lib
+LIBNAME = aufgabe6
+LIBTYPE = a
 
 #----------------------------------------- Musterregeln
 %.o: %.cpp
@@ -45,8 +45,8 @@ depend: $(SOURCES) $(HEADERS)
 	$(CXX) $(CPPFLAGS) -MM $(SOURCES) > $@
 
 #------------------------- Ziele zur Programmerstellung
-$(TARGET): $(OBJECTS) $(LIBDIR)/libaufgabe6.so
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+$(TARGET): $(OBJECTS)
+	$(CXX) $(LDFLAGS) $(CPPFLAGS) -o $@ $^ -l:libaufgabe6.a
 
 #-------------------------------------- Abhaengigkeiten
 include depend
