@@ -2,28 +2,32 @@
 # Makefile
 #
 # Autor: Vlad Bratulescu
-# Erstellt am: 09.07.2020
+# Erstellt am: 10.07.2020
 #
 
 #----------------------------------- Kommando-Variablen
 CXX = g++
 CXXFLAGS = -g -W -Wall -Weffc++ -Wold-style-cast -std=$(STD) -fpic
-CPPFLAGS = -I.
+CPPFLAGS = -I $(LIBDIR)
+LDFLAGS = -L $(LIBDIR)
+TEST = -l $(LIBDIR)
 RM = rm -f
 STD = c++11
 SL = ar rvs
 DL = -shared
 
 #--------------------------------------- Hilfsvariablen
-TARGET = lib$(LIBNAME)
+TARGET = notenspiegel
 OBJECTS =  \
-    benotung.o \
-    fachnote.o \
-    fachnoten_liste.o
+	notenspiegel.o
 SOURCES = $(OBJECTS:.o=.cpp)
-HEADERS = $(OBJECTS:.o=.h)
-LIBNAME = aufgabe6
-LIBTYPE = a
+HEADERS = \
+	$(LIBDIR)/fachnoten_liste.h \
+	$(LIBDIR)/benotung.h \
+	$(LIBDIR)/fachnote.h
+LIBS = \
+	$(LIBDIR)/libaufgabe6.*
+LIBDIR = ../lib
 
 #----------------------------------------- Musterregeln
 %.o: %.cpp
@@ -32,20 +36,17 @@ LIBTYPE = a
 #---------------------------------------- Standardziele
 .PHONY: all clean
 
-all: $(TARGET).$(LIBTYPE)
+all: $(TARGET)
 
 clean:
-	$(RM) $(TARGET).a $(TARGET).so $(OBJECTS) depend
+	$(RM) $(TARGET) $(OBJECTS) depend
 
 depend: $(SOURCES) $(HEADERS)
 	$(CXX) $(CPPFLAGS) -MM $(SOURCES) > $@
 
 #------------------------- Ziele zur Programmerstellung
-$(TARGET).a: $(OBJECTS)
-	$(SL) $@ $^
-
-$(TARGET).so: $(OBJECTS)
-	$(CXX) $(DL) -o $@ $^
+$(TARGET): $(OBJECTS)
+	$(CXX) $(LDFLAGS) $(CPPFLAGS) -o $@ $^ -laufgabe6
 
 #-------------------------------------- Abhaengigkeiten
 include depend
