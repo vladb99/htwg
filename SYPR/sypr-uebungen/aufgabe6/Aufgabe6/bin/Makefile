@@ -46,7 +46,7 @@ depend: $(SOURCES) $(HEADERS)
 
 #------------------------- Ziele zur Programmerstellung
 $(TARGET): $(OBJECTS)
-	$(CXX) $(LDFLAGS) $(CPPFLAGS) -o $@ $^ -l:libaufgabe6.a
+	$(CXX) $(LDFLAGS) $(CPPFLAGS) -o $@ $^ -l:lib$(LIBNAME).$(LIBTYPE)
 
 #-------------------------------------- Abhaengigkeiten
 include depend
