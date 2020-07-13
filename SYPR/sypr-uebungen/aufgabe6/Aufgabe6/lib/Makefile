@@ -5,7 +5,7 @@
 # Erstellt am: 09.07.2020
 #
 
-#----------------------------------- Kommando-Variablen
+# Kommando-Variablen
 CXX = g++
 CXXFLAGS = -g -W -Wall -Weffc++ -Wold-style-cast -std=$(STD) -fpic
 CPPFLAGS = -I.
@@ -14,7 +14,7 @@ STD = c++11
 SL = ar rvs
 DL = -shared
 
-#--------------------------------------- Hilfsvariablen
+# Hilfsvariablen
 TARGET = lib$(LIBNAME)
 OBJECTS =  \
     benotung.o \
@@ -25,11 +25,11 @@ HEADERS = $(OBJECTS:.o=.h)
 LIBNAME = aufgabe6
 LIBTYPE = a
 
-#----------------------------------------- Musterregeln
+# Musterregeln
 %.o: %.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-#---------------------------------------- Standardziele
+# Standardziele
 .PHONY: all clean
 
 all: $(TARGET).$(LIBTYPE)
@@ -40,13 +40,12 @@ clean:
 depend: $(SOURCES) $(HEADERS)
 	$(CXX) $(CPPFLAGS) -MM $(SOURCES) > $@
 
-#------------------------- Ziele zur Programmerstellung
+# Ziele zur Programmerstellung
 $(TARGET).a: $(OBJECTS)
 	$(SL) $@ $^
 
 $(TARGET).so: $(OBJECTS)
 	$(CXX) $(DL) -o $@ $^
 
-#-------------------------------------- Abhaengigkeiten
+# Abhaengigkeiten
 include depend
-
