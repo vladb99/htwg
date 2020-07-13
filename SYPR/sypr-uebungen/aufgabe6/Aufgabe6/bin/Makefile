@@ -5,20 +5,18 @@
 # Erstellt am: 10.07.2020
 #
 
-#----------------------------------- Kommando-Variablen
+# Kommando-Variablen
 CXX = g++
 CXXFLAGS = -g -W -Wall -Weffc++ -Wold-style-cast -std=$(STD) -fpic
 CPPFLAGS = -I$(LIBDIR)
-LDFLAGS = -L$(LIBDIR)
-TEST = -l $(LIBDIR)
+# erster Parameter sagt dem statischen Linker wo die Bibliothek ist. Zweiter Parameter sagt dem dynamischen Linker (Loader) wo die Bibliothek ist
+LDFLAGS = -L$(LIBDIR) -Wl,-rpath=$(LIBDIR)
 RM = rm -f
 STD = c++11
-SL = ar rvs
-DL = -shared
 
-#--------------------------------------- Hilfsvariablen
+# Hilfsvariablen
 TARGET = notenspiegel
-OBJECTS =  \
+OBJECTS = \
 	notenspiegel.o
 SOURCES = $(OBJECTS:.o=.cpp)
 HEADERS = \
@@ -29,11 +27,11 @@ LIBDIR = ../lib
 LIBNAME = aufgabe6
 LIBTYPE = a
 
-#----------------------------------------- Musterregeln
+# Musterregeln
 %.o: %.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-#---------------------------------------- Standardziele
+# Standardziele
 .PHONY: all clean
 
 all: $(TARGET)
@@ -44,10 +42,9 @@ clean:
 depend: $(SOURCES) $(HEADERS)
 	$(CXX) $(CPPFLAGS) -MM $(SOURCES) > $@
 
-#------------------------- Ziele zur Programmerstellung
-$(TARGET): $(OBJECTS)
-	$(CXX) $(LDFLAGS) $(CPPFLAGS) -o $@ $^ -l:lib$(LIBNAME).$(LIBTYPE)
+# Ziele zur Programmerstellung
+$(TARGET): $(OBJECTS) $(LIBDIR)/lib$(LIBNAME).$(LIBTYPE)
+	$(CXX) $(CPPFLAGS) $(LDFLAGS) -o $@ $< -l:lib$(LIBNAME).$(LIBTYPE)
 
-#-------------------------------------- Abhaengigkeiten
+# Abhaengigkeiten
 include depend
-
