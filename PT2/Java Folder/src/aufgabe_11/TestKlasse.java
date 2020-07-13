@@ -9,11 +9,11 @@ public class TestKlasse {
         //Aufgabe a)
         List<Person> persList = new LinkedList<>();
         persList.add(new Person("Andy", "Mueller", LocalDate.of(1961, 2, 10)));
-        persList.add(new Person("Peter", "Schneider", LocalDate.of(1959, 10, 20)));
-        persList.add(new Person("Andrea", "Schmidt", LocalDate.of(1969, 3, 28)));
+        persList.add(new Person("Peter", "Schneider", LocalDate.of(1989, 10, 20)));
+        persList.add(new Person("Andrea", "Schmidt", LocalDate.of(1999, 3, 28)));
         persList.add(new Person("Petra", "Fischer", LocalDate.of(1961, 9, 5)));
-        persList.add(new Person("Albert","Meyer", LocalDate.of(1979, 4, 12)));
-        persList.add(new Person("Anton", "Wagner", LocalDate.of(1961, 7, 19)));
+        persList.add(new Person("Albert","Meyer", LocalDate.of(2007, 4, 12)));
+        persList.add(new Person("Anton", "Wagner", LocalDate.of(1955, 7, 19)));
         persList.add(new Person("Iris", "Klein", LocalDate.of(2003, 1, 3)));
 
         Predicate<Person> istVolljaehrig = p -> p.getGeburtsdatum().until(LocalDate.now()).getYears() >= 18;

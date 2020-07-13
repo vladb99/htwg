@@ -1,8 +1,6 @@
 /* Wortweises Einlesen eines deutschen Textes von einer Datei.
  * Ermittlung der Haefigkeiten der Woerter und Ausgabe der  
  * 100 haeufigsten Woerter.
- *
- * Oliver Bittel; 10.03.2019
  */
 package aufgabe_11;
 
@@ -50,5 +48,4 @@ public class HaeufigkeitsanalyseEinesDeutschenTextes {
 				.limit(100)
 				.forEach(System.out::println);
 	}
-	
 }
