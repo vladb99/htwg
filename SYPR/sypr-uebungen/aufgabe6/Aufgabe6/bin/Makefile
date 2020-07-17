@@ -17,7 +17,7 @@ STD = c++11
 # Hilfsvariablen
 TARGET = notenspiegel
 OBJECTS = \
-	notenspiegel.o
+	$(TARGET).o
 SOURCES = $(OBJECTS:.o=.cpp)
 HEADERS = \
 	$(LIBDIR)/fachnoten_liste.h \
