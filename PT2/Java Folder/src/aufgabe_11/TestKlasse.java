@@ -28,12 +28,12 @@ public class TestKlasse {
         }
 
         //Aufgabe b)
-        Collections.sort(persList, Comparator.comparing(Person::getGeburtsdatum));
+        persList.sort(Comparator.comparing(Person::getGeburtsdatum));
         System.out.println("\n\n Sortiert aufsteigend:");
         persList.forEach(System.out::println);
 
         //Aufgabe c)
-        Collections.sort(persList, Comparator.comparing(Person::getGeburtsdatum).reversed());
+        persList.sort(Comparator.comparing(Person::getGeburtsdatum).reversed());
         System.out.println("\n\n Sortiert absteigend:");
         persList.forEach(System.out::println);
 

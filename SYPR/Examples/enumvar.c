@@ -1,11 +1,12 @@
 #include <stdio.h>
 
 enum month {jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec};
+typedef enum month month;
 
 int main(void)
 {
     // enum month m = 3; // funktioniert bei C, aber nicht bei C++
-    enum month m = mar;
+    month m = mar;
 
     //---------------------------------------------- print variable value
     printf("m = %d\n", m);

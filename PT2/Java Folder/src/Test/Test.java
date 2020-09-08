@@ -6,10 +6,11 @@ import aufgabe_4.FrequencyTable;
 import aufgabe_4.LinkedListFrequencyTable;
 
 import java.util.Iterator;
+import java.util.function.BiFunction;
 
 public class Test {
     public static void main(String[] args) {
-        FrequencyTable<Integer> fq = new LinkedListFrequencyTable<>();
+        /*FrequencyTable<Integer> fq = new LinkedListFrequencyTable<>();
         fq.add(2, 10);
         fq.add(5, 9);
         fq.add(7, 8);
@@ -42,6 +43,16 @@ public class Test {
         System.out.println(it2.next().getData());
         list.add(8, 1);
         //System.out.println(it2.next().getData());
+         */
+        BiFunction<Integer, Integer, Integer> add = (x,y) -> {
+            if (x>=y) {
+                return x;
+            }
+            else {
+                return y;
+            }
+        };
+        System.out.println(add.apply(4,5));
 
     }
 }
