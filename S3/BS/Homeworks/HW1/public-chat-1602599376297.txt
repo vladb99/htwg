@@ -1,0 +1,21 @@
+            [16:02] Welcome to <b>Gruppe B - 15:45 - 16:30</b>!<br /><br />For help on using BigBlueButton see these (short) <a href="https://www.bigbluebutton.org/html5" target="_blank"><u>tutorial videos</u></a>.<br /><br />To join the audio bridge click the phone button.  Use a headset to avoid causing background noise for others.<br /><br />This server is running <a href="https://docs.bigbluebutton.org/" target="_blank"><u>BigBlueButton</u></a>.
+[16:07] Benjamin Brünau : Wofür genau ist die Seed Option da?
+[16:07] PB : damit du immer dieselben zufallszahlen bekommst
+[16:09] PB : wenn man während der aufgabe fragen hat kann man die im riot fargen?
+[16:12] PB : gibt es einen Fall, bei dem SWITCH_ON_END besser ist?
+[16:13] PB : ok danke
+[16:15] PB : wieso wird bei einem IO call am ende noch ein clock tick benötigt, nicht aber wenn nach dem io call noch ein cpu call benutzt wird?
+[16:16] Michael Mächtel : Das wäre super Fragen für 'vorher' gewesen :-D
+[16:17] PB : sorry :D
+[16:18] Michael Mächtel : E/A ist in 10 fertig
+[16:18] PB : DH das OS bracht noch einen clock tick um den IO schritt zu beenden?
+[16:18] Ying-Ling Dang : 6
+[16:19] PB : wenn er nach dem IO noch einen CPU call abarbeitet muss das nicht gemacht werden?
+[16:19] Michael Mächtel : @PB: genau
+[16:19] PB : danke :)
+[16:20] Michael Mächtel : E/A ist im Wartezustand und wenn dieser fertig ist, dann wird der Prozess beendet. Wenn CPU aktiver Prozess sich beendet dann - so ist es in der Darstellung des Simulators - zum Ende der TimeSlice beendet. Ist natürlich ein wenig auf den 'Simulator' getrimmt
+[16:21] PB : alles klar, danke
+[16:21] Michael Mächtel : Genau, weil keine E/A am Ende war
+[16:23] Peter Bemetz : Gibt es einen Grund warum man nicht immer -I IO_RUN_IMMEDIATE -S SWITCH_ON_IO benutzt? Haben die anderen Policies einen Vorteil?
+[16:26] Peter Bemetz : Okay
+[16:29] Michael Mächtel : Achtung: Leider verschwindet der Chat hier immer, daher wirds nächstes Mal den Chat im Team Riot Chat Kanal geben, dann kann das jeder auch nochmal nachlesen bei Bedarf
