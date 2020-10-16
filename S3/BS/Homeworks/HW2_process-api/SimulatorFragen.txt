@@ -1,0 +1,150 @@
+Beobachtungen
+
+1. Wenn ein Prozess, das Kinder hat, exits, dann werden die Kinder dem initialen Prozess (a) am Schluss zugewiesen. Hat Prozess b, Kindprozess c und c hat Kinderprozess d. Beim exit vom b, werden c und d getrennt an a zugewiesen.
+
+2. Mit 0.1 wird am Schluss nur a bleiben. Mit 0.9 sind es sehr viele Prozesse mit mehreren Ästen
+
+4. siehe 1. Mit -R werden die Kinder nicht dem initialen Prozess zugewiesen, sondern dem lokalen Elternteil
+
+6. In Fällen wo nur geforkt wurde, kann man immer sagen wie es geschehen war. Also die Anzahl der Prozesse am Schluss ist gleich der n Aktionen + 1 (a gab ja schon) ist. Ist nach 5 Aktionen nur zwei Prozesse übrig geblieben, ist die Lösung nicht eindeutig!
+
+FRAGE 1
+
+vladb@VladB ~/G/h/S/B/H/HW2_process-api (master)> ./fork.py -s 30 -c
+
+ARG seed 30
+ARG fork_percentage 0.7
+ARG actions 5
+ARG action_list 
+ARG show_tree False
+ARG just_final False
+ARG leaf_only False
+ARG local_reparent False
+ARG print_style fancy
+ARG solve True
+
+                           Process Tree:
+                               a
+
+Action: a forks b
+                               a
+                               └── b
+Action: b forks c
+                               a
+                               └── b
+                                   └── c
+Action: a forks d
+                               a
+                               ├── b
+                               │   └── c
+                               └── d
+Action: c forks e
+                               a
+                               ├── b
+                               │   └── c
+                               │       └── e
+                               └── d
+Action: c EXITS
+                               a
+                               ├── b
+                               ├── d
+                               └── e
+
+FRAGE 4
+
+vladb@VladB ~/G/h/S/B/H/HW2_process-api (master)> ./fork.py -A a+b,b+c,c+d,c+e,c- -R -c
+
+ARG seed -1
+ARG fork_percentage 0.7
+ARG actions 5
+ARG action_list a+b,b+c,c+d,c+e,c-
+ARG show_tree False
+ARG just_final False
+ARG leaf_only False
+ARG local_reparent True
+ARG print_style fancy
+ARG solve True
+
+                           Process Tree:
+                               a
+
+Action: a forks b
+                               a
+                               └── b
+Action: b forks c
+                               a
+                               └── b
+                                   └── c
+Action: c forks d
+                               a
+                               └── b
+                                   └── c
+                                       └── d
+Action: c forks e
+                               a
+                               └── b
+                                   └── c
+                                       ├── d
+                                       └── e
+Action: c EXITS
+                               a
+                               └── b
+                                   ├── d
+                                   └── e
+
+
+
+FRAGE 6 
+
+vladb@VladB ~/G/h/S/B/H/HW2_process-api (master)> ./fork.py -t -F -s 4
+
+ARG seed 4
+ARG fork_percentage 0.7
+ARG actions 5
+ARG action_list 
+ARG show_tree True
+ARG just_final True
+ARG leaf_only False
+ARG local_reparent False
+ARG print_style fancy
+ARG solve False
+
+                           Process Tree:
+                               a
+
+Action?
+Action?
+Action?
+Action?
+Action?
+
+                        Final Process Tree:
+                               a
+                               ├── b
+                               ├── c
+                               └── e
+
+vladb@VladB ~/G/h/S/B/H/HW2_process-api (master)> ./fork.py -t -F -s 5
+ARG seed 5
+ARG fork_percentage 0.7
+ARG actions 5
+ARG action_list 
+ARG show_tree True
+ARG just_final True
+ARG leaf_only False
+ARG local_reparent False
+ARG print_style fancy
+ARG solve False
+
+                           Process Tree:
+                               a
+
+Action?
+Action?
+Action?
+Action?
+Action?
+
+                        Final Process Tree:
+                               a
+                               └── d
