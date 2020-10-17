@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-//  1. What value is the variable in the child process? 100
-//  2. What happens to the variable when both the child and parent change the value of x?
-//      -> Both change the variable from 100 to newvalue. Prozesse haben ihren eigenen Adressenbereich. Sie können ihren Speicher gegenseiting nicht beeinflussen.
-
 int main(int argc, char *argv[]) {
     printf("hello world (pid:%d)\n", (int) getpid());
     int x = 100;
