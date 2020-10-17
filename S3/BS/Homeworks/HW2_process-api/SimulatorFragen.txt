@@ -4,7 +4,7 @@ Beobachtungen
 
 2. Mit 0.1 wird am Schluss nur a bleiben. Mit 0.9 sind es sehr viele Prozesse mit mehreren Ästen
 
-4. siehe 1. Mit -R werden die Kinder nicht dem initialen Prozess zugewiesen, sondern dem lokalen Elternteil
+4. siehe 1. Mit -R werden die Kinder nicht dem initialen Prozess zugewiesen, sondern dem lokalen Elternprozess
 
 6. In Fällen wo nur geforkt wurde, kann man immer sagen wie es geschehen war. Also die Anzahl der Prozesse am Schluss ist gleich der n Aktionen + 1 (a gab ja schon) ist. Ist nach 5 Aktionen nur zwei Prozesse übrig geblieben, ist die Lösung nicht eindeutig!
 
