@@ -9,6 +9,8 @@
 
 #define BILLION 1000000000L
 
+struct timespec correctTimer(struct timespec start, struct timespec end);
+
 int main(int argc, char *argv[]) {
     // measure context switch
     int first_pipefd[2], second_pipefd[2];
