@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
             read(second_pipefd[0], NULL, 0);
         }
         clock_gettime( CLOCK_MONOTONIC, &end);
-        printf("context switch: %f microseconds\n", 
+        printf("context switch: %f nanoseconds\n", 
         (float) (BILLION * (end.tv_sec - start.tv_sec)
             + end.tv_nsec - start.tv_nsec) / anzLoops);
     }

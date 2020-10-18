@@ -24,14 +24,22 @@ int main(void) {
 
     clock_gettime( CLOCK_MONOTONIC, &requestStart);
 
-    for (int i = 0; i < count; i++) {
+    //for (int i = 0; i < count; i++) {
         read(0, NULL, 0);
-    }
+    //}
 
     clock_gettime( CLOCK_MONOTONIC, &requestEnd);
 
+    printf("start tv_sec %li\n", requestStart.tv_sec);
+    printf("start tv_nsec %li\n", requestStart.tv_nsec);
+
+    printf("end tv_sec %li\n", requestEnd.tv_sec);
+    printf("end tv_nsec %li\n", requestEnd.tv_nsec);
+
+    //accum = (BILLION * (requestEnd.tv_sec - requestStart.tv_sec)
+    //        + requestEnd.tv_nsec - requestStart.tv_nsec) / count;
     accum = (BILLION * (requestEnd.tv_sec - requestStart.tv_sec)
-            + requestEnd.tv_nsec - requestStart.tv_nsec) / count;
+            + requestEnd.tv_nsec - requestStart.tv_nsec);
     
     printf( "%lli\n",(long long int) accum );
     return 0;
