@@ -60,12 +60,8 @@ int main(int argc, char *argv[]) {
 
         struct timespec correctedTimer = correctTimer(start, end);
 
-        diff = (BILLION * correctedTimer.tv_sec + correctedTimer.tv_nsec) / anzLoops;
+        diff = (BILLION * correctedTimer.tv_sec + correctedTimer.tv_nsec) / (anzLoops * 2);
         printf("Context switch time = %lli nanoseconds\n", (long long int) diff);
-
-        //printf("context switch: %f nanoseconds\n", 
-        //(float) (BILLION * (end.tv_sec - start.tv_sec)
-        //    + end.tv_nsec - start.tv_nsec) / anzLoops);
     }
     return 0;
 }
@@ -76,13 +72,13 @@ struct timespec correctTimer(struct timespec start, struct timespec end)
 
     if ((end.tv_nsec-start.tv_nsec)<0)
     {
-            temp.tv_sec = end.tv_sec-start.tv_sec-1;
-            temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+            temp.tv_sec = end.tv_sec - start.tv_sec - 1;
+            temp.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
     }
     else 
     {
-            temp.tv_sec = end.tv_sec-start.tv_sec;
-            temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+            temp.tv_sec = end.tv_sec - start.tv_sec;
+            temp.tv_nsec = end.tv_nsec - start.tv_nsec;
     }
     return temp;
 }
