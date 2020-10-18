@@ -11,7 +11,7 @@ int main(void) {
     long long accum;
     char buf;
     char readbuffer[80];
-    int count = 10000000;
+    int count = 1100000;//2 000 000;
 
     //for (int i = 0; i < count; i++) {
     //    clock_gettime( CLOCK_MONOTONIC, &requestStart);
@@ -24,9 +24,9 @@ int main(void) {
 
     clock_gettime( CLOCK_MONOTONIC, &requestStart);
 
-    //for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         read(0, NULL, 0);
-    //}
+    }
 
     clock_gettime( CLOCK_MONOTONIC, &requestEnd);
 
@@ -36,10 +36,10 @@ int main(void) {
     printf("end tv_sec %li\n", requestEnd.tv_sec);
     printf("end tv_nsec %li\n", requestEnd.tv_nsec);
 
-    //accum = (BILLION * (requestEnd.tv_sec - requestStart.tv_sec)
-    //        + requestEnd.tv_nsec - requestStart.tv_nsec) / count;
     accum = (BILLION * (requestEnd.tv_sec - requestStart.tv_sec)
-            + requestEnd.tv_nsec - requestStart.tv_nsec);
+            + requestEnd.tv_nsec - requestStart.tv_nsec) / count;
+    //accum = (BILLION * (requestEnd.tv_sec - requestStart.tv_sec)
+    //        + requestEnd.tv_nsec - requestStart.tv_nsec);
     
     printf( "%lli\n",(long long int) accum );
     return 0;

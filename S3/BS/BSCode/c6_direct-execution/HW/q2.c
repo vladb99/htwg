@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     int first_pipefd[2], second_pipefd[2];
     int anzLoops = 1000000;
     struct timespec start, end;
+    long long diff;
 
     cpu_set_t mask;
     CPU_ZERO(&mask);
@@ -54,9 +55,32 @@ int main(int argc, char *argv[]) {
             read(second_pipefd[0], NULL, 0);
         }
         clock_gettime( CLOCK_MONOTONIC, &end);
-        printf("context switch: %f nanoseconds\n", 
-        (float) (BILLION * (end.tv_sec - start.tv_sec)
-            + end.tv_nsec - start.tv_nsec) / anzLoops);
+
+        struct timespec correctedTimer = correctTimer(start, end);
+
+        diff = (BILLION * correctedTimer.tv_sec + correctedTimer.tv_nsec) / anzLoops;
+        printf("Context switch time = %lli nanoseconds\n", (long long int) diff);
+
+        //printf("context switch: %f nanoseconds\n", 
+        //(float) (BILLION * (end.tv_sec - start.tv_sec)
+        //    + end.tv_nsec - start.tv_nsec) / anzLoops);
     }
     return 0;
+}
+
+struct timespec correctTimer(struct timespec start, struct timespec end)
+{
+    struct timespec temp;
+
+    if ((end.tv_nsec-start.tv_nsec)<0)
+    {
+            temp.tv_sec = end.tv_sec-start.tv_sec-1;
+            temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+    }
+    else 
+    {
+            temp.tv_sec = end.tv_sec-start.tv_sec;
+            temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+    }
+    return temp;
 }
