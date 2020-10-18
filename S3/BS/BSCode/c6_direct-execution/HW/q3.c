@@ -11,11 +11,11 @@
 
 struct timespec correctTimer(struct timespec start, struct timespec end);
 
-// Program to measure the cost of a context switch.
+// Same as q2.c, but this time the child sends the end time via pipe
 
 int main(int argc, char *argv[]) {
     // measure context switch
-    int first_pipefd[2], second_pipefd[2];
+    int first_pipefd[2], second_pipefd[2], time_pipefd[2];
     int anzLoops = 1000000;
     struct timespec start, end;
     long long diff;
@@ -30,6 +30,10 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
     if (pipe(second_pipefd) == -1) {
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+    if (pipe(time_pipefd) == -1) {
         perror("pipe");
         exit(EXIT_FAILURE);
     }
@@ -48,6 +52,13 @@ int main(int argc, char *argv[]) {
             read(first_pipefd[0], NULL, 0);
             write(second_pipefd[1], NULL, 0);
         }
+        // Child sends the time via pipe
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        int n = sizeof(struct timespec);
+        if (write(time_pipefd[1], &end, n) != n) {
+            fprintf(stderr, "child: Failed to write in time pipe\n");
+                exit(EXIT_FAILURE);
+        }
     } else { // parent
         if (result == -1) {
             exit(EXIT_FAILURE);
@@ -58,7 +69,13 @@ int main(int argc, char *argv[]) {
             write(first_pipefd[1], NULL, 0);
             read(second_pipefd[0], NULL, 0);
         }
-        clock_gettime( CLOCK_MONOTONIC, &end);
+
+        int n = sizeof(struct timespec);
+        if (read(time_pipefd[0], &end, n) != n) {
+            fprintf(stderr, "parent: Failed to read from pipe\n");
+                exit(EXIT_FAILURE);
+        }
+        wait(NULL);
 
         struct timespec correctedTimer = correctTimer(start, end);
 
