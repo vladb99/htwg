@@ -18,7 +18,7 @@ struct timespec correctTimer(struct timespec start, struct timespec end);
 int main(int argc, char *argv[]) {
     // measure context switch
     int first_pipefd[2], second_pipefd[2], time_pipefd[2];
-    int anzLoops = 5;
+    int anzLoops = 5;//1000000;
     struct timespec start, end;
     long long diff;
 
