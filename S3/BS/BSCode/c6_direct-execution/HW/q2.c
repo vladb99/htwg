@@ -14,13 +14,13 @@ struct timespec correctTimer(struct timespec start, struct timespec end);
 // Program to measure the cost of a context switch.
 
 int main(int argc, char *argv[]) {
-    // measure context switch
     int first_pipefd[2], second_pipefd[2];
     int anzLoops = 1000000;
     struct timespec start, end;
     long long diff;
 
-    cpu_set_t mask;
+    //cpu_set_t mask;
+    int mask;
     CPU_ZERO(&mask);
     CPU_SET(0, &mask);
     int result = sched_setaffinity(0, sizeof(mask), &mask);

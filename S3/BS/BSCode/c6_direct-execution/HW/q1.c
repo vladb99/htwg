@@ -13,7 +13,7 @@ int main(void) {
     long long accum;
     char buf;
     char readbuffer[80];
-    int count = 1000000;//2 000 000;
+    int count = 2000000;//2 000 000;
 
     //for (int i = 0; i < count; i++) {
     //    clock_gettime( CLOCK_MONOTONIC, &requestStart);
@@ -23,6 +23,30 @@ int main(void) {
      //       + requestEnd.tv_nsec - requestStart.tv_nsec;
     //}
     //accum /= count;
+    struct timespec res;
+     if (clock_getres(CLOCK_REALTIME, &res) == -1 ) {
+      perror( "clock get resolution" );
+      return EXIT_FAILURE;
+    }
+    printf("Resolution is %ld nano seconds.\n", res.tv_nsec);
+
+    clock_getres(CLOCK_MONOTONIC, &requestEnd);
+
+    clock_gettime(CLOCK_MONOTONIC, &requestStart);
+    clock_gettime(CLOCK_MONOTONIC, &requestEnd);
+
+    clock_gettime(CLOCK_MONOTONIC, &requestStart);
+    clock_gettime(CLOCK_MONOTONIC, &requestEnd);
+
+    printf("start tv_sec %li\n", requestStart.tv_sec);
+    printf("start tv_nsec %li\n", requestStart.tv_nsec);
+
+    printf("end tv_sec %li\n", requestEnd.tv_sec);
+    printf("end tv_nsec %li\n", requestEnd.tv_nsec);
+
+    struct timespec temp = correctTimer(requestStart, requestEnd);
+    printf("tv_sec: %li\n", temp.tv_sec);
+    printf("tv_nsec: %li\n", temp.tv_nsec);
 
     clock_gettime( CLOCK_MONOTONIC, &requestStart);
 
