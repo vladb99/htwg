@@ -22,7 +22,7 @@ int main(void) {
         accum += (BILLION * temp.tv_sec + temp.tv_nsec);
     }
     overhead = accum / count;
-    printf("Average Overhead of CLOCK_MONOTONIC_RAW %i\n", overhead);
+    printf("Average Overhead of CLOCK_MONOTONIC_RAW: %i in nanoseconds\n", overhead);
 
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     for (int i = 0; i < count; i++) {
@@ -32,7 +32,7 @@ int main(void) {
     temp = correctTimer(start, end);
     diff = (BILLION * temp.tv_sec + temp.tv_nsec);
 
-    printf("Time cost without overheard of systemcall with CLOCK_MONOTONIC_RAW in nano seconds %lli\n", diff / count);
+    printf("Time cost without overhead of systemcall with CLOCK_MONOTONIC_RAW in nano seconds %lli\n", diff / count);
     printf("Time cost of systemcall with CLOCK_MONOTONIC_RAW in nano seconds %lli\n\n\n", (diff / count) - overhead);
 
     accum = 0;
@@ -54,7 +54,7 @@ int main(void) {
     temp = correctTimer(start, end);
     diff = (BILLION * temp.tv_sec + temp.tv_nsec);
 
-    printf("Time cost without overheard of systemcall with CLOCK_MONOTONIC in nano seconds %lli\n", diff / count);
+    printf("Time cost without overhead of systemcall with CLOCK_MONOTONIC in nano seconds %lli\n", diff / count);
     printf("Time cost of systemcall with CLOCK_MONOTONIC in nano seconds %lli\n", (diff / count) - overhead);
 
     accum = 0;

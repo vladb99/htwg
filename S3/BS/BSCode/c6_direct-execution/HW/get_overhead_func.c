@@ -23,7 +23,7 @@ int main(void) {
         temp = correctTimer(start, end);
         accum += (BILLION * temp.tv_sec + temp.tv_nsec);
     }
-    printf("Average Overhead of CLOCK_MONOTONIC_RAW %lli\n", accum / count);
+    printf("Average Overhead of CLOCK_MONOTONIC_RAW: %lli in nano seconds\n", accum / count);
 
     for (int i = 0; i < count; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);

@@ -27,7 +27,7 @@ int main(void) {
         overheadAccum += (BILLION * temp.tv_sec + temp.tv_nsec);
     }
     overhead = overheadAccum / count;
-    printf("Average Overhead of CLOCK_MONOTONIC %i\n", overhead);
+    printf("Average Overhead of CLOCK_MONOTONIC: %i in nano seconds\n", overhead);
 
     // Set processor to run process on, child inherits the mask
     cpu_set_t mask;
@@ -73,8 +73,8 @@ int main(void) {
             accum += diff;
         }
 
-        printf("Context switch time = %lli nanoseconds with overheard\n", accum / count);
-        printf("Context switch time = %lli nanoseconds without overheard\n", (accum - overhead * count) / count);
+        printf("Context switch time = %lli nanoseconds with overhead\n", accum / count);
+        printf("Context switch time = %lli nanoseconds without overhead\n", (accum - overhead * count) / count);
     }
     return 0;
 }
