@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     struct timespec start, end, temp;
     long long diff = 0;
     long long accum = 0;
-    long long overheadAccum;
+    long long overheadAccum = 0;
 
     for (int i = 0; i < count; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
