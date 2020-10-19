@@ -1,4 +1,3 @@
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -11,59 +10,58 @@
 
 struct timespec correctTimer(struct timespec start, struct timespec end);
 
-// Program to measure the cost of a context switch.
-
 int main(int argc, char *argv[]) {
     int first_pipefd[2], second_pipefd[2];
-    int anzLoops = 1000000;
-    struct timespec start, end;
-    long long diff;
+    int count = 10000000;
+    struct timespec start, end, temp;
+    long long diff = 0;
+    long long accum = 0;
 
-    //cpu_set_t mask;
+    // Set processor to run process on, child inherits the mask
     cpu_set_t mask;
     CPU_ZERO(&mask);
     CPU_SET(0, &mask);
     int result = sched_setaffinity(0, sizeof(mask), &mask);
 
     if (pipe(first_pipefd) == -1) {
-        perror("pipe");
+        fprintf(stderr, "pipe init\n");
         exit(EXIT_FAILURE);
     }
     if (pipe(second_pipefd) == -1) {
-        perror("pipe");
+        fprintf(stderr, "pipe init\n");
         exit(EXIT_FAILURE);
     }
 
     pid_t cpid = fork();
 
     if (cpid == -1) {
-        perror("fork");
+        fprintf(stderr, "fork\n");
         exit(EXIT_FAILURE);
-    } else if (cpid == 0) { // child
+    } else if (cpid == 0) {
         if (result == -1) {
             exit(EXIT_FAILURE);
         }
 
-        for (size_t i = 0; i < anzLoops; i++) {
+        for (size_t i = 0; i < count; i++) {
             read(first_pipefd[0], NULL, 0);
             write(second_pipefd[1], NULL, 0);
         }
-    } else { // parent
+    } else {
         if (result == -1) {
             exit(EXIT_FAILURE);
         }
 
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        for (size_t i = 0; i < anzLoops; i++) {
+        for (size_t i = 0; i < count; i++) {
             write(first_pipefd[1], NULL, 0);
+            clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
+            clock_gettime( CLOCK_MONOTONIC, &end);
+            temp = correctTimer(start, end);
+            diff = (BILLION * temp.tv_sec + temp.tv_nsec) / 2;
+            accum += diff;
         }
-        clock_gettime( CLOCK_MONOTONIC, &end);
 
-        struct timespec correctedTimer = correctTimer(start, end);
-
-        diff = (BILLION * correctedTimer.tv_sec + correctedTimer.tv_nsec) / (anzLoops * 2);
-        printf("Context switch time = %lli nanoseconds\n", (long long int) diff);
+        printf("Context switch time = %lli nanoseconds\n", accum / count);
     }
     return 0;
 }
