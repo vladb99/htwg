@@ -11,7 +11,7 @@
 
 struct timespec correctTimer(struct timespec start, struct timespec end);
 
-int main(int argc, char *argv[]) {
+int main(void) {
     int first_pipefd[2], second_pipefd[2];
     int count = 10000000;
     int overhead = 0;
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
         overheadAccum += (BILLION * temp.tv_sec + temp.tv_nsec);
     }
     overhead = overheadAccum / count;
-    printf("Average Overhead of CLOCK_MONOTONIC %lli\n", overhead);
+    printf("Average Overhead of CLOCK_MONOTONIC %i\n", overhead);
 
     // Set processor to run process on, child inherits the mask
     cpu_set_t mask;
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
 
-        for (size_t i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             read(first_pipefd[0], NULL, 0);
             write(second_pipefd[1], NULL, 0);
         }
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         }
 
-        for (size_t i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             write(first_pipefd[1], NULL, 0);
             clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
