@@ -10,6 +10,9 @@ STD = gnu11
 
 all: get_time_syscall get_overhead_func get_resolutions get_cost_context_switch
 
+clean:
+	rm -f *.o get_time_syscall get_overhead_func get_resolutions get_cost_context_switch
+
 get_time_syscall: get_time_syscall.c
 	$(CC) $@ $< $(CFLAGS)
 
