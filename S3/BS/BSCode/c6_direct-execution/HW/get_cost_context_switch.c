@@ -14,9 +14,20 @@ struct timespec correctTimer(struct timespec start, struct timespec end);
 int main(int argc, char *argv[]) {
     int first_pipefd[2], second_pipefd[2];
     int count = 10000000;
+    int overhead = 0;
     struct timespec start, end, temp;
     long long diff = 0;
     long long accum = 0;
+    long long overheadAccum;
+
+    for (int i = 0; i < count; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        temp = correctTimer(start, end);
+        overheadAccum += (BILLION * temp.tv_sec + temp.tv_nsec);
+    }
+    overhead = overheadAccum / count;
+    printf("Average Overhead of CLOCK_MONOTONIC %lli\n", overhead);
 
     // Set processor to run process on, child inherits the mask
     cpu_set_t mask;
@@ -62,7 +73,8 @@ int main(int argc, char *argv[]) {
             accum += diff;
         }
 
-        printf("Context switch time = %lli nanoseconds\n", accum / count);
+        printf("Context switch time = %lli nanoseconds with overheard\n", accum / count);
+        printf("Context switch time = %lli nanoseconds without overheard\n", (accum - overhead * count) / count);
     }
     return 0;
 }
