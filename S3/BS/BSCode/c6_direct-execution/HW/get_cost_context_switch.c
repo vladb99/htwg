@@ -55,14 +55,18 @@ int main(void) {
         exit(EXIT_FAILURE);
     } else if (cpid == 0) {
         for (int i = 0; i < count; i++) {
+            printf("%s\n", "child");
             read(first_pipefd[0], NULL, 0);
+            sleep(NULL);
             write(second_pipefd[1], NULL, 0);
         }
     } else {
         for (int i = 0; i < count; i++) {
+            printf("%s\n", "parent");
             write(first_pipefd[1], NULL, 0);
             clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
+            sleep(NULL);
             clock_gettime( CLOCK_MONOTONIC, &end);
             temp = correctTimer(start, end);
             diff = (BILLION * temp.tv_sec + temp.tv_nsec) / 2;

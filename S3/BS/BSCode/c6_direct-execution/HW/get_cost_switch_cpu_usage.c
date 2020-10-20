@@ -14,7 +14,7 @@ struct timespec correctTimer(struct timespec start, struct timespec end);
 
 int main(void) {
     int first_pipefd[2], second_pipefd[2];
-    int count = 10000000;
+    int count = 20;//10000000;
     int overhead = 0;
     struct timespec start, end, temp;
     long long diff = 0;
@@ -59,6 +59,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     } else if (cpid == 0) {
         for (int i = 0; i < count; i++) {
+	    printf("%s\n", "child");
             read(first_pipefd[0], NULL, 0);
             write(second_pipefd[1], NULL, 0);
         }
@@ -66,10 +67,13 @@ int main(void) {
         clock_gettime(CLOCK_MONOTONIC, &startUsage);
 
         for (int i = 0; i < count; i++) {
-            write(first_pipefd[1], NULL, 0);
-            clock_gettime(CLOCK_MONOTONIC, &start);
+	    write(first_pipefd[1], NULL, 0);
+	    //clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
-            clock_gettime(CLOCK_MONOTONIC, &end);
+	    clock_gettime(CLOCK_MONOTONIC, &start);
+	    sched_yield();
+            printf("%s\n", "parent");
+	    clock_gettime(CLOCK_MONOTONIC, &end);
             temp = correctTimer(start, end);
             diff = (BILLION * temp.tv_sec + temp.tv_nsec) / 2;
             accum += diff;
@@ -86,7 +90,11 @@ int main(void) {
         long long stime = BILLION * usage.ru_stime.tv_sec + 1000 * usage.ru_stime.tv_usec;
 
         tempUsage = correctTimer(startUsage, endUsage);
-        long long timeNS = BILLION * tempUsage.tv_sec + tempUsage.tv_nsec;
+	long long timeNS = BILLION * tempUsage.tv_sec + tempUsage.tv_nsec;
+	
+	printf("UTIME: %lli\n", utime);
+	printf("STIME: %lli\n", stime);
+	printf("PTIME: %lli\n", timeNS);
 
         printf("CPU usage during clock: %lli\n", (utime + stime)/timeNS*100);
 
