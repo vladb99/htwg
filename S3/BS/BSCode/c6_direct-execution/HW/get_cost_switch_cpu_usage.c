@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/time.h>
+#include <sys/resource.h>
 #include <sched.h>
 #include <time.h>
 
@@ -20,6 +21,9 @@ int main(void) {
     long long accum = 0;
     long long overheadAccum = 0;
 
+    struct timespec startUsage, endUsage, tempUsage;
+    struct rusage usage;
+
     for (int i = 0; i < count; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
         clock_gettime(CLOCK_MONOTONIC, &end);
@@ -30,14 +34,14 @@ int main(void) {
     printf("Average Overhead of CLOCK_MONOTONIC: %i in nano seconds\n", overhead);
 
     // Set processor to run process on, child inherits the mask
-    cpu_set_t mask;
-    CPU_ZERO(&mask);
-    CPU_SET(0, &mask);
-    int result = sched_setaffinity(0, sizeof(mask), &mask);
+    //cpu_set_t mask;
+    //CPU_ZERO(&mask);
+    //CPU_SET(0, &mask);
+    //int result = sched_setaffinity(0, sizeof(mask), &mask);
 
-    if (result == -1) {
-        exit(EXIT_FAILURE);
-    }
+    //if (result == -1) {
+    //    exit(EXIT_FAILURE);
+    //}
 
     if (pipe(first_pipefd) == -1) {
         fprintf(stderr, "pipe init\n");
@@ -59,15 +63,28 @@ int main(void) {
             write(second_pipefd[1], NULL, 0);
         }
     } else {
+        clock_gettime(CLOCK_MONOTONIC, &startUsage);
+
         for (int i = 0; i < count; i++) {
             write(first_pipefd[1], NULL, 0);
             clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
-            clock_gettime( CLOCK_MONOTONIC, &end);
+            clock_gettime(CLOCK_MONOTONIC, &end);
             temp = correctTimer(start, end);
             diff = (BILLION * temp.tv_sec + temp.tv_nsec) / 2;
             accum += diff;
         }
+
+        clock_gettime(CLOCK_MONOTONIC, &endUsage);
+        int success = getrusage(RUSAGE_SELF, &usage);
+
+        long long utime = BILLION * usage.ru_utime.tv_sec + 1000 * usage.ru_utime.tv_usec;
+        long long stime = BILLION * usage.ru_stime.tv_sec + 1000 * usage.ru_stime.tv_usec;
+
+        tempUsage = correctTimer(startUsage, endUsage);
+        long long timeNS = BILLION * tempUsage.tv_sec + tempUsage.tv_nsec;
+
+        printf("CPU usage during clock: %lli\n", (utime + stime)/timeNS*100);
 
         printf("Context switch time = %lli nanoseconds with overhead\n", accum / count);
         printf("Context switch time = %lli nanoseconds without overhead\n", (accum - overhead * count) / count);
