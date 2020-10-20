@@ -13,7 +13,7 @@ struct timespec correctTimer(struct timespec start, struct timespec end);
 
 int main(void) {
     int first_pipefd[2], second_pipefd[2];
-    int count = 100000000;
+    int count = 1000000;
     int overhead = 0;
     struct timespec start, end, temp;
     long long diff = 0;
@@ -32,12 +32,6 @@ int main(void) {
     // Set processor to run process on, child inherits the mask
     cpu_set_t mask;
     CPU_ZERO(&mask);
-    CPU_SET(0, &mask);
-    int result = sched_setaffinity(0, sizeof(mask), &mask);
-
-    if (result == -1) {
-        exit(EXIT_FAILURE);
-    }
 
     if (pipe(first_pipefd) == -1) {
         fprintf(stderr, "pipe init\n");
@@ -54,11 +48,21 @@ int main(void) {
         fprintf(stderr, "fork\n");
         exit(EXIT_FAILURE);
     } else if (cpid == 0) {
+        CPU_SET(0, &mask);
+        if (sched_setaffinity(0, sizeof(mask), &mask) == -1) {
+            exit(EXIT_FAILURE);
+        }
+
         for (int i = 0; i < count; i++) {
             read(first_pipefd[0], NULL, 0);
             write(second_pipefd[1], NULL, 0);
         }
     } else {
+        CPU_SET(0, &mask);
+        if (sched_setaffinity(0, sizeof(mask), &mask) == -1) {
+            exit(EXIT_FAILURE);
+        }
+
         for (int i = 0; i < count; i++) {
             write(first_pipefd[1], NULL, 0);
             clock_gettime(CLOCK_MONOTONIC, &start);
