@@ -13,7 +13,7 @@ struct timespec correctTimer(struct timespec start, struct timespec end);
 
 int main(void) {
     int first_pipefd[2], second_pipefd[2];
-    int count = 10;
+    int count = 100000;
     int overhead = 0;
     struct timespec start, end, temp;
     long long diff = 0;
