@@ -13,7 +13,7 @@ struct timespec correctTimer(struct timespec start, struct timespec end);
 
 int main(void) {
     int first_pipefd[2], second_pipefd[2];
-    int count = 10000000;
+    int count = 10000;
     int overhead = 0;
     struct timespec start, end, temp;
     long long diff = 0;
@@ -55,18 +55,16 @@ int main(void) {
         exit(EXIT_FAILURE);
     } else if (cpid == 0) {
         for (int i = 0; i < count; i++) {
-            printf("%s\n", "child");
             read(first_pipefd[0], NULL, 0);
-            sleep(NULL);
+            sched_yield();
             write(second_pipefd[1], NULL, 0);
         }
     } else {
         for (int i = 0; i < count; i++) {
-            printf("%s\n", "parent");
             write(first_pipefd[1], NULL, 0);
             clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
-            sleep(NULL);
+            sched_yield();
             clock_gettime( CLOCK_MONOTONIC, &end);
             temp = correctTimer(start, end);
             diff = (BILLION * temp.tv_sec + temp.tv_nsec) / 2;

@@ -17,6 +17,7 @@ int main(void) {
 
     for (int i = 0; i < count; i++) {
         clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+        read
         clock_gettime(CLOCK_MONOTONIC_RAW, &end);
         temp = correctTimer(start, end);
         accum += (BILLION * temp.tv_sec + temp.tv_nsec);
