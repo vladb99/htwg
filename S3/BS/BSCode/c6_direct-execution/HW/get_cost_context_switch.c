@@ -57,7 +57,6 @@ int main(void) {
         for (int i = 0; i < count; i++) {
             read(first_pipefd[0], NULL, 0);
             sleep(0);
-            printf("%s\n", "child");
             write(second_pipefd[1], NULL, 0);
         }
     } else {
@@ -66,7 +65,6 @@ int main(void) {
             clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
             sleep(0);
-            printf("%s\n", "parent");
             clock_gettime( CLOCK_MONOTONIC, &end);
             temp = correctTimer(start, end);
             diff = (BILLION * temp.tv_sec + temp.tv_nsec) / 2;
