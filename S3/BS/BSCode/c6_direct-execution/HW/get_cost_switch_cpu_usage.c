@@ -34,14 +34,14 @@ int main(void) {
     printf("Average Overhead of CLOCK_MONOTONIC: %i in nano seconds\n", overhead);
 
     // Set processor to run process on, child inherits the mask
-    //cpu_set_t mask;
-    //CPU_ZERO(&mask);
-    //CPU_SET(0, &mask);
-    //int result = sched_setaffinity(0, sizeof(mask), &mask);
+    cpu_set_t mask;
+    CPU_ZERO(&mask);
+    CPU_SET(0, &mask);
+    int result = sched_setaffinity(0, sizeof(mask), &mask);
 
-    //if (result == -1) {
-    //    exit(EXIT_FAILURE);
-    //}
+    if (result == -1) {
+        exit(EXIT_FAILURE);
+    }
 
     if (pipe(first_pipefd) == -1) {
         fprintf(stderr, "pipe init\n");
@@ -77,6 +77,10 @@ int main(void) {
 
         clock_gettime(CLOCK_MONOTONIC, &endUsage);
         int success = getrusage(RUSAGE_SELF, &usage);
+
+        if (success == -1) {
+            exit(EXIT_FAILURE);
+        }
 
         long long utime = BILLION * usage.ru_utime.tv_sec + 1000 * usage.ru_utime.tv_usec;
         long long stime = BILLION * usage.ru_stime.tv_sec + 1000 * usage.ru_stime.tv_usec;
