@@ -65,7 +65,7 @@ int main(void) {
             write(first_pipefd[1], NULL, 0);
             clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
-            printf("%s", "parent);
+            printf("%s", "parent");
             sched_yield();
             clock_gettime( CLOCK_MONOTONIC, &end);
             temp = correctTimer(start, end);
