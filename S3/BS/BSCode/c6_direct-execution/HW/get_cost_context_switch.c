@@ -22,17 +22,6 @@ int main(void) {
 
     for (int i = 0; i < count; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
-        read(first_pipefd[0], NULL, 0);
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        temp = correctTimer(start, end);
-        overheadAccum += (BILLION * temp.tv_sec + temp.tv_nsec);
-    }
-    overheadAccum = 0;
-    overhead = overheadAccum / count;
-    printf("Average Overhead of CLOCK_MONOTONIC: %i in nano seconds\n", overhead);
-
-    for (int i = 0; i < count; i++) {
-        clock_gettime(CLOCK_MONOTONIC, &start);
         clock_gettime(CLOCK_MONOTONIC, &end);
         temp = correctTimer(start, end);
         overheadAccum += (BILLION * temp.tv_sec + temp.tv_nsec);
