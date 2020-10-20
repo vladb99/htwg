@@ -56,6 +56,7 @@ int main(void) {
     } else if (cpid == 0) {
         for (int i = 0; i < count; i++) {
             read(first_pipefd[0], NULL, 0);
+            sleep(0);
             printf("%s\n", "child");
             write(second_pipefd[1], NULL, 0);
         }
@@ -64,6 +65,7 @@ int main(void) {
             write(first_pipefd[1], NULL, 0);
             clock_gettime(CLOCK_MONOTONIC, &start);
             read(second_pipefd[0], NULL, 0);
+            sleep(0);
             printf("%s\n", "parent");
             clock_gettime( CLOCK_MONOTONIC, &end);
             temp = correctTimer(start, end);
