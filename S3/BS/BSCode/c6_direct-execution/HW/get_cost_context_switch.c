@@ -15,19 +15,27 @@ int main(void) {
     int first_pipefd[2], second_pipefd[2];
     int count = 1000000;
     int overhead = 0;
+    int overheadFor = 0;
     struct timespec start, end, temp;
     long long diff = 0;
     long long accum = 0;
     long long overheadAccum = 0;
 
+    // for Overheads
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    for (int i = 0; i < count; i++) {}
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    temp = correctTimer(start, end);
+    overheadFor = (BILLION * temp.tv_sec + temp.tv_nsec);
+
     for (int i = 0; i < count; i++) {
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        clock_gettime(CLOCK_MONOTONIC, &end);
+        clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+        clock_gettime(CLOCK_MONOTONIC_RAW, &end);
         temp = correctTimer(start, end);
         overheadAccum += (BILLION * temp.tv_sec + temp.tv_nsec);
     }
     overhead = overheadAccum / count;
-    printf("Average Overhead of CLOCK_MONOTONIC: %i in nano seconds\n", overhead);
+    printf("Average Overhead of CLOCK_MONOTONIC_RAW: %i in nano seconds\n", overhead);
 
     // Set processor to run process on, child inherits the mask
     cpu_set_t mask;
@@ -59,16 +67,16 @@ int main(void) {
     } else {
         for (int i = 0; i < count; i++) {
             write(first_pipefd[1], NULL, 0);
-            clock_gettime(CLOCK_MONOTONIC, &start);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
             read(second_pipefd[0], NULL, 0);
-            clock_gettime( CLOCK_MONOTONIC, &end);
+            clock_gettime( CLOCK_MONOTONIC_RAW, &end);
             temp = correctTimer(start, end);
             diff = (BILLION * temp.tv_sec + temp.tv_nsec) / 2;
             accum += diff;
         }
 
         printf("Context switch time = %lli nanoseconds with overhead\n", accum / count);
-        printf("Context switch time = %lli nanoseconds without overhead\n", (accum - overhead * count) / count);
+        printf("Context switch time = %lli nanoseconds without overhead\n", (accum - overhead * count - overheadFor) / count);
     }
     return 0;
 }

@@ -12,8 +12,15 @@ int main(void) {
     struct timespec start, end, temp;
     int count = 10000000;
     int overhead = 0;
+    int overheadFor = 0;
     long long diff = 0;
     long long accum = 0;
+
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    for (int i = 0; i < count; i++) {}
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    temp = correctTimer(start, end);
+    overheadFor = (BILLION * temp.tv_sec + temp.tv_nsec);
 
     for (int i = 0; i < count; i++) {
         clock_gettime(CLOCK_MONOTONIC_RAW, &start);
@@ -24,6 +31,8 @@ int main(void) {
     overhead = accum / count;
     printf("Average Overhead of CLOCK_MONOTONIC_RAW: %i in nanoseconds\n", overhead);
 
+    for (int i = 0; i < count; i++) {}
+
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     for (int i = 0; i < count; i++) {
         read(0, NULL, 0);
@@ -33,7 +42,7 @@ int main(void) {
     diff = (BILLION * temp.tv_sec + temp.tv_nsec);
 
     printf("Time cost without overhead of systemcall with CLOCK_MONOTONIC_RAW in nano seconds %lli\n", diff / count);
-    printf("Time cost of systemcall with CLOCK_MONOTONIC_RAW in nano seconds %lli\n\n\n", (diff / count) - overhead);
+    printf("Time cost of systemcall with CLOCK_MONOTONIC_RAW in nano seconds %lli\n\n\n", (diff / count) - overhead - overheadFor);
 
     accum = 0;
 
@@ -55,7 +64,7 @@ int main(void) {
     diff = (BILLION * temp.tv_sec + temp.tv_nsec);
 
     printf("Time cost without overhead of systemcall with CLOCK_MONOTONIC in nano seconds %lli\n", diff / count);
-    printf("Time cost of systemcall with CLOCK_MONOTONIC in nano seconds %lli\n", (diff / count) - overhead);
+    printf("Time cost of systemcall with CLOCK_MONOTONIC in nano seconds %lli\n", (diff / count) - overhead  - overheadFor);
 
     accum = 0;
 }
