@@ -1,5 +1,6 @@
 package aufgabe1;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
@@ -18,12 +19,23 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
 
     @Override
     public V insert(K key, V value) {
-        V i = search(key);
-        if (i != null) {
-            V r = i;
-
+        V v = search(key);
+        if (v != null) {
+            V r = v;
+            v = value;
+            return r;
         }
 
+        if (data.length == size) {
+            Arrays.copyOf(data, 2*size);
+        }
+        int j = size - 1;
+        while (j >= 0 && key.compareTo(data[j].getKey()) < 0) {
+            data[j+1] = data[j];
+            j--;
+        }
+        data[j+1] = new Entry<K,V>(key, value);
+        size++;
         return null;
     }
 
@@ -47,6 +59,16 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
 
     @Override
     public V remove(K key) {
+        V v = search(key);
+        if (v == null) {
+            return null;
+        }
+
+        V r = v;
+        for (int j ) {
+
+        }
+
         return null;
     }
 
