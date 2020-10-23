@@ -1,3 +1,4 @@
+/*
 // O. Bittel
 // 22.02.2017
 package aufgabe1;
@@ -6,6 +7,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+*/
 /**
  * Implementation of the Dictionary interface as AVL tree.
  * <p>
@@ -16,7 +18,8 @@ import java.util.NoSuchElementException;
  * 
  * @param <K> Key.
  * @param <V> Value.
- */
+ *//*
+
 public class BinaryTreeDictionary<K, V> implements Dictionary<K, V> {
     
     static private class Node<K, V> {
@@ -42,9 +45,11 @@ public class BinaryTreeDictionary<K, V> implements Dictionary<K, V> {
     
     // ...
 
-	/**
+	*/
+/**
 	 * Pretty prints the tree
-	 */
+	 *//*
+
 	public void prettyPrint() {
         printR(0, root);
     }
@@ -72,3 +77,4 @@ public class BinaryTreeDictionary<K, V> implements Dictionary<K, V> {
         System.out.print("|__");
     }
 }
+*/

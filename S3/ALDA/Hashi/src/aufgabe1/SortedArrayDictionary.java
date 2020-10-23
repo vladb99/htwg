@@ -1,8 +1,6 @@
 package aufgabe1;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class SortedArrayDictionary<K extends Comparable<? super K>, V> implements Dictionary<K, V> {
@@ -19,15 +17,15 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
 
     @Override
     public V insert(K key, V value) {
-        V v = search(key);
-        if (v != null) {
-            V r = v;
-            v = value;
+        int i = searchForIndex(key);
+        if (i != -1) {
+            V r = data[i].getValue();
+            data[i] = new Entry<>(key, value);
             return r;
         }
 
         if (data.length == size) {
-            Arrays.copyOf(data, 2*size);
+            data = Arrays.copyOf(data, 2*size);
         }
         int j = size - 1;
         while (j >= 0 && key.compareTo(data[j].getKey()) < 0) {
@@ -41,6 +39,16 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
 
     @Override
     public V search(K key) {
+        int i = searchForIndex(key);
+        if (i >= 0) {
+            return data[i].getValue();
+        }
+        else {
+            return null;
+        }
+    }
+
+    private int searchForIndex(K key) {
         int li = 0;
         int re = size - 1;
 
@@ -51,25 +59,25 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
             } else if (key.compareTo(data[m].getKey()) > 0) {
                 li = m + 1;
             } else {
-                return data[m].getValue();
+                return m;
             }
         }
-        return null;
+        return -1;
     }
 
     @Override
     public V remove(K key) {
-        V v = search(key);
-        if (v == null) {
+        int i = searchForIndex(key);
+        if (i == -1) {
             return null;
         }
 
-        V r = v;
-        for (int j ) {
-
+        V r = data[i].getValue();
+        for (int j = i; j < size-1; j++) {
+            data[j] = data[j + 1];
         }
-
-        return null;
+        data[--size] = null;
+        return r;
     }
 
     @Override
@@ -79,16 +87,28 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
 
     @Override
     public Iterator<Entry<K, V>> iterator() {
-        return null;
+        return new ArrayListIterator();
     }
 
-    @Override
-    public void forEach(Consumer<? super Entry<K, V>> action) {
+    private class ArrayListIterator implements Iterator<Entry<K, V>> {
+        private int current = 0;
 
-    }
+        @Override
+        public boolean hasNext() {
+            return data[current] != null;
+        }
 
-    @Override
-    public Spliterator<Entry<K, V>> spliterator() {
-        return null;
+        @Override
+        public Entry<K, V> next() {
+            if(!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return data[current++];
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }
