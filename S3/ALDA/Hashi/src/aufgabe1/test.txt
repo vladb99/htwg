@@ -1,0 +1,37 @@
+rennen: run search: run
+tauchen: dive search: dive
+reden: say search: say
+beten: pray search: pray
+singen: sing search: sing
+fahren: drive search: drive
+tanzen: dance search: dance
+starten: start search: start
+diskutieren: discuss search: discuss
+schwimmen: swim search: swim
+spielen: play search: play
+planen: plan search: plan
+gehen: go search: go
+lesen: read search: read
+arbeiten: work search: work
+schreiben: write search: write
+schreien: cry search: cry
+
+after add iteration to migratio function:
+
+rennen: run search: run
+tauchen: dive search: dive
+reden: say search: say
+beten: pray search: pray
+singen: sing search: sing
+fahren: drive search: drive
+tanzen: dance search: dance
+starten: start search: start
+diskutieren: discuss search: discuss
+schwimmen: swim search: swim
+spielen: play search: play
+planen: plan search: plan
+gehen: go search: go
+lesen: read search: read
+arbeiten: work search: work
+schreiben: write search: write
+schreien: cry search: cry

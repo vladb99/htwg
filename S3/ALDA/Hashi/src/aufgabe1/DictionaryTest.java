@@ -17,8 +17,8 @@ public class DictionaryTest {
 	 */
 	public static void main(String[] args)  {
 		
-		testSortedArrayDictionary();
-		//testHashDictionary();
+		//testSortedArrayDictionary();
+		testHashDictionary();
 		//testBinaryTreeDictionary();
 	}
 
@@ -28,8 +28,8 @@ public class DictionaryTest {
 	}
 	
 	private static void testHashDictionary() {
-		//Dictionary<String, String> dict = new HashDictionary<>(3);
-		//testDict(dict);
+		Dictionary<String, String> dict = new HashDictionary<>(3);
+		testDict(dict);
 	}
 	
 	/*private static void testBinaryTreeDictionary() {
@@ -112,6 +112,7 @@ public class DictionaryTest {
 		for (Dictionary.Entry<String, String> e : dict) {
 			System.out.println(e.getKey() + ": " + e.getValue() + " search: " + dict.search(e.getKey()));
 		}
+		System.out.println();
+		System.out.println(dict);
 	}
-	
 }

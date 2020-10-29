@@ -42,8 +42,7 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
         int i = searchForIndex(key);
         if (i >= 0) {
             return data[i].getValue();
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -83,6 +82,16 @@ public class SortedArrayDictionary<K extends Comparable<? super K>, V> implement
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("");
+        for (Entry<K, V> e : this) {
+            s.append(e.getKey()).append(": ").append(e.getValue()).append("\n");
+        }
+        s.append("size = ").append(size);
+        return s.toString();
     }
 
     @Override
