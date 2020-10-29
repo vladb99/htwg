@@ -35,3 +35,98 @@ lesen: read search: read
 arbeiten: work search: work
 schreiben: write search: write
 schreien: cry search: cry
+
+
+
+===== New Test Case ========================
+test class aufgabe1.SortedArrayDictionary
+true
+true
+true
+true
+true
+true
+true
+17
+arbeiten: work search: work
+beten: pray search: pray
+diskutieren: discuss search: discuss
+fahren: drive search: drive
+gehen: go search: go
+lesen: read search: read
+planen: plan search: plan
+reden: say search: say
+rennen: run search: run
+schreiben: write search: write
+schreien: cry search: cry
+schwimmen: swim search: swim
+singen: sing search: sing
+spielen: play search: play
+starten: start search: start
+tanzen: dance search: dance
+tauchen: dive search: dive
+
+arbeiten: work
+beten: pray
+diskutieren: discuss
+fahren: drive
+gehen: go
+lesen: read
+planen: plan
+reden: say
+rennen: run
+schreiben: write
+schreien: cry
+schwimmen: swim
+singen: sing
+spielen: play
+starten: start
+tanzen: dance
+tauchen: dive
+size = 17
+===== New Test Case ========================
+test class aufgabe1.HashDictionary
+true
+true
+true
+true
+true
+true
+true
+17
+gehen: go search: go
+fahren: drive search: drive
+diskutieren: discuss search: discuss
+singen: sing search: sing
+rennen: run search: run
+schreien: cry search: cry
+spielen: play search: play
+reden: say search: say
+tanzen: dance search: dance
+arbeiten: work search: work
+schreiben: write search: write
+schwimmen: swim search: swim
+beten: pray search: pray
+planen: plan search: plan
+tauchen: dive search: dive
+lesen: read search: read
+starten: start search: start
+
+gehen: go
+fahren: drive
+diskutieren: discuss
+singen: sing
+rennen: run
+schreien: cry
+spielen: play
+reden: say
+tanzen: dance
+arbeiten: work
+schreiben: write
+schwimmen: swim
+beten: pray
+planen: plan
+tauchen: dive
+lesen: read
+starten: start
+size = 17

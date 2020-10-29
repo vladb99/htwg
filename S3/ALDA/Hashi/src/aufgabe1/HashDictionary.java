@@ -1,18 +1,21 @@
 package aufgabe1;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class HashDictionary<K, V> implements Dictionary<K, V> {
 
     private static final int DEF_CAPACITY = 31;
-    private Node<K, V>[] tab;
+    //private Node<K, V>[] tab;
+    private LinkedList<Entry<K, V>>[] tab;
     private int size;
+    private final int loadFactor = 2;
 
     @SuppressWarnings("unchecked")
     public HashDictionary() {
         size = 0;
-        tab = new Node[DEF_CAPACITY];
+        tab = new LinkedList[DEF_CAPACITY];
         initNodes(tab);
     }
 
@@ -25,73 +28,50 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
             prime = n;
         }
         size = 0;
-        tab = new Node[prime];
+        tab = new LinkedList[prime];
         initNodes(tab);
     }
 
-    private void initNodes(Node<K, V>[] t) {
+    private void initNodes(LinkedList<Entry<K, V>>[] t) {
         for (int i = 0; i < t.length; i++) {
-            t[i] = new Node<>(null, null);
+            t[i] = new LinkedList<>();
         }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public V insert(K key, V value) {
-        Node<K, V> n = searchForNode(key);
-        if (n != null) {
-            V oldValue = n.next.data.getValue();
-            n.next.data = new Entry<>(key, value);
-            return oldValue;
+        int adr = getAdrFromKey(key);
+        adr = adr % tab.length;
+        for (Entry<K, V> entry : tab[adr]) {
+            if (entry.getKey().equals(key)) {
+                V oldValue = entry.getValue();
+                entry.setValue(value);
+                return oldValue;
+            }
         }
+
         size++;
-        if (size / tab.length >= 2) {
+        if (size / tab.length >= loadFactor) {
             migrateToTable();
         }
 
-        int adr = getAdrFromKey(key);
+        adr = getAdrFromKey(key);
         adr = adr % tab.length;
-
-        Node<K, V> p = tab[adr];
-        while (p.next != null) {
-            p = p.next;
-        }
-        p.next = new Node<>(new Entry<K, V>(key, value), null);
+        tab[adr].add(new Entry<>(key, value));
 
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     private void migrateToTable() {
         int prime = nextPrime(tab.length * 2);
-        Node<K, V>[] tab2 = new Node[prime];
+        LinkedList<Entry<K, V>>[] tab2 = new LinkedList[prime];
         initNodes(tab2);
         for (Entry<K, V> e : this) {
             int adr = getAdrFromKey(e.getKey());
             adr = adr % tab2.length;
-            Node<K, V> p = tab2[adr];
-            while (p.next != null) {
-                p = p.next;
-            }
-            p.next = new Node<>(new Entry<K, V>(e.getKey(), e.getValue()),null);
+            tab2[adr].add(new Entry<>(e.getKey(), e.getValue()));
         }
-
-        /*for (Node<K, V> n : tab) {
-            while (n.next != null) {
-                int adr = n.next.data.getKey().hashCode();
-                if (adr < 0) {
-                    adr = -adr;
-                }
-                adr = adr % tab2.length;
-                Node<K, V> p = tab2[adr];
-                while (p.next != null) {
-                    p = p.next;
-                }
-                K key = n.next.data.getKey();
-                V value = n.next.data.getValue();
-                p.next = new Node<>(new Entry<K, V>(key, value),null);
-                n = n.next;
-            }
-        }*/
         tab = tab2;
     }
 
@@ -101,8 +81,6 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
             if(num%i == 0) {
                 num++;
                 i=2;
-            } else {
-                continue;
             }
         }
         return num;
@@ -128,36 +106,26 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
 
     @Override
     public V search(K key) {
-        Node<K, V> n = searchForNode(key);
-        if (n != null) {
-            return n.next.data.getValue();
-        }
-        return null;
-    }
-
-    // Returns parent of node associated with key
-    public Node<K, V> searchForNode(K key) {
         int adr = getAdrFromKey(key);
         adr = adr % tab.length;
-        Node<K, V> p = tab[adr];
-
-        while (p.next != null) {
-            if (p.next.data.getKey().equals(key)) {
-                return p;
+        for (Entry<K, V> entry : tab[adr]) {
+            if (entry.getKey().equals(key)) {
+                return entry.getValue();
             }
-            p = p.next;
         }
         return null;
     }
 
     @Override
     public V remove(K key) {
-        Node<K, V> n = searchForNode(key);
-        if (n != null) {
-            V oldValue = n.next.data.getValue();
-            n.next = n.next.next;
-            size--;
-            return oldValue;
+        int adr = getAdrFromKey(key);
+        adr = adr % tab.length;
+        for (Entry<K, V> entry : tab[adr]) {
+            if (entry.getKey().equals(key)) {
+                tab[adr].remove(entry);
+                --size;
+                return entry.getValue();
+            }
         }
         return null;
     }
@@ -173,16 +141,16 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
     }
 
     private class HashDictionaryIterator implements Iterator<Entry<K, V>> {
-        private int current = 0;
-        private Node<K, V> currentNode = tab[current].next;
+        private int currentRow = 0;
+        private Iterator<Entry<K, V>> iterator = tab[currentRow].iterator();
 
         @Override
         public boolean hasNext() {
-            while (currentNode == null) {
-                if (current + 1 >= tab.length) {
+            while (!iterator.hasNext()) {
+                if (currentRow + 1 >= tab.length) {
                     return false;
                 }
-                currentNode = tab[++current].next;
+                iterator = tab[++currentRow].iterator();
             }
             return true;
         }
@@ -192,9 +160,7 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
             if(!hasNext()) {
                 throw new NoSuchElementException();
             }
-            Entry<K, V> data = currentNode.data;
-            currentNode = currentNode.next;
-            return data;
+            return iterator.next();
         }
 
         @Override
@@ -211,14 +177,5 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
         }
         s.append("size = ").append(size);
         return s.toString();
-    }
-
-    private static class Node<K, V> {
-        Node<K, V> next;
-        Entry<K, V> data;
-        Node(Entry<K, V> x, Node<K, V> p) {
-            data = x;
-            next = p;
-        }
     }
 }
