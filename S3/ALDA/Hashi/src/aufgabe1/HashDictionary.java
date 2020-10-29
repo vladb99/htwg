@@ -18,8 +18,13 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
 
     @SuppressWarnings("unchecked")
     public HashDictionary(int n) {
+        int prime;
+        if (!isPrime(n)) {
+            prime = nextPrime(n);
+        } else {
+            prime = n;
+        }
         size = 0;
-        int prime = calculatePrimeNumber(n);
         tab = new Node[prime];
         initNodes(tab);
     }
@@ -44,11 +49,9 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
             migrateToTable();
         }
 
-        int adr = key.hashCode();
-        if (adr < 0) {
-            adr = -adr;
-        }
+        int adr = getAdrFromKey(key);
         adr = adr % tab.length;
+
         Node<K, V> p = tab[adr];
         while (p.next != null) {
             p = p.next;
@@ -59,14 +62,11 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
     }
 
     private void migrateToTable() {
-        int prime = calculatePrimeNumber(tab.length * 2);
+        int prime = nextPrime(tab.length * 2);
         Node<K, V>[] tab2 = new Node[prime];
         initNodes(tab2);
         for (Entry<K, V> e : this) {
-            int adr = e.getKey().hashCode();
-            if (adr < 0) {
-                adr = -adr;
-            }
+            int adr = getAdrFromKey(e.getKey());
             adr = adr % tab2.length;
             Node<K, V> p = tab2[adr];
             while (p.next != null) {
@@ -95,13 +95,35 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
         tab = tab2;
     }
 
-    private int calculatePrimeNumber(int min) {
-        int i = 0, p;
-        do {
-            p = 4 * i + 3;
-            i++;
-        } while (min > p);
-        return p;
+    private int nextPrime(int num) {
+        num++;
+        for (int i = 2; i < num; i++) {
+            if(num%i == 0) {
+                num++;
+                i=2;
+            } else {
+                continue;
+            }
+        }
+        return num;
+    }
+
+    private boolean isPrime(int num){
+        boolean prime = true;
+        for(int i = 2; i < num; i++) {
+            if((num % i) == 0) {
+                prime = false;
+            }
+        }
+        return prime;
+    }
+
+    private int getAdrFromKey(K key) {
+        int adr = key.hashCode();
+        if (adr < 0) {
+            adr = -adr;
+        }
+        return adr;
     }
 
     @Override
@@ -115,10 +137,7 @@ public class HashDictionary<K, V> implements Dictionary<K, V> {
 
     // Returns parent of node associated with key
     public Node<K, V> searchForNode(K key) {
-        int adr = key.hashCode();
-        if (adr < 0) {
-            adr = -adr;
-        }
+        int adr = getAdrFromKey(key);
         adr = adr % tab.length;
         Node<K, V> p = tab[adr];
 
