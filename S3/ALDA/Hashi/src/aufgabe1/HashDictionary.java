@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 public class HashDictionary<K, V> implements Dictionary<K, V> {
 
     private static final int DEF_CAPACITY = 31;
-    //private Node<K, V>[] tab;
     private LinkedList<Entry<K, V>>[] tab;
     private int size;
     private final int loadFactor = 2;
