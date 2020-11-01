@@ -1,0 +1,544 @@
+%---------------
+%╔═╗╔═╗╔╦╗╦ ╦╔═╗
+%╚═╗║╣  ║ ║ ║╠═╝
+%╚═╝╚═╝ ╩ ╚═╝╩  
+%---------------
+
+% language setup
+\newcommand{\docLanguage}{ngerman}
+%\newcommand{\docLanguage}{english}
+
+% DOCUMENT SETUP
+\documentclass[12pt, oneside, a4paper, \docLanguage]{report}
+\usepackage[left=3cm, 
+			right=2.5cm, 
+			top=2.5cm, 
+			bottom=2.5cm, 
+			includehead, 
+			includefoot]{geometry}
+
+% line spacing
+\usepackage{setspace}
+\setstretch{1,25} % 15/12 --> 1.25
+
+% encoding setup
+% T1 font encoding for languages that use a latin alphabet
+\usepackage[T1]{fontenc} 
+
+% enhanced input encoding handling - utf8 for äÄüÜöÖß...
+\usepackage[utf8]{inputenc}
+
+%de­fines Adobe Times Ro­man as de­fault text font
+\usepackage{mathptmx}
+\usepackage{times} % needed for acronym package
+
+%PDF linking package
+\usepackage[hidelinks]{hyperref}
+
+
+% Language Setup
+\usepackage[\docLanguage]{babel}
+% after babel - set chapter string
+\AtBeginDocument{\renewcommand{\chaptername}{}}
+
+% language specific bibliography style
+\usepackage[numbers, square]{natbib}
+%\setcitestyle{square,aysep={},yysep={;}}
+\usepackage[fixlanguage]{babelbib}
+\selectbiblanguage{\docLanguage}
+% bliographystyle setup
+% babel specific: babplain, babplai3, babalpha, babunsrt, bababbrv, bababbr3
+\bibliographystyle{babunsrt}
+
+
+% enumeration
+\usepackage{enumitem}
+% tabular extension tabularx
+\usepackage{tabularx}
+
+% math packages
+\usepackage{amsmath}
+\usepackage{nicefrac}
+\usepackage{amsthm}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+%\usepackage{MnSymbol}
+
+
+%special characters
+\usepackage{amssymb}
+\usepackage{upgreek,textgreek}
+
+% acronym package
+\usepackage[printonlyused, footnote]{acronym}
+
+% breakable text in \seqsplit{}
+\usepackage{seqsplit}
+
+% \textmu
+\usepackage{textcomp}
+
+% package provides a way to compile sections of a document using the same preamble as the main document
+\usepackage{subfiles}
+
+% driver-independent color extension - used by listings,tabularx
+\usepackage[usenames,dvipsnames,table,xcdraw]{xcolor}
+
+% -- SYNTAX HIGHLIGHTING --
+\usepackage{listings}
+%\input{cfgs/listings/listings_def_lang_bash-cmd.tex} % adds style BASH_CMD
+%\input{cfgs/listings/listings_def_lang_bash-script.tex} % adds style BASH_SCRIPT
+\input{cfgs/listings/listings_def_lang_latex.tex} % adds style LATEX
+%\input{cfgs/listings/listings_def_lang_matlab.tex} % adds style MATLAB
+\input{cfgs/listings/listings_def_lang_python.tex} % adds style PYTHON
+%\input{cfgs/listings/listings_def_lang_c++.tex} % adds style CPP
+%\input{cfgs/listings/listings_def_lang_c.tex} % adds style C
+%\input{cfgs/listings/listings_def_lang_json.tex} % adds style JSON
+
+% HEADLINE CFG
+\usepackage{fancyhdr} % Headers and footers
+\usepackage{lastpage}
+\usepackage{ifthen}
+\setlength{\headheight}{1.5cm}
+%\pagestyle{fancy} % All pages have headers and footers
+% override plain page style for \part, \chapter or 
+% \maketitle, which implicit specifies plain page style
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_plain.tex}
+% set list pagestyle
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_preface.tex}
+% set default pagestyle
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_default_onepage.tex}
+%\input{cfgs/fancyhdr/fancyhdr_pagestyle_default_twopage.tex}
+
+\renewcommand{\chaptermark}[1]{\markright{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% PICTURE CFG 
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage[list=true,listformat=simple]{subcaption}
+% floating prevention packages
+\usepackage{float}    % used with [H] positioning parameter
+\usepackage{placeins} % \FloatBarrier 
+% tikz packages
+\usepackage{tikz}
+\usepackage{standalone}
+\usepackage{pgfplots}
+
+
+% include only specified tex files - uncommend here
+\includeonly{preface/cover,
+             preface/abstract,
+             preface/tableofcontents,
+             preface/listoffigures,
+             preface/listoftables,
+             preface/lstlistoflistings,
+             appendix/bibliography}
+
+%-------------------
+%╔═╗╔╦╗╦═╗╦╔╗╔╔═╗╔═╗
+%╚═╗ ║ ╠╦╝║║║║║ ╦╚═╗
+%╚═╝ ╩ ╩╚═╩╝╚╝╚═╝╚═╝
+%-------------------
+\newcommand{\strLecture}{Signale, Systeme und Sensoren}
+\newcommand{\strDate}{\today}
+\newcommand{\strAuthorA}{Animesh Sharma}
+\newcommand{\strAuthorB}{Janko Varga}
+\newcommand{\strAuthorAEmail}{an571sha@htwg-konstanz.de}
+\newcommand{\strAuthorBEmail}{ja981var@htwg-konstanz.de}
+% Versuchsbeschreibung 
+\newcommand{\strTopic}{Aufbau, Kalibrierung und Einsatz eines einfachen Entfernungsmessers}
+\newcommand{\strAbstract}{Der Versuch nutzt die in der Vorlesung gezeigten Techniken der Kalibrierung, Fehleranalyse und Fehlerrechnung um einen Distanzsensor als Entfernungmesser zu nutzen.
+	
+	Dieser Sensor nutzt das Triangulationsprinzip zur Bestimmung von Distanzen. Ein Lichtstrahl wird ausgesendet, von dem Objekt reflektiert und die Position wird bei einem OPS Sensor gemessen.
+
+	Unser Sensor liefert eine anti-proportionale Spannung bei steigender Entfernung. Der mögliche Messbereich erstreckt sich laut Datenblatt von 10 cm bis 80 cm Entfernung zum Sensor.
+}
+% hyperref customization
+\hypersetup{
+	pdftitle     = {\strTopic}, % title
+	pdfsubject   = {\strLecture}, % subject of the document
+	pdfauthor    = {\strAuthorA, \strAuthorB}, % author
+	pdfkeywords  = {}, % list of keywords
+	pdfcreator   = {}, % creator of the document
+	pdfproducer  = {}, % producer of the document
+	colorlinks   = false, % false: boxed links; true: colored links
+	linkcolor    = red, % color of internal links (change box color with linkbordercolor)
+    citecolor    = green, % color of links to bibliography
+    filecolor    = magenta, % color of file links
+    urlcolor     = cyan, % color of external links
+	%bookmarks    = true, % show bookmarks bar?
+	unicode	     = true, % non-Latin characters in Acrobat’s bookmarks
+	pdftoolbar   = true, % show Acrobat’s toolbar?
+	pdfmenubar   = true, % show Acrobat’s menu?
+    pdffitwindow = false, % window fit to page when opened
+	pdfnewwindow = true % links in new PDF window
+}
+
+%-----------------------------------------
+% ╔╗ ╔═╗╔═╗╦╔╗╔  ╔╦╗╔═╗╔═╗╦ ╦╔╦╗╔═╗╔╗╔╔╦╗ 
+% ╠╩╗║╣ ║ ╦║║║║   ║║║ ║║  ║ ║║║║║╣ ║║║ ║  
+% ╚═╝╚═╝╚═╝╩╝╚╝  ═╩╝╚═╝╚═╝╚═╝╩ ╩╚═╝╝╚╝ ╩  
+%-----------------------------------------
+
+\begin{document}
+\pagenumbering{Roman} 
+
+\setcounter{section}{0}
+\include{preface/cover}
+
+\include{preface/abstract}
+\clearpage
+
+%
+% TABLE OF CONTENTS
+%
+\include{preface/tableofcontents}
+
+%
+% Abbildungsverzeichnis
+%
+\include{preface/listoffigures}
+
+%
+% Tabellenverzeichnis
+%
+\include{preface/listoftables}
+
+%
+% Listingverzeichnis
+%
+\include{preface/lstlistoflistings}
+
+
+%--------------------------
+% ╔═╗╦ ╦╔═╗╔═╗╔╦╗╔═╗╦═╗╔═╗ 
+% ║  ╠═╣╠═╣╠═╝ ║ ║╣ ╠╦╝╚═╗ 
+% ╚═╝╩ ╩╩ ╩╩   ╩ ╚═╝╩╚═╚═╝ 
+%--------------------------
+
+\pagenumbering{arabic} 
+\setcounter{page}{1} 
+\pagestyle{default}
+%
+% CHAPTER Einleitung
+%
+\chapter{Einleitung}
+\label{chap:EINL}
+Dieser Versuch beschäftigt sich mit der Kalibrierung eines Distanzsensors der Firma Sharp (GP2Y0A21YK0F, siehe Datenblatt in Moodle).
+
+Zur Kalibrierung des Distanzsensors werden 20 Messungen durchgeführt. Bei diesen Messungen wird in Abhängigkeit der Entfernung eines Objektes zum Sensor die Ausgangsspannung und die Schwankung der Ausgangsspannung aufgezeichnet.
+
+Die Werte werden handschriftlich notiert und dann durch der ToolBox Tedsk2000 in eine digital .csv Datei umgewandelt.
+
+Digital erfassten Messwerten werden anschließend im Python auf ihre Standardabweichung sowie ihren Durchschnitt ausgewertet.
+
+Im folgenden werden die digital .CSV Datei erfassten Messwerte per Python-Skript weiterverarbeitet um mittels der in der Vorlesung besprochenen Verfahren eine Ausgleichsfunktion zu bestimmen. Dies geschieht nach dem Verfahren der Linearen Regression.
+
+Diese Ausgleichsfunktion kann nun zur direkten Umrechnung von Ausgangsspannungswerten des Distanzsensors in eine Distanz des Objektes das sich vor diesem Distanzsensor befindet genutzt werden.
+Die berechnete Ausgleichsgerade wird verwendet um die Distanz der jeweiligen Ausgangsspannungswert des Distanzsensors zu berechnen. 
+Anschließend wird mit dem Sensor die Länge und Breite eines A4-Blatts vermessen werden. Anhand der zuvor berechneten Ausgleichsfunktion kann nun die Länge und Breite eines DIN A-4 Blattes berechnet werden.
+Mit diesen Längen lässt sich anschließend die Fläche des DIN-4 Blattes bestimmen.
+Um die Genauigkeit dieser Fläche zu bestimmen wird eine Fehlerrechnung anhand der in Vorlesung besprochenen Verfahren durchgeführt.
+
+\cite{Franz2016n}
+\cite{Franz2016e}
+
+%
+% CHAPTER Versuch 1
+%
+\chapter{Versuch 1}
+\label{chap:VERSUCH_1}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_1_FRAGESTELLUNG}
+In Versuch 1 [\ref{chap:VERSUCH_1}] soll die Kennlinie des Sensors mithilfe mehrerer Messungen an gleichmäßigen Abständen zwischen 10 cm und 70 cm ermittelt werden. Die Messungen sollen sowohl automatisch mittels eines Software Tool, sowie von Hand erfasst werden.
+
+Für den Versuchsaufbau wird der Distanzsensor GP2Y0A21YK0F der Firma Sharp an eine Spannungsquelle von 5 V Gleichspannung angeschlossen. Zusätzlich wird der Distanzsensor am Anschluss für den Signalausgang, sowie am Ground-Anschluss mit einem Oszilloskop verbunden. Vor dem Sensor wird eine weiße Holzplatte in einem festgelegten Abstand aufgestellt. Das Oszilloskop wird über einen USB-Anschluss mit einem Laborcomputer verbunden, um dort eine automatische Erfassung der Messwerte vornehmen zu können.
+
+Es werden 20 Messungen mit verschiedenen Distanzen vorgenommen. Es wird mit 10 cm Abstand vom Gehäuseende des Sensors zur Holzplatte begonnen. Bei jeder Messung wird der Abstand zwischen Sensor und Platte in gleichmäßigen Schritten vergrößert, bis er bei der 20. Messung beträgt. Zur Ausrichtung der Holzplatte zum Sensor wird ein Meterstab verwendet.
+
+Die Messwerte werden auf zwei Arten erfasst. Zum einen werden die Messwerte vom Display des Oszilloskops abgelesen und von Hand notiert. Zum anderen werden die Werte automatisch über das Software Tool. Hierzu kommt das TekTDS2000 zum Einsatz.
+
+
+
+\section{Messwerte}
+\label{chap:VERSUCH_1_MESSWERTE}
+Tabelle [\ref{chap:VERSUCH_1_MESSWERTE}] zeigt die von Hand notierten sowie die Messwerte
+\begin{table}[H]
+	\centering\small
+	\begin{tabular}{|c|c|c}
+	\hline
+	Abstand & SpannungHandSchriftlich & SpannungPython \\
+	\hline
+	10 & 1,34 & 1.3414533019015529 \\
+	\hline
+	11 & 1,26 & 1.2627733050890784 \\
+	\hline
+	12 & 1,2 & 1.195226632000002 \\
+	\hline
+	13 & 1,14 & 1.137693313333338 \\ 
+	\hline
+	15 & 1,06 & 1.0628932880598618 \\
+	\hline
+	17 & 0,978 & 0.9781599775142552 \\
+	\hline
+	19 & 0,918 & 0.9178133102576838 \\
+	\hline
+	22 & 0,842 & 0.8415066407519863 \\
+	\hline
+	24 & 0,765 & 0.7639999819596622 \\
+	\hline
+	27 & 0,707 & 0.7063599873186642 \\
+	\hline
+	30 & 0,667 & 0.6675733195344817 \\
+	\hline
+	32 & 0,664 & 0.663013321240753 \\
+	\hline
+	36 & 0,586 & 0.5849999852975118 \\
+	\hline
+	40 & 0,569 & 0.5688399847944485 \\
+	\hline
+	43 & 0,548 & 0.5488799828887724 \\
+	\hline
+	50 & 0,528 & 0.5280933187007965 \\
+	\hline
+	65 & 0,465 & 0.463973320166375 \\
+	\hline
+	60 & 0,471 & 0.4693066540956928 \\
+	\hline
+	66 & 0,467 & 0.46653332004953496 \\
+	\hline
+	70 & 0,473 & 0.47115998834375056 \\
+	\hline
+	\end{tabular}
+	\caption{Messwerte Kalibrierung}
+	\label{fig:VERSUCH_1_MESSWERTE_TABELLE}
+\end{table}
+
+
+\section{Auswertung}
+\label{chap:VERSUCH_1_AUSWERTUNG}
+Der plot \ref{fig:VERSUCH_1_AUSWERTUNG_PLOT} stellt ein Graph zwischen die Mittelwert alle Spannung und der jeweiligen Distanz dar . Dieser Plot wurde mit dem Python-Skript \ref{chap:APPENDIX_SOURCECODE_V1} erstellt.
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=\textwidth]{media/plot1.png}
+	\caption{Plot Messungen}
+	\label{fig:VERSUCH_1_AUSWERTUNG_PLOT}
+\end{figure}
+
+
+\section{Interpretation}
+\label{chap:VERSUCH_1_INTERPRETATION}
+Nach der Auswertung der Messwerte ist zu erkennen das sich die Ausgangsspannung anti-proportional zur Distanz der Objekte vor dem Distanzsensor verhält.
+
+Die manuell notierten Ergebnisse der Ausgangsspannung kommen sehr nahe an die digital erstellte Messung.
+Noch hinfügen bitte
+
+
+
+%
+% CHAPTER Versuch 2
+%
+\chapter{Versuch 2}
+\label{chap:Modellierung der Kennlinie durch lineare Regression}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_2_FRAGESTELLUNG}
+Mit den gemessen Werten wird nun ein Funktion bestimmt. Dieser Funktion wird weiterhin benutzt um den Abstand eines Objektes zum Sensor zu bestimmen.
+Für die Bestimmung dieser Funktion nutzen wir das in der Vorlesung besprochene Verfahren der linearen Regression. 
+Allerdings lässt sich dieses Verfahren nur bei einer linearen Kennlinie anwenden, welche bei unserem Sensor nicht vorliegt. Um das Verfahren trotzdem nutzen zu können werden mittels des im Aufgabenblatt gezeigten Lösungsansatzes - der Logarithmierung von Distanz und Spannung - aus den Werten in der Messwerttabelle [\ref{fig:VERSUCH_1_MESSWERTE_TABELLE}] für die lineare Regression geeignete Werte berechnet.
+Als Resultat der linearen Regression erhalten wir den Gradienten \(a\), sowie das Offset \(b\). Setzt man diese Parameter in die Funktion \(y = e^b * x^a\) ein erhält man die Kennlinie des Distanzsensors. \(x\) ist hierbei die am Sensor gemessene Spannung.
+   
+\section{Messwerte}
+\label{chap:VERSUCH_2_MESSWERTE}
+Mit dem Python Skript[\ref{chap:APPENDIX_SOURCECODE_V2}] wird die Messwerten[\ref{chap:VERSUCH_1_MESSWERTE}] aus Versuch 1 logarithmiert und in der Tabelle [\ref{fig:VERSUCH_2_MESSWERTE_TABELLE}] sowie dem Plot [\ref{fig:VERSUCH_2_MESSWERTE_PLOT}] dargestellt.
+\begin{table}[H]
+	\centering\small
+	\begin{tabular}{|c|c|}
+		\hline
+		log(Spannung) & log(Distanz) \\
+		\hline
+		0.29375358 & 2.30259
+		\hline
+		0.23331034 & 2.3979
+		\hline
+		0.17833582 & 2.48491
+		\hline
+		0.1290028 & 2.56495
+		\hline
+		0.06099471 & 2.70805
+		\hline
+		-0.02208205 & 2.83321
+		\hline
+		-0.08576127 & 2.94444
+		\hline
+		-0.17256137 & 3.09104
+		\hline
+		-0.26918751 &﻿3.17805
+		\hline
+		-0.34763027 &﻿3.29584
+		\hline
+		-0.40410605 &﻿3.4012
+		\hline
+		-0.4109602 &﻿3.46574
+		\hline
+		-0.53614346 &﻿3.58352
+		\hline
+		-0.56415611 &﻿3.68888
+		\hline
+		-0.59987547 &﻿3.7612
+		\hline
+		-0.63848227 &﻿3.91202
+		\hline
+		-0.76792823 &﻿4.00733
+		\hline
+		-0.75649888 &﻿4.09434
+		\hline
+		-0.76242584 &﻿4.18965
+		\hline
+		-0.75255756 &﻿4.2485
+		\hline
+		\end{tabular}
+	\caption{Messwerte nach Logarithmierung}
+	\label{fig:VERSUCH_2_MESSWERTE_TABELLE}
+\end{table}
+
+		
+\section{Auswertung}
+\label{chap:VERSUCH_2_AUSWERTUNG}
+Anhand der logarithmierten Werte kann nun der Gradient berechnet werden. Diesen erhält man, wenn man die in Tabelle [\ref{fig:VERSUCH_2_MESSWERTE_TABELLE}] gezeigten Werte in die Formel \(a = \frac{\sum_{i=1}^{n}{(x_i - \overline{x}) \cdot (y_i - \overline{y})}}{\sum_{i=1}^{n}{(x_i - \overline{x}^2)}}\) einsetzt.
+Mithilfe des Gradienten der logarithmierten Messwerte lässt sich über die Formel \(b = \overline{y} - a \cdot \overline{x}\) der Offset berechnen.
+Daraus resultierende Werten sind-
+\(a =﻿-1.7083868215513274\)
+\(b =﻿2.7784983876002296\)
+
+Durch der Wert a und b erhalten wir der Plot für die Formel \(y =  a \cdot \overline{x} + b\).
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=\textwidth]{media/plot2.png}
+	\caption{Plot der Messwerte nach Logarithmierung}
+	\label{fig:VERSUCH_2_MESSWERTE_PLOT}
+\end{figure}
+
+Die Kennlinie erhält man, in dem man die doppelte Logarithmierung \(exp(a \cdot \ln x + b)\) umkehrt.
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=\textwidth]{media/plot3.png}
+	\caption{Plot der Messwerte nach Logarithmierung}
+	\label{fig:VERSUCH_2_AUSWERTUNG_PLOT}
+\end{figure}
+
+
+
+
+\section{Interpretation}
+\label{chap:VERSUCH_2_INTERPRETATION}
+
+[\ref{fig:VERSUCH_2_AUSWERTUNG_PLOT}] zeigt die gemessenen Spannungs-/Entfernungswerte, sowie die berechnete Kennlinie. 
+Hier ist es deutlich zu sehen , dass die Kennlinie und die gemessenen Werte sehr nahe beieinander liegen und das Verfahren zur Ermittlung einer nicht linearen Kennlinie mithilfe der linearen Regression mit logarithmierten Werten funktioniert.
+Da jedoch nur jeweils eine Messung für die Eingangswerte vorgenommen wurde, wurde der Messfehler für die Werte,aus denen die Kennlinie berechnet wurde relativ hoch.
+Jede Messung aus der Kennlinie wurde zum hohen systematischen Fehler führen.
+
+%
+% CHAPTER Versuch 3
+%
+\chapter{Versuch 3}
+\label{chap:Flächenmessung mit Fehlerrechnung}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_3_FRAGESTELLUNG}
+Ein DIN A4-Blatt wird mit dem Sensor vermesset und der Flächeninhalt des Blattes anhand der Kennlinie berechnet. Statt ein Maßstab hat man ein einfaches DIN A4 Blatt. 
+Es werden identische Vorschriften eingehalten wie in der Versuch 3 und genau zwei Messungen vorgenommen. 
+
+\section{Messwerte}
+\label{chap:VERSUCH_3_MESSWERTE}
+Durch die Kennlinie \ref{fig:VERSUCH_2_AUSWERTUNG_KENNLINIE} lassen sich die Maße des DIN A 4 Blattes nun berechnen. Die Werten werden direkt aus der Python-Skript[\ref{chap:APPENDIX_SOURCECODE_V3}] genommen
+
+\begin{table}[H]
+	\centering\small
+	\begin{tabular}{|c|c|c}
+		\hline
+		Abstand & Standard Abweichung & SpannungMittelWert \\
+		\hline
+		33.89716769313252 cm & 0.024231080615716258 & ﻿0.6466266508498713 V
+		\hline
+		21.640045978542307 cm & ﻿0.021173111361523497 & 0.8408933074472433 V \\
+		\hline
+	\end{tabular}
+	\caption{ Messung A4-Blatt}
+	\label{fig:VERSUCH_3_AUSWERTUNG_TABELLE}
+\end{table}
+
+Die Tabelle aus dem Vorlesungsskript eine Sicherheit von \(P = 68,26\%\) ein Korrekturfaktor von \(t = 1,0\) bzw. für eine Sicherheit von \(P = 95\%\) ein Korrekturfaktor von \(t = 1,96\), da wir 1500 Werte gemessen haben.
+
+Für :\(P = 68,26\%\):
+\[Laenge = 0.64 V \pm 1,0 * 0.024231080615716258 V\]
+\[Breite = 0.84V \pm 1,0 * 0.021173111361523497 V\]
+
+Für :\(P = 68,26\%\):
+\[Laenge = 0.64 V \pm 1,98 * 0.024231080615716258 V\]
+\[Breite = 0.84V \pm 1,98 * 0.021173111361523497 V\]
+
+
+
+
+
+
+
+\section{Auswertung}
+\label{chap:VERSUCH_3_AUSWERTUNG}
+
+\section{Interpretation}
+\label{chap:VERSUCH_3_INTERPRETATION}
+
+%
+% CHAPTER Anhang
+%
+\renewcommand\thesection{A.\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+
+\chapter*{Anhang}
+\label{chap:APPENDIX}
+\addcontentsline{toc}{chapter}{Anhang}
+%\setcounter{chapter}{0}
+\addtocounter{chapter}{1}
+\setcounter{section}{0}
+
+\section{Quellcode}
+\label{chap:APPENDIX_SOURCECODE}
+
+\subsection{Quellcode Versuch 1}
+\label{chap:APPENDIX_SOURCECODE_V1}
+\lstinputlisting[style=PYTHON, frame=single, caption=Messung, captionpos=b, label=lst:APPENDIX_SOURCECODE_V1]{Messung.py}
+
+\subsection{Quellcode Versuch 2}
+\label{chap:APPENDIX_SOURCECODE_V2}
+\lstinputlisting[style=PYTHON, frame=single, caption=Messung, captionpos=b, label=lst:APPENDIX_SOURCECODE_V2]{LinearRegression.py}
+
+\subsection{Quellcode Versuch 3}
+\label{chap:APPENDIX_SOURCECODE_V3}
+\lstinputlisting[style=PYTHON, frame=single, caption=Messung, captionpos=b, label=lst:APPENDIX_SOURCECODE_V3]{Blatt.py}
+
+
+\section{Messergebnisse}
+\label{chap:APPENDIX_MEASUREMENT_SOURCE}
+
+%
+% Literaturverzeichnis
+%
+\include{appendix/bibliography}
+
+\end{document}
+%------------------------------------
+% ╔═╗╔╗╔╔╦╗  ╔╦╗╔═╗╔═╗╦ ╦╔╦╗╔═╗╔╗╔╔╦╗
+% ║╣ ║║║ ║║   ║║║ ║║  ║ ║║║║║╣ ║║║ ║ 
+% ╚═╝╝╚╝═╩╝  ═╩╝╚═╝╚═╝╚═╝╩ ╩╚═╝╝╚╝ ╩ 
+%------------------------------------
