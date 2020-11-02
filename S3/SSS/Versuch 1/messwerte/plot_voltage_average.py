@@ -45,6 +45,9 @@ fig.tight_layout()
 
 #Linear regression AUFGABE 2
 
+arrayMean = [1.353, 1.139, 0.972, 0.866, 0.752, 0.713, 0.671, 0.635, 0.616, 0.608, 0.553, 0.545, 0.610, 0.627, 0.610, 0.565, 0.523, 0.525, 0.514, 0.448]
+arrayDistance = [100, 140, 180, 220, 270, 300, 330, 370, 400, 430, 470, 500, 520, 550, 570, 600, 620, 650, 670, 700]
+
 logVoltage = np.log(arrayMean)
 logDistance = np.log(arrayDistance)
 
@@ -84,9 +87,11 @@ fileLength = open("/Users/vladb/Git/htwg/S3/SSS/Versuch 1/messwerte/Blatt Messun
 voltageWidth = np.genfromtxt(fileWidth , delimiter= ",", skip_header=1000, usecols = (4))
 voltageLength = np.genfromtxt(fileLength , delimiter= ",", skip_header=1000, usecols = (4))
 
+# STD nicht im Protokol deshalb von Messungen genommen!
 # Width
 sizeWidth = voltageWidth.shape[0]
-meanWidth = voltageWidth.mean()
+#meanWidth = voltageWidth.mean()
+meanWidth = 0.890
 stdWidth = np.std(voltageWidth)
 
 delta68W = stdWidth / math.sqrt(sizeWidth)
@@ -97,7 +102,8 @@ interval95W = [meanWidth - 1.96 * stdWidth, meanWidth + 1.96 * stdWidth]
 
 # Length
 sizeLength = voltageLength.shape[0]
-meanLength = voltageLength.mean()
+#meanLength = voltageLength.mean()
+meanLength = 0.693
 stdLength = np.std(voltageLength)
 
 delta68L = stdLength / math.sqrt(sizeLength)
@@ -118,9 +124,29 @@ print("95%% Interval: %f to %f" % (interval95L[0], interval95L[1]))
 print("")
 
 width = np.exp(a * np.log(meanWidth) + b)
-print("Width: %.3f cm" % (width / 10))
+deltaWidth = a * np.exp(b) * math.pow(meanWidth, a - 1) * delta68W
+deltaWidth = abs(deltaWidth)
 
-#a*e^b*x^(a-1) 
+length = np.exp(a * np.log(meanLength) + b)
+deltaLength = a * np.exp(b) * math.pow(meanLength, a - 1) * delta68L
+deltaLength = abs(deltaLength)
+
+#width2 = np.exp(b) * math.pow(meanWidth, a)
+#print("Width: %.3f cm" % (width / 10))
+#print(width2)
+#a*e^b*x^(a-1)
+
+print("Correction:")
+print("w = (%f +- %f) cm" % (width / 10, deltaWidth / 10))
+print("l = (%f +- %f) cm" % (length / 10, deltaLength / 10))
+
+# auf seine Folien ist die Berechnung für absolute Fehler
+# auf Rechnung aachen, ist das für relativen Fehler. Es ist auch nicht so genau
+# f(width, length) = width * length 
+# delta area = math.sqrt()
+
+deltaArea = math.sqrt(math.pow(length * deltaWidth, 2) + math.pow(width * deltaLength, 2))
+print("area = (%f +- %f) cm^2" % (width * length / 100, deltaArea / 100)) # Hier auch / 100???
 
 
 
