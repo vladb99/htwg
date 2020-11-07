@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 double calculateTime();
 
@@ -9,6 +11,8 @@ int main(int argc, char **argv) {
         fprintf(stderr, "usage: ./memory-user <memory> <time>");
         exit(1);
     }
+
+    printf("PID %d", getpid());
 
     int memory = atoi(argv[1]) * 1024 * 1024;
     int time = atoi(argv[2]);
