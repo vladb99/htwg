@@ -1,6 +1,7 @@
 Lecture/
 PV_Huber/
 PV_Denninger/
+toignore/
 
 *.o
 *.out
