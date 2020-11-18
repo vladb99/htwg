@@ -51,20 +51,28 @@ public class TestBasedUI {
                 System.exit(1);
             } else if (cmd.equals("b")) {
                 System.out.println("SortedArrayDictionary");
-                benchmarkCreation(8000, 100, "Aufbau 8000: ", Type.sorted);
-                benchmarkCreation(16000, 100, "Aufbau 16000: ", Type.sorted);
-                benchmarkSearchSuccess(8000, 1000, "Search Success 8000: ", Type.sorted, true);
-                benchmarkSearchSuccess(16000, 1000, "Search Success 16000: ", Type.sorted, true);
-                benchmarkSearchSuccess(8000, 1000, "Search Failure 8000: ", Type.sorted, false);
-                benchmarkSearchSuccess(16000, 1000, "Search Failure 16000: ", Type.sorted, false);
+                benchmarkCreation(8000, 10, "Aufbau 8000: ", Type.sorted);
+                benchmarkCreation(16000, 10, "Aufbau 16000: ", Type.sorted);
+                benchmarkSearchSuccess(8000, 100, "Search Success 8000: ", Type.sorted, true);
+                benchmarkSearchSuccess(16000, 100, "Search Success 16000: ", Type.sorted, true);
+                benchmarkSearchSuccess(8000, 100, "Search Failure 8000: ", Type.sorted, false);
+                benchmarkSearchSuccess(16000, 100, "Search Failure 16000: ", Type.sorted, false);
                 System.out.println("");
                 System.out.println("HashDictionary");
-                benchmarkCreation(8000, 5000, "Aufbau 8000: ", Type.hash);
-                benchmarkCreation(16000, 5000, "Aufbau 16000: ", Type.hash);
-                benchmarkSearchSuccess(8000, 1000, "Search Success 8000: ", Type.hash, true);
-                benchmarkSearchSuccess(16000, 1000, "Search Success 16000: ", Type.hash, true);
-                benchmarkSearchSuccess(8000, 1000, "Search Failure 8000: ", Type.hash, false);
-                benchmarkSearchSuccess(16000, 1000, "Search Failure 16000: ", Type.hash, false);
+                benchmarkCreation(8000, 500, "Aufbau 8000: ", Type.hash);
+                benchmarkCreation(16000, 500, "Aufbau 16000: ", Type.hash);
+                benchmarkSearchSuccess(8000, 100, "Search Success 8000: ", Type.hash, true);
+                benchmarkSearchSuccess(16000, 100, "Search Success 16000: ", Type.hash, true);
+                benchmarkSearchSuccess(8000, 100, "Search Failure 8000: ", Type.hash, false);
+                benchmarkSearchSuccess(16000, 100, "Search Failure 16000: ", Type.hash, false);
+                System.out.println("");
+                System.out.println("BinaryTreeDictionary");
+                benchmarkCreation(8000, 500, "Aufbau 8000: ", Type.binary);
+                benchmarkCreation(16000, 500, "Aufbau 16000: ", Type.binary);
+                benchmarkSearchSuccess(8000, 100, "Search Success 8000: ", Type.binary, true);
+                benchmarkSearchSuccess(16000, 100, "Search Success 16000: ", Type.binary, true);
+                benchmarkSearchSuccess(8000, 100, "Search Failure 8000: ", Type.binary, false);
+                benchmarkSearchSuccess(16000, 100, "Search Failure 16000: ", Type.binary, false);
                 System.out.println("");
             }
         }
@@ -98,7 +106,7 @@ public class TestBasedUI {
                 dict = new HashDictionary<>();
                 break;
             case binary:
-                System.out.println("Not yet implemented");
+                dict = new BinaryTreeDictionary<>();
                 break;
         }
     }
