@@ -247,7 +247,7 @@ public class BinaryTreeDictionary<K, V> implements Dictionary<K, V> {
 
 		@Override
 		public boolean hasNext() {
-			return parentOfLeftMostAncestor(current) != null || leftMostDescendant(current.right) != null;
+			return current != null;
 		}
 
 		@Override
@@ -255,12 +255,13 @@ public class BinaryTreeDictionary<K, V> implements Dictionary<K, V> {
 			if(!hasNext()) {
 				throw new NoSuchElementException();
 			}
+			Node<K ,V> temp = current;
 			if (current.right != null) {
 				current = leftMostDescendant(current.right);
 			} else {
 				current = parentOfLeftMostAncestor(current);
 			}
-			return new Entry<>(current.key, current.value);
+			return new Entry<>(temp.key, temp.value);
 		}
 
 		@Override
