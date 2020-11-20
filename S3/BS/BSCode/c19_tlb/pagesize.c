@@ -2,13 +2,13 @@
 #include <stdio.h>
 
 int main() {
-    printf("Pagesize: %d", getpagesize());
+    printf("Before array: Pagesize: %d\n", getpagesize());
 
     int array[1000];
     for (int i = 0;i < 1000 ; i++) {
         array[i] = 0;
     }
 
-    printf("Pagesize: %d", getpagesize());
+    printf("After array: Pagesize: %d\n", getpagesize());
     return 0;
 }
