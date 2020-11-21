@@ -3,6 +3,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <sched.h>
 #include <fcntl.h>
 
 double calculateTime();
