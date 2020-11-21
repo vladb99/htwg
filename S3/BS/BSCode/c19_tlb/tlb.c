@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
     struct timespec start, end;
     int *array = (int *)malloc(numPages * pageSize);
 
-    printf("Page size: %d Byte\n", pageSize);
+    //printf("Page size: %d Byte\n", pageSize);
     printf("int size: %lu Byte\n", sizeof(int));
 
     int jump = pageSize / sizeof(int);
@@ -44,16 +44,20 @@ int main(int argc, char **argv) {
     printf("Overhead loop: %f\n", overheadLoop);
 
     // Page access loop
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     for (int j = 0; j < trials; j++) {
-        clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+        //clock_gettime(CLOCK_MONOTONIC_RAW, &start);
         for (int i = 0; i < numPages * jump; i += jump) {
             array[i] += 1;
         }
-        clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-        timeSum += calculateTime(&start, &end);
+        //clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+        //timeSum += calculateTime(&start, &end);
     }
-    timeSum = timeSum - overheadTimer - overheadLoop;
-    double averagePageAccess = timeSum / trials / numPages;
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+
+    //timeSum = timeSum - overheadTimer - overheadLoop;
+    //double averagePageAccess = timeSum / trials / numPages;
+    double averagePageAccess = calculateTime(&start, &end) / trials / numPages;
     printf("Average page access: %f ns\n", averagePageAccess);
     free(array);
 }
