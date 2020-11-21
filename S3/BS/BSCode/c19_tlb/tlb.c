@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
+    double timeSum = 0;
     int numPages = atoi(argv[1]);
     int trials = atoi(argv[2]);
     int pageSize = getpagesize();
@@ -22,18 +23,19 @@ int main(int argc, char **argv) {
     printf("Page size: %d Byte\n", pageSize);
     printf("int size: %lu Byte\n", sizeof(int));
 
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-
     int jump = pageSize / sizeof(int);
     printf("jump: %d\n", jump);
 
-    for (int i = 0; i < numPages * jump; i += jump) {
-        array[i] += 1;
+    for (int j = 0; j < trials; j++) {
+        clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+        for (int i = 0; i < numPages * jump; i += jump) {
+            array[i] += 1;
+        }
+        clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+        timeSum += calculateTime(&start, &end);
     }
-
-    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-    double diff = calculateTime(&start, &end);
-    printf("Page access: %f in ns\n", diff);
+    double averagePageAccess = timeSum / trials / numPages;
+    printf("Average page access: %f ns\n", averagePageAccess);
 }
 
 double calculateTime(struct timespec *start, struct timespec *end) {
