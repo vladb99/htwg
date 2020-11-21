@@ -6,6 +6,10 @@
 
 double calculateTime();
 
+// gdb tbl -> run 10 1000
+// valgrind --leak-check=yes ./tlb 10 1000
+// gcc -o tlb tlb.c -Wall -Wextra -Wpedantic
+
 int main(int argc, char **argv) {
     if (argc != 3) {
         fprintf(stderr, "usage: ./tlb <num-pages> <trials>");
@@ -18,7 +22,7 @@ int main(int argc, char **argv) {
     int pageSize = getpagesize();
 
     struct timespec start, end;
-    int array[numPages * pageSize / sizeof(int)];
+    int *array = (int *)malloc(numPages * pageSize);
 
     printf("Page size: %d Byte\n", pageSize);
     printf("int size: %lu Byte\n", sizeof(int));
@@ -26,6 +30,20 @@ int main(int argc, char **argv) {
     int jump = pageSize / sizeof(int);
     printf("jump: %d\n", jump);
 
+    // Overhead timer
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    double overheadTimer = calculateTime(&start, &end);
+    printf("Overhead timer: %f\n", overheadTimer);
+
+    // Overhead for loop
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    for (int i = 0; i < numPages * jump; i += jump) {}
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    double overheadLoop = calculateTime(&start, &end);
+    printf("Overhead loop: %f\n", overheadLoop);
+
+    // Page access loop
     for (int j = 0; j < trials; j++) {
         clock_gettime(CLOCK_MONOTONIC_RAW, &start);
         for (int i = 0; i < numPages * jump; i += jump) {
@@ -34,8 +52,10 @@ int main(int argc, char **argv) {
         clock_gettime(CLOCK_MONOTONIC_RAW, &end);
         timeSum += calculateTime(&start, &end);
     }
+    timeSum = timeSum - overheadTimer - overheadLoop;
     double averagePageAccess = timeSum / trials / numPages;
     printf("Average page access: %f ns\n", averagePageAccess);
+    free(array);
 }
 
 double calculateTime(struct timespec *start, struct timespec *end) {
