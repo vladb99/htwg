@@ -19,13 +19,12 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    double timeSum = 0;
     int numPages = atoi(argv[1]);
     int trials = atoi(argv[2]);
     int pageSize = getpagesize();
 
     struct timespec start, end;
-    int *array = (int *)malloc(numPages * pageSize);
+    int *array = (int *)calloc(numPages, pageSize);
 
     cpu_set_t mask;
     CPU_ZERO(&mask);
