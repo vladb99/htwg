@@ -3,6 +3,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 double calculateTime();
 
@@ -23,6 +24,13 @@ int main(int argc, char **argv) {
 
     struct timespec start, end;
     int *array = (int *)malloc(numPages * pageSize);
+
+    cpu_set_t mask;
+    CPU_ZERO(&mask);
+    CPU_SET(0, &mask);
+    if (sched_setaffinity(0, sizeof(mask), &mask) == -1) {
+        exit(EXIT_FAILURE);
+    }
 
     //printf("Page size: %d Byte\n", pageSize);
     printf("int size: %lu Byte\n", sizeof(int));
