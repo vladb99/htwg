@@ -5,15 +5,22 @@ Created on Sat Nov 21 12:24:43 2020
 
 @author: vladb
 """
-
+import sys
 import subprocess
 import numpy as np
 import matplotlib.pyplot as plt;
 import re
+import argparse
+
+parser = argparse.ArgumentParser(description='Script so useful.')
+parser.add_argument("--trials", type=int, default=10000)
+
+args = parser.parse_args()
+
+trials = args.trials
 
 maxNumPages = 16384
 numPages = 1
-trials = 10000
 
 arrayNumPages = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 arrayTime = np.zeros(int(round(np.log(maxNumPages) / np.log(2))))
@@ -43,6 +50,6 @@ plt.plot(x2, arrayTime, 'o-')
 plt.xticks(x2, arrayNumPages, fontsize='x-small')
 plt.ylabel('Time per page access in ns')
 plt.xlabel('Number of pages')
-plt.title('TLB Size Measurement (multiple cpu)')
+plt.title('TLB Size Measurement (multiple cpu) ' + str(trials))
 plt.savefig('page_access.png')
 plt.show()
