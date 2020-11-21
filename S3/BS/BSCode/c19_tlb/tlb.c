@@ -38,26 +38,28 @@ int main(int argc, char **argv) {
 
     // Overhead for loop
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-    for (int i = 0; i < numPages * jump; i += jump) {}
+    for (int j = 0; j < trials; j++) {
+        for (int i = 0; i < numPages * jump; i += jump) {}
+    }
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
     double overheadLoop = calculateTime(&start, &end);
     printf("Overhead loop: %f\n", overheadLoop);
 
     // Page access loop
-    //clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     for (int j = 0; j < trials; j++) {
-        clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+        //clock_gettime(CLOCK_MONOTONIC_RAW, &start);
         for (int i = 0; i < numPages * jump; i += jump) {
             array[i] += 1;
         }
-        clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-        timeSum += calculateTime(&start, &end);
+        //clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+        //timeSum += calculateTime(&start, &end);
     }
-    //clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 
-    timeSum = timeSum - overheadTimer - overheadLoop;
-    double averagePageAccess = timeSum / trials / numPages;
-    //double averagePageAccess = calculateTime(&start, &end) / trials / numPages;
+    //timeSum = timeSum - overheadTimer - overheadLoop;
+    //double averagePageAccess = timeSum / trials / numPages;
+    double averagePageAccess = (calculateTime(&start, &end) - overheadLoop - overheadTimer) / trials / numPages;
     printf("Average page access: %f ns\n", averagePageAccess);
     free(array);
 }

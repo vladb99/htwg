@@ -13,7 +13,7 @@ import re
 
 maxNumPages = 16384
 numPages = 1
-trials = 1000000
+trials = 10000
 
 arrayNumPages = np.zeros(int(round(np.log(maxNumPages) / np.log(2))))
 arrayTime = np.zeros(int(round(np.log(maxNumPages) / np.log(2))))
