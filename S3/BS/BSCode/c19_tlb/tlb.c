@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 
     //timeSum = timeSum - overheadTimer - overheadLoop;
     //double averagePageAccess = timeSum / trials / numPages;
-    double averagePageAccess = (calculateTime(&start, &end) - overheadLoop - overheadTimer) / trials / numPages;
+    double averagePageAccess = (calculateTime(&start, &end)) / trials / numPages;
     printf("Average page access: %f ns\n", averagePageAccess);
     free(array);
 }
