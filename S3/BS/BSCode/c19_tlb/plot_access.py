@@ -19,13 +19,13 @@ args = parser.parse_args()
 
 trials = args.trials
 
-maxNumPages = 16384
+maxNumPages = 524288
 numPages = 1
 
-arrayNumPages = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+arrayNumPages = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 arrayTime = np.zeros(int(round(np.log(maxNumPages) / np.log(2))))
 
-x = [1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192]
+x = [1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131071,262144]
 
 count = 0
         
@@ -47,7 +47,7 @@ N = len(arrayNumPages)
 x2 = np.arange(N)
     
 plt.plot(x2, arrayTime, 'o-')
-plt.xticks(x2, arrayNumPages, fontsize='x-small')
+plt.xticks(x2, arrayNumPages, rotation=20, fontsize='x-small')
 plt.ylabel('Time per page access in ns')
 plt.xlabel('Number of pages')
 plt.title('TLB Size Measurement (multiple cpu) ' + str(trials))
