@@ -1,0 +1,448 @@
+%---------------
+%╔═╗╔═╗╔╦╗╦ ╦╔═╗
+%╚═╗║╣  ║ ║ ║╠═╝
+%╚═╝╚═╝ ╩ ╚═╝╩
+%---------------
+
+% language setup
+\newcommand{\docLanguage}{ngerman}
+%\newcommand{\docLanguage}{english}
+
+% DOCUMENT SETUP
+\documentclass[12pt, oneside, a4paper, \docLanguage]{report}
+\usepackage[left=3cm,
+			right=2.5cm,
+			top=2.5cm,
+			bottom=2.5cm,
+			includehead,
+			includefoot]{geometry}
+
+% line spacing
+\usepackage{setspace}
+\setstretch{1,25} % 15/12 --> 1.25
+
+% encoding setup
+% T1 font encoding for languages that use a latin alphabet
+\usepackage[T1]{fontenc}
+
+% enhanced input encoding handling - utf8 for äÄüÜöÖß...
+\usepackage[utf8]{inputenc}
+
+%de­fines Adobe Times Ro­man as de­fault text font
+\usepackage{mathptmx}
+\usepackage{times} % needed for acronym package
+
+%PDF linking package
+\usepackage[hidelinks]{hyperref}
+
+
+% Language Setup
+\usepackage[\docLanguage]{babel}
+% after babel - set chapter string
+\AtBeginDocument{\renewcommand{\chaptername}{}}
+
+% language specific bibliography style
+\usepackage[numbers, square]{natbib}
+%\setcitestyle{square,aysep={},yysep={;}}
+\usepackage{babelbib}
+% bliographystyle setup
+% babel specific: babplain, babplai3, babalpha, babunsrt, bababbrv, bababbr3
+\bibliographystyle{babunsrt}
+
+
+% enumeration
+\usepackage{enumitem}
+% tabular extension tabularx
+\usepackage{tabularx}
+
+% math packages
+\usepackage{amsmath}
+\usepackage{nicefrac}
+\usepackage{amsthm}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+%\usepackage{MnSymbol}
+
+
+%special characters
+\usepackage{amssymb}
+\usepackage{upgreek,textgreek}
+
+% acronym package
+\usepackage[printonlyused, footnote]{acronym}
+
+% breakable text in \seqsplit{}
+\usepackage{seqsplit}
+
+% \textmu
+\usepackage{textcomp}
+
+% package provides a way to compile sections of a document using the same preamble as the main document
+\usepackage{subfiles}
+
+% driver-independent color extension - used by listings,tabularx
+\usepackage[usenames,dvipsnames,table,xcdraw]{xcolor}
+
+% -- SYNTAX HIGHLIGHTING --
+\usepackage{listings}
+%\input{cfgs/listings/listings_def_lang_bash-cmd.tex} % adds style BASH_CMD
+%\input{cfgs/listings/listings_def_lang_bash-script.tex} % adds style BASH_SCRIPT
+\input{cfgs/listings/listings_def_lang_latex.tex} % adds style LATEX
+%\input{cfgs/listings/listings_def_lang_matlab.tex} % adds style MATLAB
+\input{cfgs/listings/listings_def_lang_python.tex} % adds style PYTHON
+%\input{cfgs/listings/listings_def_lang_c++.tex} % adds style CPP
+%\input{cfgs/listings/listings_def_lang_c.tex} % adds style C
+%\input{cfgs/listings/listings_def_lang_json.tex} % adds style JSON
+
+% HEADLINE CFG
+\usepackage{fancyhdr} % Headers and footers
+\usepackage{lastpage}
+\usepackage{ifthen}
+\setlength{\headheight}{1.5cm}
+%\pagestyle{fancy} % All pages have headers and footers
+% override plain page style for \part, \chapter or
+% \maketitle, which implicit specifies plain page style
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_plain.tex}
+% set list pagestyle
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_preface.tex}
+% set default pagestyle
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_default_onepage.tex}
+%\input{cfgs/fancyhdr/fancyhdr_pagestyle_default_twopage.tex}
+
+\renewcommand{\chaptermark}[1]{\markright{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% PICTURE CFG
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage[list=true,listformat=simple]{subcaption}
+% floating prevention packages
+\usepackage{float}    % used with [H] positioning parameter
+\usepackage{placeins} % \FloatBarrier
+% tikz packages
+\usepackage{tikz}
+\usepackage{standalone}
+\usepackage{pgfplots}
+
+
+% include only specified tex files - uncommend here
+\includeonly{preface/cover,
+             preface/abstract,
+             preface/tableofcontents,
+             preface/listoffigures,
+             preface/listoftables,
+             preface/lstlistoflistings,
+             appendix/bibliography}
+
+%-------------------
+%╔═╗╔╦╗╦═╗╦╔╗╔╔═╗╔═╗
+%╚═╗ ║ ╠╦╝║║║║║ ╦╚═╗
+%╚═╝ ╩ ╩╚═╩╝╚╝╚═╝╚═╝
+%-------------------
+\newcommand{\strLecture}{Signale, Systeme und Sensoren}
+\newcommand{\strDate}{\today}
+\newcommand{\strAuthorA}{D. Wollmann}
+\newcommand{\strAuthorB}{V. Bratulescu}
+%\newcommand{\strAuthorC}{C. Author}
+\newcommand{\strAuthorAEmail}{da161wol@htwg-konstanz.de}
+\newcommand{\strAuthorBEmail}{vl161bra@htwg-konstanz.de}
+%\newcommand{\strAuthorCEmail}{cauthor@htwg-konstanz.de}
+% Versuchsbeschreibung
+\newcommand{\strTopic}{Kalibrierung von Digitalkameras}
+\newcommand{\strAbstract}{
+
+In diesem Versuch werden die Eigenschaften von digitalen Kameras untersucht. Dabei wird die Python Bibliothek OpenCV eingesetzt, um die Kamerasensoren zu kalibrieren. 
+Ein Grauwertkeil wird mit einer digitalen Kamera aufgenommen und für jede Grauwertstufe den Mittelwert und die Standardabweichung berechnet. Als nächstes wird versucht die Auswirkungen des Dunkelstroms zu eliminieren. Dafür wird ein sogenanntes Dunkelbild erstellt, mit dem dann das Originalbild korrigiert wird. Außerdem gibt es noch das Problem, dass die Optik der Kamera die Helligkeit nicht gleichmäßig auf den Sensor überträgt und somit eine Vignettierung entsteht. Dafür wird ein Weißbild erstellt. Im letzten Teil der Aufgabe werden die Bilder auf funktionsuntüchtige Pixel, wie zum Beispiel hot, stuck und dead pixel untersucht.
+}
+% hyperref customization
+\hypersetup{
+	pdftitle     = {\strTopic}, % title
+	pdfsubject   = {\strLecture}, % subject of the document
+	pdfauthor    = {\strAuthorA, \strAuthorB}, % author
+	pdfkeywords  = {}, % list of keywords
+	pdfcreator   = {}, % creator of the document
+	pdfproducer  = {}, % producer of the document
+	colorlinks   = false, % false: boxed links; true: colored links
+	linkcolor    = red, % color of internal links (change box color with linkbordercolor)
+    citecolor    = green, % color of links to bibliography
+    filecolor    = magenta, % color of file links
+    urlcolor     = cyan, % color of external links
+	%bookmarks    = true, % show bookmarks bar?
+	unicode	     = true, % non-Latin characters in Acrobat’s bookmarks
+	pdftoolbar   = true, % show Acrobat’s toolbar?
+	pdfmenubar   = true, % show Acrobat’s menu?
+    pdffitwindow = false, % window fit to page when opened
+	pdfnewwindow = true % links in new PDF window
+}
+
+%-----------------------------------------
+% ╔╗ ╔═╗╔═╗╦╔╗╔  ╔╦╗╔═╗╔═╗╦ ╦╔╦╗╔═╗╔╗╔╔╦╗
+% ╠╩╗║╣ ║ ╦║║║║   ║║║ ║║  ║ ║║║║║╣ ║║║ ║
+% ╚═╝╚═╝╚═╝╩╝╚╝  ═╩╝╚═╝╚═╝╚═╝╩ ╩╚═╝╝╚╝ ╩
+%-----------------------------------------
+
+\begin{document}
+\pagenumbering{Roman}
+
+\setcounter{section}{0}
+\include{preface/cover}
+
+\include{preface/abstract}
+\clearpage
+
+%
+% TABLE OF CONTENTS
+%
+\include{preface/tableofcontents}
+
+%
+% Abbildungsverzeichnis
+%
+\include{preface/listoffigures}
+
+%
+% Tabellenverzeichnis
+%
+\include{preface/listoftables}
+
+%
+% Listingverzeichnis
+%
+\include{preface/lstlistoflistings}
+
+
+%--------------------------
+% ╔═╗╦ ╦╔═╗╔═╗╔╦╗╔═╗╦═╗╔═╗
+% ║  ╠═╣╠═╣╠═╝ ║ ║╣ ╠╦╝╚═╗
+% ╚═╝╩ ╩╩ ╩╩   ╩ ╚═╝╩╚═╚═╝
+%--------------------------
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\pagestyle{default}
+%
+% CHAPTER Einleitung
+%
+\chapter{Einleitung}
+\label{chap:EINL}
+
+
+%
+% CHAPTER Versuch 1
+%
+\chapter{Versuch 1: Aufnahme und Analyse eines Grauwertkeiles}
+\label{chap:VERSUCH_1}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_1_FRAGESTELLUNG}
+Im ersten Versuch wird einen Grauwertkeil mithilfe einer Webcam aufgenommen. In Absprache mit Herrn Franz haben wir alle Bilder der Versuche mit einer digitalen Kamera aufgenommen. Dabei verwenden wir die Sony A6300. Der Grauwertkeil wurde an der Wand befestigt und senkrecht dazu die Kamera aufgestellt. Die Kamera wurde ebenfalls so ausgerichtet, dass die Grauwertstufen parallel zum Bildrand verlaufen. Der Lichteinfluss im Raum wurde so angepasst, dass kein Schatten auf das Bild einfällt.
+
+Das aufgenommene Bild wird mit der OpenCV Bibliothek in Python eingelesen und in ein Grauwertbild umgewandelt. Dieses wird in die einzelnen Stufen eingeteilt und jeweils die Standardabweichung und der Mittelwert berechnet. Dabei sollen die Unterbilder möglichst viele Pixel der jeweiligen Stufe umfassen ohne die Stufenränder zu berühren.
+
+Da unser aufgenommenes Bild eine Auflösung von 6000x4000 Pixel hat und mit der Methode cv2.imshow nicht angezeigt werden kann, haben wir uns dazu entschieden das Bild auf die Auflösung 600x400 Pixel zu skalieren, was 10\% der originalen Größe entspricht. Die Skalierung wurde mithilfe von Python durchgeführt.
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=\textwidth, angle=-90, scale=0.8]{media/Versuchsaufbau_Grauwertkeil}
+	\caption{Versuchsaufbau}
+	\label{fig:VERSUCH_1_AUFBAU}
+\end{figure}
+
+\section{Messwerte}
+\label{chap:VERSUCH_1_MESSWERTE}
+Die Aufnahme mit den Einstellungen aus der Tabelle \ref{fig:VERSUCH_1_MESSWERTE_TABELLE} ergab folgendes Bild \ref{fig:VERSUCH_1_MESSWERTE_ORIGINAL}.
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=\textwidth, angle=90, scale=0.6]{media/original_versuch1.png}
+	\caption{Der Grauwertkeil}
+	\label{fig:VERSUCH_1_MESSWERTE_ORIGINAL}
+\end{figure}
+
+\begin{table}[H]
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Beschreibung}                & \textbf{Wert} \\ \hline
+Frame Width							 & 600			 \\ \hline
+Frame Height						 & 400			 \\ \hline
+ISO                                  & 100           \\ \hline
+Blende                               & f3.2          \\ \hline
+Verschlusszeit                       & 1/13          \\ \hline
+Manueller Fokus                      & Ja            \\ \hline
+Abstand von Objektiv zu Grauwertkeil & 32.5cm        \\ \hline
+\end{tabular}
+\caption{Einstellungen der Sony A6300}
+\label{fig:VERSUCH_1_MESSWERTE_TABELLE}
+\end{table}
+
+\section{Auswertung}
+\label{chap:VERSUCH_1_AUSWERTUNG}
+Das Originalbild wird mit der Funktion cv2.cvtcolor in ein Grauwertbild umgewandelt. Mithilfe von Indizierung und Index Slicing wurde das Grauwertbild in fünf Unterbilder unterteilt. 
+
+\begin{figure}[hbt!]
+      \centering
+      \subfloat[Grauwert 1]{
+        \includegraphics[width=0.08\textwidth]{media/gray1_versuch1.png}\label{fig:f1}}
+      \subfloat[Grauwert 2]{
+        \includegraphics[width=0.08\textwidth]{media/gray2_versuch1.png}\label{fig:f2}}
+      \subfloat[Grauwert 3]{
+        \includegraphics[width=0.08\textwidth]{media/gray3_versuch1.png}\label{fig:f3}}
+      \subfloat[Grauwert 4]{
+        \includegraphics[width=0.08\textwidth]{media/gray4_versuch1.png}\label{fig:f4}}
+      \subfloat[Grauwert 5]{
+        \includegraphics[width=0.08\textwidth]{media/gray5_versuch1.png}\label{fig:f5}}
+        \hfill
+    \subfloat[Grauwertkeil]{
+        \includegraphics[width=0.4 \textwidth]{media/grauwertkeil_versuch1.png}\label{fig:f6}}
+    \caption{Die einzelnen Grauwertsstufen und das zusätzliche Gesamtbild}
+    \label{fig:VERSUCH_1_AUSWERTUNG_GRAUWERTKEIL}
+\end{figure}
+
+Durch die Funktion cv2.meanStdDev wird die empirische Standardabweichung und der Mittelwert der einzelnen Unterbilder des Grauwertkeils berechnet. Die Ergebnisse der Standardabweichungen und Mittelwerte sehen wir in Abbildung \ref{fig:VERSUCH_1_AUSWERTUNG_BERECHNUNG}.
+
+\begin{figure}[hbt!]
+      \centering
+      \subfloat[Mittelwert der Grauwerte]{
+      	\includegraphics[width=0.45\textwidth]{media/plot_durchschnitt_versuch1.png}\label{fig:f1}}
+      \hfill
+      \subfloat[Standardabweichung der Grauwerte]{
+       	\includegraphics[width=0.45\textwidth]{media/plot_standardabweichung_versuch1.png}\label{fig:f2}}
+      \caption{Standardabweichung und Durchschnitt der jeweiligen Grauwerte}
+      \label{fig:VERSUCH_1_AUSWERTUNG_BERECHNUNG}
+\end{figure}
+
+\section{Interpretation}
+\label{chap:VERSUCH_1_INTERPRETATION}
+In Abbildung \ref{fig:VERSUCH_1_AUSWERTUNG_GRAUWERTKEIL} ist zu sehen, dass die einzelnen Grauwertkeile unterschiedlich hoch sind, was darauf zurückzuführen ist, dass wir die Array Breite unterschiedlich gewählt haben, um die Stufenränder nicht zu berühren. Die große Standardabweichung bei Gray 1 in \ref{fig:VERSUCH_1_AUSWERTUNG_BERECHNUNG}, könnte daran liegen, dass wir in diesem Bereich am wenigsten Messwerte genommen haben, was das Ergebnis verfälschen könnte.
+
+Zusammenfassend kann man sagen, dass die einzelnen Grauwertstufen eine geringe Standardabweichung aufweisen, was bedeutet, dass fast alle Pixel den gleichen Wert haben.
+
+
+%
+% CHAPTER Versuch 2
+%
+\chapter{Versuch 2: Aufnahme eines Dunkelbildes}
+\label{chap:VERSUCH_2}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_2_FRAGESTELLUNG}
+Aufgrund von Fertigungstoleranzen und von spontan entstehenden Ladungsträgerpaaren durch Wärmezufuhr, entsteht ein sogennanter Dunkelstrom. Dieser und das thermische Rauschen der Ausleseelektronik führt dazu, dass jeder Pixel ein leicht unterschiedlicher Nullpunkt hat. Um diesen pixelweisen Offset zu eliminieren, wird in Versuch 2 ein Dunkelbild erstellt. Das Dunkelbild wird von einem Eingabebild subtrahiert und somit bekommt man ein korrigiertes Endbild. Das Dunkelbild haben wir aufgenommen, indem wir das Objektiv komplett abgedeckt haben. In diesem Versuch werden 10 Bilder aufgenommen und dabei pro Pixel ein Mittelwert berechnet. Wenn man alle berechneten Mittelwerte zu einem Bild zusammenfügt, hat man das sogenannte Dunkelbild, das vom Eingabebild subtrahiert werden kann.
+\newpage
+\section{Messwerte}
+\label{chap:VERSUCH_2_MESSWERTE}
+In der nachfolgenden Abbildung \ref{fig:VERSUCH_2_MESSWERTE_ORIGINAL} ist eines der aufgenommenen Bilder, wo das Objektiv verdeckt war, dargestellt.
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.5\textwidth]{media/originalBlackImage_versuch2.png}
+	\caption{Eins der zehn aufgenommenen Bilder}
+	\label{fig:VERSUCH_2_MESSWERTE_ORIGINAL}
+\end{figure}
+
+\section{Auswertung}
+\label{chap:VERSUCH_2_AUSWERTUNG}
+Um das Objektiv abzudecken, haben wir die standard mitgelieferte Schutzkappe verwendet. Dadurch konnten wir ein maximal dunkles Bild erzielen.
+Zu aller erst haben wir die 10 aufgenommenen Bilder eingelesen, in ein Grauwertbild umgewandelt und anschließend in ein float image konvertiert. Danach haben wir den pixelweisen Mittelwert berechnet und in einem Ausgabebild gespeichert, welches wir zuvor wieder zurück konvertiert haben als int image. Das Ausgabebild wurde dann mit der Funktion cv2.equalizeHist kontrastmaximiert und zum Schluss vom Grauwertkeilbild subtrahiert. Das konstrastmaximierte Bild ist in Abbildung \ref{fig:VERSUCH_2_MESSWERTE_CONSTRAST} zu sehen.
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.5\textwidth]{media/maxContrastBlackImage_versuch2.png}
+	\caption{Konstrastmaximiertes Dunkelbild}
+	\label{fig:VERSUCH_2_MESSWERTE_CONSTRAST}
+\end{figure}
+
+Der korrigierte Grauwertkeil ist in Abbildung \ref{fig:VERSUCH_2_MESSWERTE_CORRECTED} dargestellt.
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.5\textwidth]{media/subGrayIntImage_versuch2.png}
+	\caption{Korrigierter Grauwertkeil}
+	\label{fig:VERSUCH_2_MESSWERTE_CORRECTED}
+\end{figure}
+
+\section{Interpretation}
+\label{chap:VERSUCH_2_INTERPRETATION}
+Da unser korrigierter Grauwertkeil relativ ähnlich, wenn nicht sogar identisch zu unserem Ausgangsbild ist, können wir davon ausgehen, dass unsere verwendete Kamera, so gut wie keine Dunkelströme aufweist und die schwarzen Farben sehr gut aufnimmt. Des weiteren hatten auch unsere Pixel der aufgenommenen zehn Bilder, einen sehr nahen Wert an null, bzw. nur vereinzelte Pixel standen auf eins. Was dementsprechend ein Dunkelbild ergibt, welches kein starken Einfluss auf die Subtraktion des Eingangsbildes hat.
+%
+% CHAPTER Versuch 3
+%
+\chapter{Versuch 3}
+\label{chap:VERSUCH_3}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_3_FRAGESTELLUNG}
+
+\section{Messwerte}
+\label{chap:VERSUCH_3_MESSWERTE}
+
+\section{Auswertung}
+\label{chap:VERSUCH_3_AUSWERTUNG}
+
+\section{Interpretation}
+\label{chap:VERSUCH_3_INTERPRETATION}
+
+%
+% CHAPTER Versuch 4
+%
+\chapter{Versuch 4}
+\label{chap:VERSUCH_4}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_4_FRAGESTELLUNG}
+
+\section{Messwerte}
+\label{chap:VERSUCH_4_MESSWERTE}
+
+\section{Auswertung}
+\label{chap:VERSUCH_4_AUSWERTUNG}
+
+\section{Interpretation}
+\label{chap:VERSUCH_4_INTERPRETATION}
+%
+% CHAPTER Anhang
+%
+\renewcommand\thesection{A.\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+
+\chapter*{Anhang}
+\label{chap:APPENDIX}
+\addcontentsline{toc}{chapter}{Anhang}
+%\setcounter{chapter}{0}
+\addtocounter{chapter}{1}
+\setcounter{section}{0}
+
+\section{Quellcode}
+\label{chap:APPENDIX_SOURCECODE}
+
+\subsection{Quellcode Versuch 1}
+\label{chap:APPENDIX_SOURCECODE_V1}
+
+\subsection{Quellcode Versuch 2}
+\label{chap:APPENDIX_SOURCECODE_V2}
+
+\subsection{Quellcode Versuch 3}
+\label{chap:APPENDIX_SOURCECODE_V3}
+
+\subsection{Quellcode Versuch 4}
+\label{chap:APPENDIX_SOURCECODE_V4}
+
+
+\section{Messergebnisse}
+\label{chap:APPENDIX_MEASUREMENT_SOURCE}
+
+%
+% Literaturverzeichnis
+%
+\include{appendix/bibliography}
+
+\end{document}
+%------------------------------------
+% ╔═╗╔╗╔╔╦╗  ╔╦╗╔═╗╔═╗╦ ╦╔╦╗╔═╗╔╗╔╔╦╗
+% ║╣ ║║║ ║║   ║║║ ║║  ║ ║║║║║╣ ║║║ ║
+% ╚═╝╝╚╝═╩╝  ═╩╝╚═╝╚═╝╚═╝╩ ╩╚═╝╝╚╝ ╩
+%------------------------------------
