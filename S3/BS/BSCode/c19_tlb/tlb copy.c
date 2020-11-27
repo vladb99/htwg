@@ -1,7 +1,3 @@
-// Gruppe B12
-// Daniel Wollmann
-// Vlad Bratulescu
-
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +7,10 @@
 #include <sched.h>
 
 double calculateTime();
+
+// gdb tbl -> run 10 1000
+// valgrind --leak-check=yes ./tlb 10 1000
+// gcc -o tlb tlb.c -Wall -Wextra -Wpedantic
 
 int main(int argc, char **argv) {
     if (argc != 3) {

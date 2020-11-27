@@ -1,10 +1,12 @@
+# Gruppe B12
+# Daniel Wollmann
+# Vlad Bratulescu
+
+# Beispielaufruf: ./plot_access.py --trials 3000
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Nov 21 12:24:43 2020
 
-@author: vladb
-"""
 import sys
 import subprocess
 import numpy as np
