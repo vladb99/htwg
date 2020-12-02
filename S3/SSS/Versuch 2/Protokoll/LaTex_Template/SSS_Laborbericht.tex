@@ -230,7 +230,16 @@ Ein Grauwertkeil wird mit einer digitalen Kamera aufgenommen und für jede Grauw
 %
 \chapter{Einleitung}
 \label{chap:EINL}
+In dem zweiten Versuch der Versuchsreihe geht es um die Kalibrierung von Kameras.
+Dabei wird die Python Bibliothek OpenCV eingesetzt, um die Kamerasensoren zu kalibrieren.
 
+Ein Grauwertkeil wird mit einer digitalen Kamera aufgenommen und für jede Grauwertstufe der Mittelwert und die Standardabweichung berechnet.
+
+Als nächstes wird versucht die Auswirkungen des Dunkelstroms zu eliminieren. Dafür werden zehn Dunkelbilder aufgenommen und daraus der pixelweise Mittelwert berechnet, welcher dann vom Eingangsbild subtrahiert wird. 
+
+Außerdem gibt es noch das Problem, dass die Optik der Kamera die Helligkeit nicht gleichmäßig auf den Sensor überträgt und somit eine Vignettierung entsteht. Dafür werden zehn Weißbilder aufgenommen und ebenfalls der pixelweise Mittelwerte berechnet. Nach der Subtraktion des Dunkelbildes vom Weißbild wird dieses normalisiert, welches dann vom Eingangsbild dividiert werden kann. 
+
+Im letzten Versuch wird der Sensor auf funktionsuntüchtige Pixel, wie zum Beispiel hot, stuck und dead pixel untersucht. Dabei wird das Dunkel- und das Weißbild analysiert. Anschließend wird das korrigierte Eingangsbild mit dem originalen Eingangsbild verglichen. 
 
 %
 % CHAPTER Versuch 1
@@ -252,7 +261,7 @@ Da unser aufgenommenes Bild eine Auflösung von 6000x4000 Pixel hat und mit der 
 	\caption{Versuchsaufbau}
 	\label{fig:VERSUCH_1_AUFBAU}
 \end{figure}
-
+\newpage
 \section{Messwerte}
 \label{chap:VERSUCH_1_MESSWERTE}
 Die Aufnahme mit den Einstellungen aus der Tabelle \ref{fig:VERSUCH_1_MESSWERTE_TABELLE} ergab folgendes Bild \ref{fig:VERSUCH_1_MESSWERTE_ORIGINAL}.
@@ -265,6 +274,7 @@ Die Aufnahme mit den Einstellungen aus der Tabelle \ref{fig:VERSUCH_1_MESSWERTE_
 \end{figure}
 
 \begin{table}[H]
+\centering\small
 \begin{tabular}{|l|l|}
 \hline
 \textbf{Beschreibung}                & \textbf{Wert} \\ \hline
@@ -279,7 +289,7 @@ Abstand von Objektiv zu Grauwertkeil & 32.5cm        \\ \hline
 \caption{Einstellungen der Sony A6300}
 \label{fig:VERSUCH_1_MESSWERTE_TABELLE}
 \end{table}
-
+\newpage
 \section{Auswertung}
 \label{chap:VERSUCH_1_AUSWERTUNG}
 Das Originalbild wird mit der Funktion cv2.cvtcolor in ein Grauwertbild umgewandelt. Mithilfe von Indizierung und Index Slicing wurde das Grauwertbild in fünf Unterbilder unterteilt. 
@@ -371,38 +381,144 @@ Da unser korrigierter Grauwertkeil relativ ähnlich, wenn nicht sogar identisch 
 %
 % CHAPTER Versuch 3
 %
-\chapter{Versuch 3}
+\chapter{Versuch 3: Aufnahme eines Weißbildes}
 \label{chap:VERSUCH_3}
 
 \section{Fragestellung, Messprinzip, Aufbau, Messmittel}
 \label{chap:VERSUCH_3_FRAGESTELLUNG}
-
+Im dritten Versuch handelt es sich um den Effekt der Vignettierung. Die ungleichmäßige Übertragung der Helligkeit  auf den Sensor, führt zu einer Abdunkelung des Bildes zu den Rändern hin. Zur Kompensation wird deshalb ein Weißbild aufgenommen. Um dieses zu bekommen, wurden zehn Aufnahmen eines weißen Blatt Papiers gemacht. Der Abstand zur Kamera hat sich nicht geändert. Während der Aufnahme der Bilder wurde darauf geachtet, dass der Lichteinfluss auf das Blatt Papier gleichmäßig verteilt ist. Theoretisch bräuchte man für jede Fokuseinstellung ein eigenes Weißbild, dies soll in diesem Versuch aber nicht beachtet werden.
+Mithilfe eines Python Skripts wird der Mittelwert jedes einzelnen Pixels berechnet, um damit das thermische Rauschen eliminieren zu können. Von dem errechneten Mittelwertbild wird das Dunkelbild subtrahiert, welches kontrastmaximiert dargestellt werden soll. Das berechnete Bild soll normiert werden, sodass es den Mittelwert 1 erhält und wird anschließend vom korrigierten Eingangsbild dividiert.
+\newpage
 \section{Messwerte}
 \label{chap:VERSUCH_3_MESSWERTE}
-
+In der nachfolgenden Abbildung \ref{fig:VERSUCH_3_MESSWERTE_WHITE} ist eines der aufgenommenen Weißbilder dargestellt.
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.5\textwidth]{media/whiteScaled.png}
+	\caption{Eins der zehn aufgenommenen Bilder}
+	\label{fig:VERSUCH_3_MESSWERTE_WHITE}
+\end{figure}
 \section{Auswertung}
 \label{chap:VERSUCH_3_AUSWERTUNG}
+Zuerst wurden die zehn Bilder eingelesen und als Grauwertbilder umgewandelt. Danach wurde der pixelweise Mittelwert berechnet und in einem neuen Bild gespeichert (a), wovon wir dann das kontrastmaximierte Dunkelbild subtrahiert haben. Anschließend wurde das Ergebnis kontrastmaximiert dargestellt. Dies ist in Abbildung  \ref{fig:VERSUCH_3_AUSWERTUNG_WHITEIMG} zu sehen.
 
+\begin{figure}[hbt!]
+      \centering
+      \subfloat[Pixelweiser Mittelwert der einzelnen Aufnahmen]{
+      	\includegraphics[width=0.45\textwidth]{media/meanWhiteImage.png}\label{fig:f1}}
+      \hfill
+      \subfloat[Konstrastmaximiertes Weißbild]{
+       	\includegraphics[width=0.45\textwidth]{media/maxContrastWhiteImage.png}\label{fig:f2}}
+      \caption{Auswertung Weißbild}
+      \label{fig:VERSUCH_3_AUSWERTUNG_WHITEIMG}
+\end{figure}
+
+Als nächtes wird das Weißbild normalisiert. Dafür wurden alle Pixel mit dem Mittelwert des ganzen Bildes dividiert. Der Mittelwert des normalisierten Bildes beträgt in unserem Fall 1.0000002. Um das finale Bild aus Abbildung \ref{fig:VERSUCH_3_AUSWERTUNG_NORMAL} zu erhalten, wird das korrigierte Eingangsbild mit dem normalisierten Weißbild dividiert. 
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.5\textwidth]{media/finalImage.png}
+	\caption{Das korrigierte Bild aus \ref{fig:VERSUCH_2_MESSWERTE_CORRECTED} dividiert mit dem normalisierten Weißbild}
+	\label{fig:VERSUCH_3_AUSWERTUNG_NORMAL}
+\end{figure}
 \section{Interpretation}
 \label{chap:VERSUCH_3_INTERPRETATION}
+In dem kontrastmaximierten Weißbild ist die Vignettierung sehr deutlich zu sehen und man erkennt gut an welchen Stellen das Licht nicht gut auf den Sensor übertragen wird. Wie zu erwarten, befindet sich die Vignettierung an den Bildrändern. Bei unserem finalen Bild, erkennt man leider kein großen Unteschied zu dem korrigierten Eingangsbild. Deshalb haben wir die Bilder im Detail analysiert und festgestellt, dass ein Unterschied vorhanden ist, den man aber nicht mit bloßem Auge erkennen kann.
+
+Betrachtet man die Arrays des korrigierten und des finalen Bildes im oberen linken Bereich, wo eine Vignettierung vorhanden ist, sieht man, dass diese im finalen Bild kompensiert wurde und hellere Pixel aufweist. Des Weiteren ist im Bereich der unteren Mitte, wo nur eine schwache Vignettierung vorhanden ist, zu erkennen, dass durch das normalisierte Weißbild die Pixel sich nur schwach verändern. Dieser Vergleich ist in Abbildung \ref{fig:VERSUCH_3_INTERPRETATION_VERGLEICH} dargestellt und Abbildung \ref{fig:VERSUCH_3_INTERPRETATION_BEREICH} verdeutlicht welche Bereiche wir verglichen haben.
+
+\begin{figure}[hbt!]
+      \centering
+      \subfloat[Korrigiertes Eingangsbild links oben]{
+      	\includegraphics[width=0.45\textwidth]{media/InputImageObenLinks.PNG}\label{fig:f1}}
+      \hfill
+       \subfloat[Finales Bild aus \ref{fig:VERSUCH_3_AUSWERTUNG_NORMAL} links oben]{
+      	\includegraphics[width=0.45\textwidth]{media/FinalImageObenLinks.PNG}\label{fig:f2}}
+      \hfill
+      \subfloat[Korrigiertes Eingangsbild unten mitte]{
+       	\includegraphics[width=0.45\textwidth]{media/InputImageUntenMitte.PNG}\label{fig:f3}}
+       \subfloat[Finales Bild aus \ref{fig:VERSUCH_3_AUSWERTUNG_NORMAL} unten mitte]{
+      \hfill
+      	\includegraphics[width=0.45\textwidth]{media/FinalImageUntenMitte.PNG}\label{fig:f4}}
+      \caption{Auszüge der Arrays aus dem Python Skript}
+      \label{fig:VERSUCH_3_INTERPRETATION_VERGLEICH}
+\end{figure}
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.5\textwidth]{media/maxContrastWhiteImageEdited.png}
+	\caption{Analysierte Bereiche in einem roten und grünen Kreis dargestellt}
+	\label{fig:VERSUCH_3_INTERPRETATION_BEREICH}
+\end{figure}
 
 %
 % CHAPTER Versuch 4
 %
-\chapter{Versuch 4}
+\chapter{Versuch 4: Pixelfehler}
 \label{chap:VERSUCH_4}
 
 \section{Fragestellung, Messprinzip, Aufbau, Messmittel}
 \label{chap:VERSUCH_4_FRAGESTELLUNG}
-
+Im letzten Aufgabenteil wird das Dunkel- und Weißbild auf Funktionsuntüchtige Pixel untersucht. Es gibt verschiedene Arten von funktionsuntüchtigen Pixel, wie z.B. dead, hot und stuck pixel. Dead Pixel bleiben immer auf dem niedrigsten Wert stecken und lassen sich sehr gut auf einem Weißbild identifizieren. Stuck pixel hingegend bleiben immer auf dem Maximalwert und hot pixel gehen bei längerer Belichtungszeit in die Sättigung. Beide können sehr gut auf einem Dunkelbild erkannt werden. Am Schluss wird das finale Bild anhand des Mittelwertes und der Standardabweichung erneut, wie im ersten Versuch, ausgewertet.
+\newpage
 \section{Messwerte}
 \label{chap:VERSUCH_4_MESSWERTE}
+In den nachfolgenden Abbildungen, ist die Untersuchung auf funktionsuntüchtige Pixel dargestellt.	 
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.7\textwidth]{media/circleWhiteImage.png}
+	\caption{Untersuchung Weißbild}
+	\label{fig:VERSUCH_4_MESSWERTE_WEISSBILD}
+\end{figure}
 
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.7\textwidth]{media/circleBlackImage.png}
+	\caption{Untersuchung Weißbild}
+	\label{fig:VERSUCH_4_MESSWERTE_DUNKELBILD}
+\end{figure}
 \section{Auswertung}
 \label{chap:VERSUCH_4_AUSWERTUNG}
 
+In Abbildung \ref{fig:VERSUCH_4_MESSWERTE_WEISSBILD} wird das Weißbild auf funktionsuntüchtige Pixel untersucht. Mithilfe unseres Python Skripts haben wir den höchsten und niedrigsten Werte mit verschiedenen Farben eingekreist. Der grüne Kreis stellt den höchsten Wert dar, während der rote den niedrigsten Wert umkreist.
+
+In Abbildung \ref{fig:VERSUCH_4_MESSWERTE_DUNKELBILD} wird das Dunkelbild auf funktionsuntüchtige Pixel untersucht, wobei hier der rote Kreis den grünen überdeckt. Das ist darauf zurückzuführen, dass das Dunkelbild ein Array aus Nullen ist und wir standardmäßig die Kreise auf die Koordinaten (0,0) gesetzt haben.
+
+Die Werte dieser auffäligen Pixel werden in Tabelle \ref{fig:VERSUCH_4_AUSWERTUNG_TABELLE} aufgelistet.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Beschreibung}               & \textbf{Wert} \\ \hline
+Höchster Wert im Dunkelbild    & 0                     \\ \hline
+Niedrigster Wert im Dunkelbild & 0                     \\ \hline
+Höchster Wert im Weißbild       & 206                 \\ \hline
+Niedrigster Wert im Weißbild    & 166                 \\ \hline
+\end{tabular}
+\caption{Werte der eingekreisten Pixel}
+\label{fig:VERSUCH_4_AUSWERTUNG_TABELLE}
+\end{table}
+
+In Abbildung \ref{fig:VERSUCH_4_AUSWERTUNG_BERECHNUNG} wird das finale Bild \ref{fig:VERSUCH_3_AUSWERTUNG_NORMAL} anhand des Mittelwerts und der Standardabweichung ausgewertet.
+
+\begin{figure}[hbt!]
+      \centering
+      \subfloat[Mittelwert der Grauwerte]{
+      	\includegraphics[width=0.45\textwidth]{media/plot_durchschnitt_final.png}\label{fig:f1}}
+      \hfill
+      \subfloat[Standardabweichung der Grauwerte]{
+       	\includegraphics[width=0.45\textwidth]{media/plot_standardabweichung_final.png}\label{fig:f2}}
+      \caption{Standardabweichung und Durchschnitt der jeweiligen Grauwerte}
+      \label{fig:VERSUCH_4_AUSWERTUNG_BERECHNUNG}
+\end{figure}
+
 \section{Interpretation}
 \label{chap:VERSUCH_4_INTERPRETATION}
+Da im Dunkelbild der höchste Pixel den Wert Null hat, ist daraus zu schließen, dass es sich hierbei nicht um hot oder stuck pixels handelt. Im Weißbild hat der niedrigste Pixel den Wert 166, was darauf hindeutet, dass es sich hier nicht um ein dead pixel handelt. Aus den zwei Erkenntnissen, schließen wir daraus, das unsere verwendete Kamera keine funktionsuntüchtigen Pixels besitzt.
+
+Es ist zu sehen, dass die Standardabweichung generell etwas niedriger ausfällt, als im ersten Versuch. Dabei sticht deutlich der erste Grauwertkeil heraus, da die Standardabweichung von 5 auf 2.2 geschrumpft ist. Dass ist darauf zurückzuführen, dass es sich bei dem ersten Grauwertkeil um den weißen Teil handelt und die Vignettierung dabei aufgehoben wird.
+
 %
 % CHAPTER Anhang
 %
@@ -420,25 +536,22 @@ Da unser korrigierter Grauwertkeil relativ ähnlich, wenn nicht sogar identisch 
 \label{chap:APPENDIX_SOURCECODE}
 
 \subsection{Quellcode Versuch 1}
-\label{chap:APPENDIX_SOURCECODE_V1}
-
+\label{chap:APPENDIX_SOURCECODE_V1}	
+\lstinputlisting[style=PYTHON, frame=single, caption=Skript Versuch 1, captionpos=b, label=lst:APPENDIX_SOURCECODE_PLOT]{code/versuch1_1.py}
+\newpage
 \subsection{Quellcode Versuch 2}
 \label{chap:APPENDIX_SOURCECODE_V2}
-
+\lstinputlisting[style=PYTHON, frame=single, caption=Skript Versuch 2, captionpos=b, label=lst:APPENDIX_SOURCECODE_PLOT]{code/versuch2_2.py}
+\newpage
 \subsection{Quellcode Versuch 3}
 \label{chap:APPENDIX_SOURCECODE_V3}
-
+\lstinputlisting[style=PYTHON, frame=single, caption=Skript Versuch 3, captionpos=b, label=lst:APPENDIX_SOURCECODE_PLOT]{code/Versuch2_3.py}
+\lstinputlisting[style=PYTHON, frame=single, caption=Skript Versuch 3b, captionpos=b, label=lst:APPENDIX_SOURCECODE_PLOT]{code/Versuch2_3b.py}
+\newpage
 \subsection{Quellcode Versuch 4}
 \label{chap:APPENDIX_SOURCECODE_V4}
-
-
-\section{Messergebnisse}
-\label{chap:APPENDIX_MEASUREMENT_SOURCE}
-
-%
-% Literaturverzeichnis
-%
-\include{appendix/bibliography}
+\lstinputlisting[style=PYTHON, frame=single, caption=Skript Versuch 4, captionpos=b, label=lst:APPENDIX_SOURCECODE_PLOT]{code/Versuch2_4.py}
+\lstinputlisting[style=PYTHON, frame=single, caption=Skript Versuch 4b, captionpos=b, label=lst:APPENDIX_SOURCECODE_PLOT]{code/Versuch2_4b.py}
 
 \end{document}
 %------------------------------------
