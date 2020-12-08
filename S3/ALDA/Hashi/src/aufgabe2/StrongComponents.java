@@ -5,10 +5,7 @@ package aufgabe2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Klasse für Bestimmung aller strengen Komponenten.
@@ -34,9 +31,51 @@ public class StrongComponents<V> {
 	 * @param g gerichteter Graph.
 	 */
 	public StrongComponents(DirectedGraph<V> g) {
-		// ...
+		reduceGraph(g);
 	}
-	
+
+	private void reduceGraph(DirectedGraph<V> g) {
+		// a)
+		DepthFirstOrder<V> dfs = new DepthFirstOrder<>(g);
+		List<V> p = dfs.postOrder();
+		List<V> pi = new LinkedList<>();
+
+		// List wird reversiert
+		for (int i = p.size() - 1; i >= 0; i--) {
+			pi.add(p.get(i));
+		}
+
+		// b)
+		DirectedGraph<V> gi = g.invert();
+
+		// c)
+		Set<V> visited = new TreeSet<>();
+		int index = 0;
+
+		// Knoten in gi werde in der Reihenfolge von pi besucht
+		for (V v : pi) {
+			if (!visited.contains(v)) {
+				// Jede Set<V> muss noch davor initialisert werden
+				comp.put(index, new TreeSet<>());
+				visitDF(v, gi, visited, index);
+				index++;
+			}
+		}
+	}
+
+	private void visitDF(V v, DirectedGraph<V> gi, Set<V> visited, int index) {
+		visited.add(v);
+
+		// Knoten wird hier vearbeitet
+		comp.get(index).add(v);
+
+		for (V w : gi.getSuccessorVertexSet(v)) {
+			if (!visited.contains(w)) {
+				visitDF(w, gi, visited, index);
+			}
+		}
+	}
+
 	/**
 	 * 
 	 * @return Anzahl der strengen Komponeneten.
@@ -47,7 +86,15 @@ public class StrongComponents<V> {
 
 	@Override
 	public String toString() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < comp.keySet().size(); i++) {
+			sb.append("Component ").append(i).append(": ");
+			for (V v : comp.get(i)) {
+				sb.append(v).append(", ");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 	
 	/**
@@ -99,7 +146,7 @@ public class StrongComponents<V> {
 	}
 	
 	private static void test2() throws FileNotFoundException {
-		DirectedGraph<Integer> g = readDirectedGraph(new File("mediumDG.txt"));
+		DirectedGraph<Integer> g = readDirectedGraph(new File("src/aufgabe2/mediumDG.txt"));
 		System.out.println(g.getNumberOfVertexes());
 		System.out.println(g.getNumberOfEdges());
 		System.out.println(g);

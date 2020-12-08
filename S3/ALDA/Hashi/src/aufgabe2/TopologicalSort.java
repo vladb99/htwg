@@ -61,7 +61,6 @@ public class TopologicalSort<V> {
 	public List<V> topologicalSortedList() {
         return Collections.unmodifiableList(ts);
     }
-    
 
 	public static void main(String[] args) {
 		DirectedGraph<Integer> g = new AdjacencyListDirectedGraph<>();

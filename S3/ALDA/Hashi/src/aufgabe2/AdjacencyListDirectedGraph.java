@@ -46,10 +46,12 @@ public class AdjacencyListDirectedGraph<V> implements DirectedGraph<V> {
 		boolean retValue = true;
 		if (succ.get(v).containsKey(w)) { // pred.get(w).containsKey(v) would also work
 			retValue = false;
+		} else {
+			numberEdge++;
 		}
 		succ.get(v).put(w, weight);
 		pred.get(w).put(v, weight);
-		numberEdge++;
+
 		return retValue;
     }
 
