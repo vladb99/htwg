@@ -1,0 +1,11 @@
+GRANT SELECT ON land TO dbsys45;
+GRANT SELECT, INSERT, UPDATE ON adresse TO dbsys45;
+GRANT SELECT ON attraktion TO dbsys45;
+GRANT SELECT ON entfernt TO dbsys45;
+GRANT SELECT ON ausstattung TO dbsys45;
+GRANT SELECT ON besitzt TO dbsys45;
+GRANT SELECT ON bild TO dbsys45;
+GRANT SELECT ON wohnung TO dbsys45;
+GRANT SELECT, INSERT, UPDATE, DELETE ON kunde TO dbsys45;
+GRANT SELECT, INSERT, UPDATE ON buchung TO dbsys45;
+GRANT SELECT, INSERT, UPDATE ON anzahlung TO dbsys45;
