@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.21)  14 DEC 2020 10:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.21)  14 DEC 2020 11:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1708,20 +1708,21 @@ File: media/decodedRichtig.png Graphic file (type png)
 Package pdftex.def Info: media/decodedRichtig.png  used on input line 278.
 (pdftex.def)             Requested size: 220.50887pt x 140.22029pt.
  [4 <./media/plotDecodedRichtig.png> <./media/decodedRichtig.png>]
-<media/AmplitudenspektrumBreit.png, id=160, 433.62pt x 289.08pt>
+<media/AmplitudenspektrumBreit.png, id=160, 393.47pt x 279.0425pt>
 File: media/AmplitudenspektrumBreit.png Graphic file (type png)
 <use media/AmplitudenspektrumBreit.png>
 Package pdftex.def Info: media/AmplitudenspektrumBreit.png  used on input line 
 307.
-(pdftex.def)             Requested size: 220.50887pt x 147.00539pt.
-<media/AmplitudenspektrumSchmal.png, id=162, 433.62pt x 289.08pt>
+(pdftex.def)             Requested size: 220.50887pt x 156.37769pt.
+ [5 <./media/AmplitudenspektrumBreit.png>]
+<media/AmplitudenspektrumSchmal.png, id=167, 401.5pt x 279.0425pt>
 File: media/AmplitudenspektrumSchmal.png Graphic file (type png)
 <use media/AmplitudenspektrumSchmal.png>
 Package pdftex.def Info: media/AmplitudenspektrumSchmal.png  used on input line
- 316.
-(pdftex.def)             Requested size: 220.50887pt x 147.00539pt.
- [5 <./media/AmplitudenspektrumBreit.png>]
-Overfull \hbox (1.48747pt too wide) in paragraph at lines 321--322
+ 317.
+(pdftex.def)             Requested size: 220.50887pt x 153.25668pt.
+
+Overfull \hbox (1.48747pt too wide) in paragraph at lines 322--323
 []\T1/ptm/m/n/12 Der gröÿ-te Am-pli-tu-den-aus-schlag in-ner-halb des Spek-trum
 s liegt bei der Fre-quenz 1029Hz.
  []
@@ -1731,7 +1732,7 @@ s liegt bei der Fre-quenz 1029Hz.
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 370.
+nput line 374.
 
 (./code/Aufgabe1.py
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
@@ -1750,27 +1751,23 @@ Overfull \hbox (29.76767pt too wide) in paragraph at lines 16--17
 
 AED: lastpage setting LastPage
 [11]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 380.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 380.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 384.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 384.
  (./SSS_Laborbericht.aux (./preface/cover.aux) (./preface/abstract.aux)
 (./preface/tableofcontents.aux) (./preface/listoffigures.aux)
 (./preface/listoftables.aux) (./preface/lstlistoflistings.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 380.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 380.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 384.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 384.
 Package rerunfilecheck Info: File `SSS_Laborbericht.out' has not changed.
 (rerunfilecheck)             Checksum: 3AEE5F61BB23081E68A2D6CC2FCBEF71;1838.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 380.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 384.
  ) 
 Here is how much of TeX's memory you used:
- 39236 strings out of 480608
- 837159 string characters out of 5903629
- 1367883 words of memory out of 5000000
+ 39239 strings out of 480608
+ 837174 string characters out of 5903629
+ 1367866 words of memory out of 5000000
  54136 multiletter control sequences out of 15000+600000
- 578771 words of font info for 84 fonts, out of 8000000 for 9000
+ 580479 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  64i,12n,98p,712b,2364s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -1781,7 +1778,7 @@ xmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2020/texmf-dist/fo
 nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/
 urw/times/utmr8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/times/
 utmri8a.pfb>
-Output written on SSS_Laborbericht.pdf (17 pages, 341967 bytes).
+Output written on SSS_Laborbericht.pdf (17 pages, 343496 bytes).
 PDF statistics:
  398 PDF objects out of 1000 (max. 8388607)
  357 compressed objects within 4 object streams

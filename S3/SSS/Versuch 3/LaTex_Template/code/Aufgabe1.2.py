@@ -7,7 +7,7 @@ data, time = np.genfromtxt("decodedRichtig.csv", delimiter=",", unpack=True, ski
 
 plt.title('Keyboard Ton C4')
 plt.xlabel('Time [ms]')
-plt.ylabel('Voltage [mV]')
+plt.ylabel('Amplitude [Digital Number]')
 
 plt.minorticks_on()
 plt.grid(which='major', linestyle='-', linewidth='0.5', color='black')

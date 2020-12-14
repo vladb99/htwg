@@ -230,7 +230,7 @@ In diesem Versuch wird die Fourieranalyse auf einen akustischen Ton angewendet. 
 \chapter{Einleitung}
 \label{chap:EINL}
 
-In dem dritten Versuch wird die Fourieranalyse auf ein akustisches Signal angewendet. Das akustische Signal wird durch ein Keyboard erzeugt, welches einen konstanten Ton abspielt, der periodisch ist. Der abgespielte Ton mithilfe der pyaudio Bibliothek in Python aufgenommen und weiterverarbeitet. Dabei werden die Grundperiode, Signaldauer und weitere Merkmale berechnet. Anschließend wird durch die Fouriertransformation das Amplitudenspektrum berechnet und graphisch dargestellt.
+In dem dritten Versuch wird die Fourieranalyse auf ein akustisches Signal angewendet. Das akustische Signal wird durch ein Keyboard erzeugt, welches einen konstanten Ton abspielt, der periodisch ist. Der abgespielte Ton wird mithilfe der pyaudio Bibliothek in Python aufgenommen und weiterverarbeitet. Dabei werden die Grundperiode, Signaldauer und weitere Merkmale berechnet. Anschließend wird durch die Fouriertransformation das Amplitudenspektrum berechnet und graphisch dargestellt.
 
 %
 % CHAPTER Versuch 1
@@ -241,7 +241,7 @@ In dem dritten Versuch wird die Fourieranalyse auf ein akustisches Signal angewe
 \section{Fragestellung, Messprinzip, Aufbau, Messmittel}
 \label{chap:VERSUCH_1_FRAGESTELLUNG}
 
-In diesem Versuch wird die Fourieranalyse auf ein akustisches Signal angewendet. Dazu wird mit einem Keyboard ein konstanter Ton (C4) erzeugt und mittels eines Mikrofons aufgenommen. Der aufgenommene Ton soll eine genügend hohe Amplitude haben und gleichmäßig wiederholende Perioden aufweisen. Der Ton wird über das Mikrofon mittels der pyaudio Bibliothek aufgenommen und anschließen in einer .csv Datei abgespeichert.
+In diesem Versuch wird die Fourieranalyse auf ein akustisches Signal angewendet. Dazu wird mit einem Keyboard ein konstanter Ton (C4) erzeugt und mittels eines Mikrofons aufgenommen. Der aufgenommene Ton soll eine genügend hohe Amplitude haben und gleichmäßig wiederholende Perioden aufweisen. Der Ton wird über das Mikrofon mittels der pyaudio Bibliothek aufgenommen und anschließend in einer .csv Datei abgespeichert.
 Das verwendete Mikrofon wurde in der Nähe der Ausgabelautsprecher des Keyboards platziert, sodass der abgespielte Ton gut aufgenommen werden kann.
 
 \begin{figure}[H]
@@ -262,7 +262,7 @@ berechnet werden. Durch das Amplitudenspektrum kann anschließend die ursprüngl
 \section{Messwerte}
 \label{chap:VERSUCH_1_MESSWERTE}
 In Abbildung \ref{fig:VERSUCH_1_PERIODEN} ist ein Ausschnitt einzelner Perioden des aufgenommenen Signals dargestellt, welches wir durch ein Keyboard erzeugt haben. Die x-Achse represäntiert den Zeitpunkt in Millisekunden von der Aufnahme der jeweiligen Messung. Die jeweiligen Zeitpunkte haben wir berechnet und den Daten in der .csv Datei hinzugefügt.
-Um den jeweiligen Zeitpunkt zu berechnen, haben wir das Abtastintervall mit dem jeweiligen Index des Messwertes multipliziert.
+Um den jeweiligen Zeitpunkt zu berechnen, haben wir das Abtastintervall mit dem jeweiligen Index des Messwertes multipliziert. Die pyaudio Bibliothek produziert nur Werte mit der Einheit Digital Number. Diese sind nicht auf die Spannung kalibriert.
 
 \begin{figure}[H]
 	\centering\small
@@ -276,7 +276,7 @@ In der nachfolgenden Abbildung \ref{fig:VERSUCH_1_DR} ist das gesamte aufgenomme
 \begin{figure}[H]
 	\centering\small
 	\includegraphics[width=0.5\textwidth]{media/decodedRichtig.png}
-	\caption{Gesamtes Amplitudenspektrum bis zur Hälfte}
+	\caption{Das aufgenommene Signal}
 	\label{fig:VERSUCH_1_DR}
 \end{figure}
 \newpage
@@ -300,7 +300,7 @@ Abtastintervall {[}sec{]}                     & 2.295e-05  \\ \hline
 \label{fig:VERSUCH_1_AUSWERTUNG_TABELLE}
 \end{table}
 
-Das Amplitudenspektrum wird durch den Betrag der numpy Funktion np.fft.fft() berechnet. Wie zuvor erwähnt ist die x-Achse Beschriftung jedoch in der Einheit Anzahl Schwingungen innerhalb der gesamten Signaldauer und nicht in Hertz eingegeben. Deshalb muss die oben genannte Formel angewandt werden. Außerdem wird das Amplitudenspektrum nur bis zur Hälfte angezeigt. Dieses wird in Abbildung \ref{fig:VERSUCH_1_ASB} dargestellt.
+Das Amplitudenspektrum wird durch den Betrag der numpy Funktion np.fft.fft() berechnet. Wie zuvor erwähnt, ist die x-Achse Beschriftung jedoch in der Einheit Anzahl Schwingungen innerhalb der gesamten Signaldauer und nicht in Hertz eingegeben. Deshalb muss die oben genannte Formel angewandt werden. Außerdem wird das Amplitudenspektrum nur bis zur Hälfte angezeigt. Dieses wird in Abbildung \ref{fig:VERSUCH_1_ASB} dargestellt.
 
 \begin{figure}[H]
 	\centering\small
@@ -309,6 +309,7 @@ Das Amplitudenspektrum wird durch den Betrag der numpy Funktion np.fft.fft() ber
 	\label{fig:VERSUCH_1_ASB}
 \end{figure}
 
+\newpage
 In Abbildung \ref{fig:VERSUCH_1_ASS} ist ein Ausschnitt des Amplitudenspektrums zu sehen.
 
 \begin{figure}[H]
@@ -323,7 +324,7 @@ Der größte Amplitudenausschlag innerhalb des Spektrums liegt bei der Frequenz 
 \begin{equation*}
 	k = \frac{1}{\lambda}
 \end{equation*}
-ermittelt haben. Wobei $\lambda$ die Wellenlänge ist, die in unserem Fall 2ms beträgt. Dies kann in der Abbildung \ref{fig:VERSUCH_1_PERIODEN} abgelesen werden. Dadurch ergibt sich die Wellenzahl von 500Hz.
+ermittelt haben. Wobei $\lambda$ die Wellenlänge ist, die in unserem Fall 2ms beträgt. Dies kann in der Abbildung \ref{fig:VERSUCH_1_PERIODEN} abgelesen werden. Durch die errechnete Wellenzahl ergibt sich eine Frequenz von 500Hz, die wiederrum der Grundfrequenz entspricht.
 
 
 Die Frequenz mit dem maximalen Amplitudenwert kann mithilfe einer einfachen for Schleife, die über das Spektrum iteriert, ermittelt werden.
@@ -339,6 +340,9 @@ Frequenz mit der größten Amplitude {[}Hz{]}                        & 1029.22  
 \caption{Ergebnisse}
 \label{fig:VERSUCH_1_MAX}
 \end{table}
+
+Der Amplitudenwert bei der Grundfrequenz von 500Hz beträgt ungefähr 0.62 $\cdot$ $10^{8}$ Digital Numbers.
+
 \newpage
 \section{Interpretation}
 \label{chap:VERSUCH_1_INTERPRETATION}
