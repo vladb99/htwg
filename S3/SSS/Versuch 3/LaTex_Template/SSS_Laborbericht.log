@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.21)  11 DEC 2020 19:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.21)  14 DEC 2020 10:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1558,7 +1558,7 @@ your preamble.
 \openout2 = `preface/cover.aux'.
 
 (./preface/cover.tex
-<preface/htwg-logo.png, id=59, 298.716pt x 119.4864pt>
+<preface/htwg-logo.png, id=55, 298.716pt x 119.4864pt>
 File: preface/htwg-logo.png Graphic file (type png)
 <use preface/htwg-logo.png>
 Package pdftex.def Info: preface/htwg-logo.png  used on input line 7.
@@ -1689,32 +1689,32 @@ Kapitel 1.
 
 ]
 Kapitel 2.
-<media/Versuchsaufbau.png, id=138, 373.395pt x 307.1475pt>
+<media/Versuchsaufbau.png, id=133, 770.88pt x 1027.84pt>
 File: media/Versuchsaufbau.png Graphic file (type png)
 <use media/Versuchsaufbau.png>
 Package pdftex.def Info: media/Versuchsaufbau.png  used on input line 249.
-(pdftex.def)             Requested size: 220.50887pt x 181.38417pt.
+(pdftex.def)             Requested size: 220.50887pt x 294.00392pt.
 [2
 
- <./media/Versuchsaufbau.png>] [3]
-<media/plotDecodedRichtig.png, id=152, 405.515pt x 279.0425pt>
+] [3 <./media/Versuchsaufbau.png>]
+<media/plotDecodedRichtig.png, id=147, 405.515pt x 279.0425pt>
 File: media/plotDecodedRichtig.png Graphic file (type png)
 <use media/plotDecodedRichtig.png>
 Package pdftex.def Info: media/plotDecodedRichtig.png  used on input line 269.
 (pdftex.def)             Requested size: 220.50887pt x 151.74089pt.
-<media/decodedRichtig.png, id=154, 391.4625pt x 248.93pt>
+<media/decodedRichtig.png, id=149, 391.4625pt x 248.93pt>
 File: media/decodedRichtig.png Graphic file (type png)
 <use media/decodedRichtig.png>
 Package pdftex.def Info: media/decodedRichtig.png  used on input line 278.
 (pdftex.def)             Requested size: 220.50887pt x 140.22029pt.
  [4 <./media/plotDecodedRichtig.png> <./media/decodedRichtig.png>]
-<media/AmplitudenspektrumBreit.png, id=165, 433.62pt x 289.08pt>
+<media/AmplitudenspektrumBreit.png, id=160, 433.62pt x 289.08pt>
 File: media/AmplitudenspektrumBreit.png Graphic file (type png)
 <use media/AmplitudenspektrumBreit.png>
 Package pdftex.def Info: media/AmplitudenspektrumBreit.png  used on input line 
 307.
 (pdftex.def)             Requested size: 220.50887pt x 147.00539pt.
-<media/AmplitudenspektrumSchmal.png, id=167, 433.62pt x 289.08pt>
+<media/AmplitudenspektrumSchmal.png, id=162, 433.62pt x 289.08pt>
 File: media/AmplitudenspektrumSchmal.png Graphic file (type png)
 <use media/AmplitudenspektrumSchmal.png>
 Package pdftex.def Info: media/AmplitudenspektrumSchmal.png  used on input line
@@ -1757,40 +1757,34 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 380.
 (./preface/listoftables.aux) (./preface/lstlistoflistings.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 380.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 380.
+Package rerunfilecheck Info: File `SSS_Laborbericht.out' has not changed.
+(rerunfilecheck)             Checksum: 3AEE5F61BB23081E68A2D6CC2FCBEF71;1838.
 
 
-Package rerunfilecheck Warning: File `SSS_Laborbericht.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package rerunfilecheck Info: Checksums for `SSS_Laborbericht.out':
-(rerunfilecheck)             Before: 673BC766AEE02E5D67BA10498706758A;1965
-(rerunfilecheck)             After:  3AEE5F61BB23081E68A2D6CC2FCBEF71;1838.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 380.
  ) 
 Here is how much of TeX's memory you used:
- 39239 strings out of 480608
- 837217 string characters out of 5903629
- 1367927 words of memory out of 5000000
- 54138 multiletter control sequences out of 15000+600000
+ 39236 strings out of 480608
+ 837159 string characters out of 5903629
+ 1367883 words of memory out of 5000000
+ 54136 multiletter control sequences out of 15000+600000
  578771 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  64i,12n,98p,712b,2364s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{section.3.2} has been referenced but does not exi
-st, replaced by a fixed one
-
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
-ve/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
-e/2020/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2020/texm
-f-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2020/texmf-dist/font
-s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/ur
-w/times/utmr8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/times/ut
-mri8a.pfb>
-Output written on SSS_Laborbericht.pdf (17 pages, 172533 bytes).
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/tex
+live/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
+ive/2020/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2020/te
+xmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2020/texmf-dist/fo
+nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/
+urw/times/utmr8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/times/
+utmri8a.pfb>
+Output written on SSS_Laborbericht.pdf (17 pages, 341967 bytes).
 PDF statistics:
- 403 PDF objects out of 1000 (max. 8388607)
- 362 compressed objects within 4 object streams
- 178 named destinations out of 1000 (max. 500000)
- 147 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 398 PDF objects out of 1000 (max. 8388607)
+ 357 compressed objects within 4 object streams
+ 177 named destinations out of 1000 (max. 500000)
+ 139 words of extra memory for PDF output out of 10000 (max. 10000000)
 
