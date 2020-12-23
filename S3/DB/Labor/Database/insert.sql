@@ -153,6 +153,17 @@ INSERT INTO buchung(wnr, knr, anreise, abreise, bDatum, beDatum, anz, rnr, rDatu
 		rechnungID.NEXTVAL,
 		to_date('07.01.2021', 'MM.DD.YYYY'),
 		900.00);
+INSERT INTO buchung(wnr, knr, anreise, abreise, bDatum, beDatum, anz, rnr, rDatum, betrag)
+	VALUES(6,
+		2,
+		to_date('07.01.2021','MM.DD.YYYY'),
+		to_date('07.06.2021', 'MM.DD.YYYY'),
+		to_date('06.01.2021', 'MM.DD.YYYY'),
+		to_date('07.15.2021', 'MM.DD.YYYY'),
+		2,
+		rechnungID.NEXTVAL,
+		to_date('06.01.2021', 'MM.DD.YYYY'),
+		900.00);
 
 --ANZAHLUNG
 
