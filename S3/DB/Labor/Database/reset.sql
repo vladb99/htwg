@@ -7,6 +7,7 @@ drop table anzahlung;
 drop sequence rechnungID;
 
 drop table buchung;
+drop table stornierung;
 drop table kunde;
 
 drop table wohnung;

@@ -139,3 +139,54 @@ betrag 				numeric(6, 2) NOT NULL,
 CONSTRAINT anzahlung_pk PRIMARY KEY (annr),
 CONSTRAINT anzahlung_fk FOREIGN KEY (bnr) REFERENCES buchung(bnr)
 );
+
+CREATE TABLE stornierung
+(
+bnr                 integer NOT NULL,
+wnr                 integer NOT NULL,
+knr                 integer NOT NULL,
+anreise             date NOT NULL,
+abreise             date NOT NULL,
+bDatum              date,
+beDatum             date,
+anz                 integer,
+rnr                 integer,
+rDatum              date,
+betrag              numeric(6, 2),
+sDatum              date NOT NULL,
+CONSTRAINT stornierung_pk PRIMARY KEY (bnr),
+CONSTRAINT stornierung_fk1 FOREIGN KEY (wnr) REFERENCES wohnung(wnr),
+CONSTRAINT stornierung_fk2 FOREIGN KEY (knr) REFERENCES kunde(knr),
+CONSTRAINT stornierung_betrag CHECK (betrag >= 0),
+CONSTRAINT stornierung_anzSterne CHECK (anz >= 1 AND anz <= 5),
+CONSTRAINT stornierung_bewertungsDatum CHECK (beDatum > abreise),
+CONSTRAINT stornierung_mindestZeitraum CHECK ((abreise - anreise) >= 3)
+);
+
+CREATE OR REPLACE TRIGGER stornierte_buchungen
+	AFTER DELETE ON buchung
+	FOR EACH ROW
+BEGIN
+    INSERT INTO stornierung(bnr, wnr, knr, anreise, abreise, bDatum, beDatum, anz, rnr, rDatum, betrag, sDatum)
+	VALUES(:old.bnr,
+        :old.wnr,
+		:old.knr,
+		:old.anreise,
+		:old.abreise,
+		:old.bDatum,
+		:old.beDatum,
+		:old.anz,
+		:old.rnr,
+		:old.rDatum,
+		:old.betrag,
+        sysdate);
+END;
+/
+
+
+
+
+
+
+
+

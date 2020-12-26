@@ -101,6 +101,8 @@ INSERT INTO kunde(anr, kname, vorname, newsletter, iban, email)
 	VALUES(8, 'Maller', 'Tom', 'N', 'DE3243434343', 'tom.maller@gmail.com');
 INSERT INTO kunde(anr, kname, vorname, newsletter, iban, email)
 	VALUES(7, 'Schneider', 'Sebastian', 'N', 'DE12345128690', 'seb.schneider@gmail.com');
+INSERT INTO kunde(anr, kname, vorname, newsletter, iban, email)
+	VALUES(8, 'Schneider', 'Nico', 'N', 'DE3143234443', 'nico.schneider@gmail.com');
 
 --BUCHUNG
 
