@@ -7,10 +7,7 @@ import java.awt.Color;
 import java.io.IOException;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 /**
@@ -36,10 +33,40 @@ public class ScotlandYard {
 	public static DirectedGraph<Integer> getGraph() throws FileNotFoundException {
 
 		DirectedGraph<Integer> sy_graph = new AdjacencyListDirectedGraph<>();
-		Scanner in = new Scanner(new File("ScotlandYard_Kanten.txt"));
+		Scanner in = new Scanner(new File("src/aufgabe3/scotlandYard/ScotlandYard_Kanten.txt"));
 
-		// ...
-		
+		while (in.hasNext()) {
+			String[] line = in.nextLine().split(" ");
+			int vertex1 = Integer.parseInt(line[0]);
+			int vertex2 = Integer.parseInt(line[1]);
+			String transport = line[2];
+			int weight = 0;
+
+			switch (transport) {
+				case "Taxi":
+					weight = 2;
+					break;
+				case "Bus":
+					weight = 3;
+					break;
+				case "UBahn":
+					weight = 5;
+					break;
+			}
+			if (sy_graph.containsVertex(vertex1) && sy_graph.containsVertex(vertex2)) {
+				if (sy_graph.containsEdge(vertex1, vertex2) && weight < sy_graph.getWeight(vertex1, vertex2)) {
+					sy_graph.addEdge(vertex1, vertex2, weight);
+					sy_graph.addEdge(vertex2, vertex1, weight);
+				} else if(!sy_graph.containsEdge(vertex1, vertex2)) {
+					sy_graph.addEdge(vertex1, vertex2, weight);
+					sy_graph.addEdge(vertex2, vertex1, weight);
+				}
+			} else {
+				sy_graph.addEdge(vertex1, vertex2, weight);
+				sy_graph.addEdge(vertex2, vertex1, weight);
+			}
+		}
+
 		// Test, ob alle Kanten eingelesen wurden: 
 		System.out.println("Number of Vertices:       " + sy_graph.getNumberOfVertexes());	// 199
 		System.out.println("Number of directed Edges: " + sy_graph.getNumberOfEdges());	  	// 862
@@ -78,8 +105,8 @@ public class ScotlandYard {
 
 		DirectedGraph<Integer> syGraph = getGraph();
 		
-		Heuristic<Integer> syHeuristic = null; // Dijkstra
-		//Heuristic<Integer> syHeuristic = getHeuristic(); // A*
+		//Heuristic<Integer> syHeuristic = null; // Dijkstra
+		Heuristic<Integer> syHeuristic = getHeuristic(); // A*
 
 		ShortestPath<Integer> sySp = new ShortestPath<Integer>(syGraph,syHeuristic);
 
@@ -129,7 +156,7 @@ public class ScotlandYard {
 }
 
 class ScotlandYardHeuristic implements Heuristic<Integer> {
-	private Map<Integer,Point> coord; // Ordnet jedem Knoten seine Koordinaten zu
+	private Map<Integer,Point> coord = new TreeMap<>(); // Ordnet jedem Knoten seine Koordinaten zu
 
 	private static class Point {
 		int x;
@@ -141,12 +168,23 @@ class ScotlandYardHeuristic implements Heuristic<Integer> {
 	}
 
 	public ScotlandYardHeuristic() throws FileNotFoundException {
-		// ...
+		Scanner in = new Scanner(new File("src/aufgabe3/scotlandYard/ScotlandYard_Knoten.txt"));
+
+		while (in.hasNext()) {
+			String[] line = in.nextLine().split("\\s");
+			int vertex = Integer.parseInt(line[0]);
+			int x = Integer.parseInt(line[1]);
+			int y = Integer.parseInt(line[2]);
+
+			Point p = new Point(x, y);
+			coord.put(vertex, p);
+		}
 	}
 
-	public double estimatedCost(Integer u, Integer v) {
-		// ...
-		return -1;
+	public double estimatedCost(Integer v, Integer w) {
+		Point vp = coord.get(v);
+		Point wp = coord.get(w);
+		return Math.sqrt((vp.x-wp.x)*(vp.x-wp.x) + (vp.y-wp.y)*(vp.y-wp.y)) / 30;
 	}
 }
 
