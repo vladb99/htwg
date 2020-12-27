@@ -8,6 +8,7 @@ import aufgabe3.SYSimulation.src.sim.SYSimulation;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Kürzeste Wege in Graphen mit A*- und Dijkstra-Verfahren.
@@ -21,7 +22,10 @@ public class ShortestPath<V> {
 	
 	Map<V,Double> dist; // Distanz für jeden Knoten
 	Map<V,V> pred; // Vorgänger für jeden Knoten
-	// ...
+	DirectedGraph<V> graph = null;
+	Heuristic<V> heuristic = null;
+	List<V> path = null;
+	Double distance = null;
 
 	/**
 	 * Konstruiert ein Objekt, das im Graph g k&uuml;rzeste Wege 
@@ -34,7 +38,11 @@ public class ShortestPath<V> {
 	 * dem Dijkstra-Verfahren gesucht.
 	 */
 	public ShortestPath(DirectedGraph<V> g, Heuristic<V> h) {
-		// ...
+		this.graph = g;
+		this.heuristic = h;
+
+		this.dist = new TreeMap<>();
+		this.pred = new TreeMap<>();
 	}
 
 	/**
@@ -61,8 +69,72 @@ public class ShortestPath<V> {
 	 * @param s Startknoten
 	 * @param g Zielknoten
 	 */
-	public void searchShortestPath(V s, V g) {
-		// ...
+	public boolean searchShortestPath(V s, V g) {
+		List<V> candidates = new LinkedList<>();
+		List<V> visited = new LinkedList<>();
+
+		dist.put(s, (double) 0);
+		pred.put(s, null);
+		candidates.add(s);
+
+		while (!candidates.isEmpty()) {
+			V first = candidates.get(0);
+			V best = first;
+			double cost = dist.get(first) + getHeuristicCost(first, g); // dist + heuristic
+
+			// Search for the candidate with lowest g and h value
+			for(V candidate : candidates) {
+				double candidateCost = dist.get(candidate) + getHeuristicCost(candidate, g);
+				if (candidateCost <= cost) {
+					cost = candidateCost;
+					best = candidate;
+				}
+			}
+
+			// Remove best candidate from candidates and add it to the visited list
+			visited.add(best);
+			candidates.remove(best);
+
+			// Print message
+			System.out.println("Besuche Knoten " + best.toString() + " mit d = " + dist.get(best));
+
+			// Did it reach the target?
+			if (best.equals(g)) {
+				// Set path and distance
+				V node = best;
+				path = new LinkedList<>();
+				distance = dist.get(best);
+				do {
+					path.add(0, node);
+					node = pred.get(node);
+				} while(node != null);
+
+				return true;
+			}
+
+			// Loop through all adjacent nodes of best
+			for (V w : graph.getSuccessorVertexSet(best)) {
+				if (!visited.contains(w) && !candidates.contains(w)) { // w not in the candidates and visited list
+					candidates.add(w);
+					dist.put(w, dist.get(best) + graph.getWeight(best, w));
+					pred.put(w, best);
+				} else if (candidates.contains(w)) { // update cost and predecessor if already in the candidates list and cost is lower
+					if (dist.get(best) + graph.getWeight(best, w) < dist.get(w)) {
+						dist.put(w, dist.get(best) + graph.getWeight(best, w));
+						pred.put(w, best);
+					}
+				}
+			}
+
+		}
+		return false;
+	}
+
+	private double getHeuristicCost(V u, V v) {
+		if (heuristic == null) {
+			return 0;
+		}
+		return heuristic.estimatedCost(u, v);
 	}
 
 	/**
@@ -72,8 +144,10 @@ public class ShortestPath<V> {
 	 * @return kürzester Weg als Liste von Knoten.
 	 */
 	public List<V> getShortestPath() {
-		// ...
-		return new LinkedList();
+		if (path == null) {
+			throw new IllegalArgumentException();
+		}
+		return path;
 	}
 
 	/**
@@ -83,7 +157,10 @@ public class ShortestPath<V> {
 	 * @return Länge eines kürzesten Weges.
 	 */
 	public double getDistance() {
-		return -1;
+		if (distance == null) {
+			throw new IllegalArgumentException();
+		}
+		return distance;
 	}
 
 }
