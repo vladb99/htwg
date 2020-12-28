@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+// Notes to myself:
+// 1. I didn't use infinite, but just a visited list. I didn't implement the algorithm from vorlesung exactly the same.
+// 2. searchShortestPath returns boolean
+
+
 /**
  * Kürzeste Wege in Graphen mit A*- und Dijkstra-Verfahren.
  * @author Vlad B
