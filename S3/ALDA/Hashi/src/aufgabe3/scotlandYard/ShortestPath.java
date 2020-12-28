@@ -12,8 +12,8 @@ import java.util.TreeMap;
 
 /**
  * Kürzeste Wege in Graphen mit A*- und Dijkstra-Verfahren.
- * @author Oliver Bittel
- * @since 27.01.2015
+ * @author Vlad B
+ * @since 28.12.2020
  * @param <V> Knotentyp.
  */
 public class ShortestPath<V> {
@@ -26,6 +26,7 @@ public class ShortestPath<V> {
 	Heuristic<V> heuristic = null;
 	List<V> path = null;
 	Double distance = null;
+	List<V> visited = null;
 
 	/**
 	 * Konstruiert ein Objekt, das im Graph g k&uuml;rzeste Wege 
@@ -71,7 +72,7 @@ public class ShortestPath<V> {
 	 */
 	public boolean searchShortestPath(V s, V g) {
 		List<V> candidates = new LinkedList<>();
-		List<V> visited = new LinkedList<>();
+		visited = new LinkedList<>(); // usage of visited list avoids using infinite
 
 		dist.put(s, (double) 0);
 		pred.put(s, null);

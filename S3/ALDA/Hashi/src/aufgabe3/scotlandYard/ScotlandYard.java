@@ -12,8 +12,8 @@ import java.util.*;
 
 /**
  * Kürzeste Wege im Scotland-Yard Spielplan mit A* und Dijkstra.
- * @author Oliver Bittel
- * @since 27.02.2019
+ * @author Vlad B
+ * @since 28.12.2020
  */
 public class ScotlandYard {
 
@@ -105,8 +105,8 @@ public class ScotlandYard {
 
 		DirectedGraph<Integer> syGraph = getGraph();
 		
-		//Heuristic<Integer> syHeuristic = null; // Dijkstra
-		Heuristic<Integer> syHeuristic = getHeuristic(); // A*
+		Heuristic<Integer> syHeuristic = null; // Dijkstra
+		//Heuristic<Integer> syHeuristic = getHeuristic(); // A*
 
 		ShortestPath<Integer> sySp = new ShortestPath<Integer>(syGraph,syHeuristic);
 
@@ -139,6 +139,10 @@ public class ScotlandYard {
 
 		System.out.println("Distance = " + sySp.getDistance());
 		List<Integer> sp = sySp.getShortestPath();
+
+		for (int c : sySp.visited) {
+			sim.visitStation(c, Color.BLUE);
+		}
 
 		int a = -1;
 		for (int b : sp) {

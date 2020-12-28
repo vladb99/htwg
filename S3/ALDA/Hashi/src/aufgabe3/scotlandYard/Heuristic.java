@@ -6,8 +6,8 @@
 package aufgabe3.scotlandYard;
 
 /**
- * @author Oliver Bittel
- * @since 27.01.2015
+ * @author Vlad B
+ * @since 28.12.2020
  * @param <V> Knotentyp.
  */
 public interface Heuristic<V> {

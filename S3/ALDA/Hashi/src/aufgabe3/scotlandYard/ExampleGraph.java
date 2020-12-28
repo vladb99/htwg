@@ -11,9 +11,9 @@ import java.util.TreeMap;
  * für einen kleinen Beispielgraph (siehe auch ExampleGraph.jpg).
  * Als Kantengewichte und als Heuristik für A* wird der
  * Euklidische Abstand genommen.
- * 
- * @author Oliver Bittel
- * @since 29.10.2018
+ *
+ * @author Vlad B
+ * @since 28.12.2020
  */
 
 public class ExampleGraph {
@@ -84,7 +84,7 @@ public class ExampleGraph {
 	public static void main(String[] args) throws FileNotFoundException {
 		initializeCoordinates();
 		initializeGraph();
-		
+
 		System.out.println("Dijkstra:");
 		ShortestPath<Integer> spDijkstra = new ShortestPath<Integer>(g, null);
 		spDijkstra.searchShortestPath(3, 6);
