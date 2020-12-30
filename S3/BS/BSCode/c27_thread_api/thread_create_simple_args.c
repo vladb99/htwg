@@ -2,6 +2,8 @@
 #include <pthread.h>
 #include "common_threads.h"
 
+// On Linux compile with: gcc -o fork-join fork-join.c -pthread
+
 void *mythread(void *arg) {
     long long int value = (long long int) arg;
     printf("%lld\n", value);
