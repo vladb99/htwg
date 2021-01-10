@@ -59,7 +59,7 @@ def main():
     abtastintervall = 0.022957424252209337 / 1000 #sec
     haelfte = int(signallaenge / 2)
     freq = np.zeros(signallaenge)
-    # Formel um die Anzahl der Schwingungen in die Freuquenz umzurechnen - f = n / (M * delta t)
+    # Formel um die Anzahl der Schwingungen in die Freuquenz umzurechnen -> f = n / (M * delta t)
     for n in range(0, signallaenge, 1):
         freq[n] = n/(abtastintervall * signallaenge)
     

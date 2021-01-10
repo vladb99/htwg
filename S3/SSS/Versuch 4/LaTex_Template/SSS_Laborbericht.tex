@@ -156,7 +156,7 @@
 \newcommand{\strTopic}{Aufbau eines einfachen Spracherkenners}
 \newcommand{\strAbstract}{
 
-In dem vierten Versuch geht es um den Aufbau eines einfachen Sprachenerkenners und dessen Auswertung. Der Spracherkenner soll simple Befehle wie "Hoch", "Tief", "Links" und "Rechts" erkennen. Der Aufbau soll nach dem Prinzip des Prototyp-Klassifikators geschehen.
+In dem vierten Versuch geht es um den Aufbau eines einfachen Sprachenerkenners und dessen Auswertung. Der Spracherkenner soll simple Befehle wie 'Hoch', 'Tief', 'Links' und 'Rechts' erkennen. Der Aufbau soll nach dem Prinzip des Prototyp-Klassifikators geschehen.
 Die Spektren werden mithilfe der Windowing-Methode berechnet.
 }
 % hyperref customization
@@ -230,11 +230,11 @@ Die Spektren werden mithilfe der Windowing-Methode berechnet.
 %
 \chapter{Einleitung}
 \label{chap:EINL}
-In dem vierten Versuch geht es um den Aufbau eines einfachen Sprachenerkenners und dessen Auswertung. Der Spracherkenner soll simple Befehle wie "Hoch", "Tief", "Links" und "Rechts" erkennen. Der Aufbau soll nach dem Prinzip des Prototyp-Klassifikators geschehen.
+In dem vierten Versuch geht es um den Aufbau eines einfachen Sprachenerkenners und dessen Auswertung. Der Spracherkenner soll simple Befehle wie 'Hoch', 'Tief', 'Links' und 'Rechts' erkennen. Der Aufbau soll nach dem Prinzip des Prototyp-Klassifikators geschehen.
 Die Spektren werden mithilfe der Windowing-Methode berechnet.
 
 Für die Aufnahme wird ein Mikrofon verwendet, dass mit der Soundkarte des Computers verbunden ist und mithilfe der pyaudio Bibliothek aufgenommen wird. Im python Programm wird zusätzlich eine Triggerfunktion hinzugefügt, damit alle Signale an dem selben Zeitpunkt anfangen.
-Außerdem werden die die Korrelationskoefizienten nach Bravais-Pearson zum Vergleich zweier Eingabespektren verwendet.
+Außerdem werden die Korrelationskoeffizienten nach Bravais-Pearson zum Vergleich zweier Eingabespektren verwendet.
 
 %
 % CHAPTER Versuch 1
@@ -252,12 +252,12 @@ Durch den Code aus dem dritten Versuch können wir das Amplitudenspektrum der Au
 
 \section{Messwerte}
 \label{chap:VERSUCH_1_MESSWERTE}
-In Abbildung \ref{fig:VERSUCH_1_halloOriginal} wird die Sprachaufnahme des Wortes 'Hallo" dargestellt.
+In Abbildung \ref{fig:VERSUCH_1_halloOriginal} wird die Sprachaufnahme des Wortes 'Hallo' dargestellt.
 
 \begin{figure}[H]
 	\centering\small
 	\includegraphics[width=0.75\textwidth]{media/AufnahmeHalloOriginal.png}
-	\caption{Sprachaufnahme des Wortes "Hallo"}
+	\caption{Sprachaufnahme des Wortes 'Hallo'}
 	\label{fig:VERSUCH_1_halloOriginal}
 \end{figure}
 
@@ -266,7 +266,7 @@ In Abbildung \ref{fig:VERSUCH_1_halloTriggered} wird die Triggerfunktion auf das
 \begin{figure}[H]
 	\centering\small
 	\includegraphics[width=0.75\textwidth]{media/AufnahmeHalloGetriggert.png}
-	\caption{Sprachaufnahme des Wortes "Hallo" mit Triggerfunktion}
+	\caption{Sprachaufnahme des Wortes 'Hallo' mit Triggerfunktion}
 	\label{fig:VERSUCH_1_halloTriggered}
 \end{figure}
 
@@ -332,7 +332,7 @@ Im Vergleich von Abbildung \ref{fig:VERSUCH_1_halloOriginal} und \ref{fig:VERSUC
 
 Im Amplitundenspektrum kann man erkennen, dass es sich hierbei um kein periodisches Signal handelt. Außerdem wird dieses auf die Hälfte gekürzt, da sich das Spektrum ab der Hälfte wierderholt.
 
-In Abbildung \ref{fig:VERSUCH_1_window} kann man schön sehen, dass das errechnete Amplitudenspektrum durch Windowing sehr  ähnlich mit dem Spektrum des Originalsignals ist.
+In Abbildung \ref{fig:VERSUCH_1_window} kann man schön sehen, dass das errechnete Amplitudenspektrum durch Windowing sehr ähnlich mit dem Spektrum des Originalsignals ist.
 
 %
 % CHAPTER Versuch 2
@@ -342,9 +342,9 @@ In Abbildung \ref{fig:VERSUCH_1_window} kann man schön sehen, dass das errechne
 
 \section{Fragestellung, Messprinzip, Aufbau, Messmittel}
 \label{chap:VERSUCH_2_FRAGESTELLUNG}
-Im zweiten Teil des Versuches sollen die Befehle "Hoch", "Tief", "Links" und "Rechts" jeweils fünf Mal aufgenommen und jeweils das Spektrum berechnet werden. Anschließend soll aus die einzelnen fünf Aufnahmen, ein Referenzsprektrum berechnet werden. Dabei ist darauf zu achten, dass alle Aufnahmen vom gleichen Sprecher gesprochen werden.
+Im zweiten Teil des Versuches sollen die Befehle 'Hoch', 'Tief', 'Links' und 'Rechts' jeweils fünf Mal aufgenommen und jeweils das Spektrum berechnet werden. Anschließend soll aus den einzelnen fünf Aufnahmen, ein Referenzsprektrum berechnet werden. Dabei ist darauf zu achten, dass alle Aufnahmen vom gleichen Sprecher gesprochen werden.
 
-Danach werden jeweils fünf mal die Befehle von zwei unterschiedliche Personen aufgenommen. Im Anschluss wird von jedem Testdatensatz das Spektrum berechnet und mit den Referenzsprektren verglichen. Als Maßtab wird der Korrelationskoeffizient nach Bravais-Pearson verwendet. Umso näher der Wert bei 1 ist, desto größer ist die Ähnlichkeit zu dem Referenzspektrum.
+Danach werden jeweils fünf Mal die Befehle von zwei unterschiedlichen Personen aufgenommen. Im Anschluss wird von jedem Testdatensatz das Spektrum berechnet und mit den Referenzsprektren verglichen. Als Maßtab wird der Korrelationskoeffizient nach Bravais-Pearson verwendet. Umso näher der Wert bei 1 ist, desto größer ist die Ähnlichkeit zu dem Referenzspektrum.
 
 Zum Schluss soll noch die Detektions- und Fehlerrate angegeben werden.
 \newpage
@@ -384,7 +384,7 @@ In Abbildung \ref{fig:VERSUCH_2_firstSpectrums} werden die Spektren der ersten A
 \newpage
 \section{Auswertung}
 \label{chap:VERSUCH_2_AUSWERTUNG}
-In Abbildung \ref{fig:VERSUCH_2_referencsSpecs} werden die Referenzsprektren der vier Befehle dargestellt. Das Referenzspektrum haben wie folgt berechnet: Zuerst haben wir von jedem der fünf Aufnahmen pro Befehl, das Spektrum mithilfe Windowing berechnet und anschließend den Mittelwert daraus genommen.
+In Abbildung \ref{fig:VERSUCH_2_referencsSpecs} werden die Referenzsprektren der vier Befehle dargestellt. Das Referenzspektrum haben wir wie folgt berechnet: Zuerst haben wir von jedem der fünf Aufnahmen pro Befehl, das Spektrum mithilfe von Windowing berechnet und anschließend aus den fünf Spektren den Mittelwert daraus genommen.
 
 \begin{figure}[H]
 \centering
@@ -416,7 +416,7 @@ In Abbildung \ref{fig:VERSUCH_2_referencsSpecs} werden die Referenzsprektren der
 	\label{fig:VERSUCH_2_referencsSpecs}
 \end{figure}
 
-In den nachffolgenden Tabellen sind die Testdatensätze zu sehen, die mit dem Referenzspektren verglichen wurden. In der linken Spalte ist der Name des Testdatensatzes beschrieben. In der zweiten ist der Korrelationskoeffiezient zu dem erkannten Befehl. Der erkannte Befehl befindet sich in der dritten Spalte. Ganz rechts in der Tabelle steht ob die Schätzung korrekt war.
+In den nachffolgenden Tabellen sind die Testdatensätze zu sehen, die mit dem Referenzspektren verglichen wurden. In der linken Spalte ist der Name des Testdatensatzes beschrieben. In der zweiten Spalte steht der Korrelationskoeffiezient zu dem erkannten Befehl. Der erkannte Befehl befindet sich in der dritten Spalte. Ganz rechts in der Tabelle steht, ob die Schätzung des Python Programms korrekt war.
 
 \newpage
 In Tabelle \ref{fig:VERSUCH_2_person1} sind die Ergebnisse von Person 1 (Sprecher der Referenzspektren) ersichtlich.
@@ -447,7 +447,7 @@ rechts3\textunderscore training.csv			& 0.5576880105772456			& Rechts			& Ja		\\
 rechts4\textunderscore training.csv			& 0.6184389154587102			& Rechts			& Ja		\\ \hline
 rechts5\textunderscore training.csv			& 0.6147002078697453			& Rechts			& Ja		\\ \hline
 \end{tabular}
-\caption{Korrelationskoeffizienten von Person 1 bzw. Specher der Referenzspektren}
+\caption{Korrelationskoeffizienten von Person 1 bzw. des Spechers der Referenzspektren}
 \label{fig:VERSUCH_2_person1}
 \end{table}
 
@@ -499,9 +499,9 @@ Person 2     & 50\%         & 50\%       \\ \hline
 \section{Interpretation}
 \label{chap:VERSUCH_2_INTERPRETATION}
 
-Die Ergebnisse von Person 1, welcher der Sprechen war, sind wie zu erwarten, mit einer Detektionsrate von 100\%. Jedoch sieht das bei Person 2 anders aus, da hier die Detektionsrate nur bei 50\% liegt. Beispielweise wurde anstatt 'Tief' der Befehl 'Links' erkannt, was sich darauf zurückzuführen lässt, dass die Referenzspektren von 'Tief' und 'Links' in den niedriegen Frequenzen sehr identisch sind und dadurch stark korrelieren.
+Die Ergebnisse von Person 1, welcher der Sprecher der Referenzspektren war, sind wie zu erwarten, mit einer Detektionsrate von 100\% einwandfrei. Jedoch sieht das bei Person 2 anders aus, da hier die Detektionsrate nur bei 50\% liegt. Beispielweise wurde anstatt 'Tief' der Befehl 'Links' erkannt, was sich darauf zurückzuführen lässt, dass die Referenzspektren von 'Tief' und 'Links' in den niedriegen Frequenzen sehr identisch sind und dadurch stark korrelieren.
 
-Schlussfolgernd lässt sich die Erkenntiss schließen, dass wenn man sich ein privaten Spracherkenner bauen möchte, dies eine gute Methode ist und sehenswerte Ergebnisse liefert. Jedoch ist diese Methode nicht für die breite Masse geeignet, da in unserem Beispiel eine Detektionsrate von 50\% zu ungenau ist. Eventuell hätte der Spracherkenner bessere Ergebnisse geliefert, wenn wir für die Berechnung der Referenzspektren noch mehr Testdatensätze verwendet hätten und auch verschiedene Sprecher.
+Schlussfolgernd lässt sich die Erkenntiss schließen, dass wenn man sich ein Spracherkenner für den privaten Gebrauch bauen möchte, dies eine gute Methode ist und sehenswerte Ergebnisse liefert. Jedoch ist diese Methode nicht für die breite Masse geeignet, da in unserem Beispiel eine Detektionsrate von 50\% zu ungenau ist, wenn andere Stimmen mit ins Spiel kommen. Eventuell hätte der Spracherkenner bessere Ergebnisse geliefert, wenn wir für die Berechnung der Referenzspektren noch mehr Testdatensätze verwendet hätten, wie auch verschiedene Sprecher.
 
 %
 % CHAPTER Anhang
