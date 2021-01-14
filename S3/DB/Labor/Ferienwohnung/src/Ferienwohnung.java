@@ -165,15 +165,14 @@ public class Ferienwohnung extends JFrame {
                         "INNER JOIN dbsys25.adresse adresse on wohnung.anr = adresse.anr " +
                         "WHERE adresse.lname = '" + countryCb.getSelectedItem() + "' ";
 
-                // Aufgabe sagt, man soll nur eine Ausstattung angeben
-                //for (String ausstattung : selectedAusstattungen) {
-                //    if (!ausstattung.equals("")) {
-                //        mySelectQuery = mySelectQuery + "AND besitzt.auname = '" + ausstattung + "' ";
-                //    }
-                //}
-                if (selectedAusstattungen.size() > 0) {
-                    mySelectQuery = mySelectQuery + "AND besitzt.auname = '" + selectedAusstattungen.get(0) + "' ";
+                for (String ausstattung : selectedAusstattungen) {
+                    if (!ausstattung.equals("")) {
+                        mySelectQuery = mySelectQuery + "AND besitzt.auname = '" + ausstattung + "' ";
+                    }
                 }
+                //if (selectedAusstattungen.size() > 0) {
+                //    mySelectQuery = mySelectQuery + "AND besitzt.auname = '" + selectedAusstattungen.get(0) + "' ";
+                //}
 
                 mySelectQuery = mySelectQuery + "AND wohnung.wname NOT IN " +
                         "(" +
@@ -248,8 +247,8 @@ public class Ferienwohnung extends JFrame {
                 System.out.println(myUpdateQuery);
                 stmt.executeUpdate(myUpdateQuery);
 
-                stmt.close();
                 conn.commit();
+                stmt.close();
                 resetTableModel();
             } catch (SQLException se) {														// SQL-Fehler abfangen
                 System.out.println();
@@ -311,7 +310,7 @@ public class Ferienwohnung extends JFrame {
         try {
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver()); 				// Treiber laden
             String url = "jdbc:oracle:thin:@oracle19c.in.htwg-konstanz.de:1521:ora19c"; // String für DB-Connection
-            conn = DriverManager.getConnection(url, "dbsys46", "dbsys46"); 						// Verbindung erstellen
+            conn = DriverManager.getConnection(url, "dbsys51", "dbsys51"); 						// Verbindung erstellen
 
             conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE); 			// Transaction Isolations-Level setzen
             conn.setAutoCommit(false);													// Kein automatisches Commit
