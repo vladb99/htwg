@@ -1,0 +1,443 @@
+%---------------
+%╔═╗╔═╗╔╦╗╦ ╦╔═╗
+%╚═╗║╣  ║ ║ ║╠═╝
+%╚═╝╚═╝ ╩ ╚═╝╩
+%---------------
+
+% language setup
+\newcommand{\docLanguage}{ngerman}
+%\newcommand{\docLanguage}{english}
+
+% DOCUMENT SETUP
+\documentclass[12pt, oneside, a4paper, \docLanguage]{report}
+\usepackage[left=3cm,
+			right=2.5cm,
+			top=2.5cm,
+			bottom=2.5cm,
+			includehead,
+			includefoot]{geometry}
+
+% line spacing
+\usepackage{setspace}
+\setstretch{1,25} % 15/12 --> 1.25
+
+% encoding setup
+% T1 font encoding for languages that use a latin alphabet
+\usepackage[T1]{fontenc}
+
+% enhanced input encoding handling - utf8 for äÄüÜöÖß...
+\usepackage[utf8]{inputenc}
+
+%de­fines Adobe Times Ro­man as de­fault text font
+\usepackage{mathptmx}
+\usepackage{times} % needed for acronym package
+
+%PDF linking package
+\usepackage[hidelinks]{hyperref}
+
+
+% Language Setup
+\usepackage[\docLanguage]{babel}
+% after babel - set chapter string
+\AtBeginDocument{\renewcommand{\chaptername}{}}
+
+% language specific bibliography style
+\usepackage[numbers, square]{natbib}
+%\setcitestyle{square,aysep={},yysep={;}}
+\usepackage{babelbib}
+% bliographystyle setup
+% babel specific: babplain, babplai3, babalpha, babunsrt, bababbrv, bababbr3
+\bibliographystyle{babunsrt}
+
+
+% enumeration
+\usepackage{enumitem}
+% tabular extension tabularx
+\usepackage{tabularx}
+
+% math packages
+\usepackage{amsmath}
+\usepackage{nicefrac}
+\usepackage{amsthm}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+%\usepackage{MnSymbol}
+
+
+%special characters
+\usepackage{amssymb}
+\usepackage{upgreek,textgreek}
+
+% acronym package
+\usepackage[printonlyused, footnote]{acronym}
+
+% breakable text in \seqsplit{}
+\usepackage{seqsplit}
+
+% \textmu
+\usepackage{textcomp}
+
+% package provides a way to compile sections of a document using the same preamble as the main document
+\usepackage{subfiles}
+
+% driver-independent color extension - used by listings,tabularx
+\usepackage[usenames,dvipsnames,table,xcdraw]{xcolor}
+
+% -- SYNTAX HIGHLIGHTING --
+\usepackage{listings}
+%\input{cfgs/listings/listings_def_lang_bash-cmd.tex} % adds style BASH_CMD
+%\input{cfgs/listings/listings_def_lang_bash-script.tex} % adds style BASH_SCRIPT
+\input{cfgs/listings/listings_def_lang_latex.tex} % adds style LATEX
+%\input{cfgs/listings/listings_def_lang_matlab.tex} % adds style MATLAB
+\input{cfgs/listings/listings_def_lang_python.tex} % adds style PYTHON
+%\input{cfgs/listings/listings_def_lang_c++.tex} % adds style CPP
+%\input{cfgs/listings/listings_def_lang_c.tex} % adds style C
+%\input{cfgs/listings/listings_def_lang_json.tex} % adds style JSON
+
+% HEADLINE CFG
+\usepackage{fancyhdr} % Headers and footers
+\usepackage{lastpage}
+\usepackage{ifthen}
+\setlength{\headheight}{1.5cm}
+%\pagestyle{fancy} % All pages have headers and footers
+% override plain page style for \part, \chapter or
+% \maketitle, which implicit specifies plain page style
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_plain.tex}
+% set list pagestyle
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_preface.tex}
+% set default pagestyle
+\input{cfgs/fancyhdr/fancyhdr_pagestyle_default_onepage.tex}
+%\input{cfgs/fancyhdr/fancyhdr_pagestyle_default_twopage.tex}
+
+\renewcommand{\chaptermark}[1]{\markright{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% PICTURE CFG
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage[list=true,listformat=simple]{subcaption}
+% floating prevention packages
+\usepackage{float}    % used with [H] positioning parameter
+\usepackage{placeins} % \FloatBarrier
+% tikz packages
+\usepackage{tikz}
+\usepackage{standalone}
+\usepackage{pgfplots}
+
+
+% include only specified tex files - uncommend here
+\includeonly{preface/cover,
+             preface/abstract,
+             preface/tableofcontents,
+             preface/listoffigures,
+             preface/listoftables,
+             preface/lstlistoflistings,
+             appendix/bibliography}
+
+%-------------------
+%╔═╗╔╦╗╦═╗╦╔╗╔╔═╗╔═╗
+%╚═╗ ║ ╠╦╝║║║║║ ╦╚═╗
+%╚═╝ ╩ ╩╚═╩╝╚╝╚═╝╚═╝
+%-------------------
+\newcommand{\strLecture}{Signale, Systeme und Sensoren}
+\newcommand{\strDate}{\today}
+\newcommand{\strAuthorA}{D. Wollmann}
+\newcommand{\strAuthorB}{V. Bratulescu}
+\newcommand{\strAuthorAEmail}{da161wol@htwg-konstanz.de}
+\newcommand{\strAuthorBEmail}{vl161bra@htwg-konstanz.de}
+% Versuchsbeschreibung
+\newcommand{\strTopic}{Digitalisierung}
+\newcommand{\strAbstract}{
+
+
+In dem fünften Versuch geht es um die Umwandlung von analogen in digitale Daten. Die Lernziele dieses Versuches sind zum einen die Messgenauigkeit der AD- und DA-Wandlung zu untersuchen, wie auch praktische Erfahrungen mit dem Abtasttheorem zu sammeln.
+}
+% hyperref customization
+\hypersetup{
+	pdftitle     = {\strTopic}, % title
+	pdfsubject   = {\strLecture}, % subject of the document
+	pdfauthor    = {\strAuthorA, \strAuthorB}, % author
+	pdfkeywords  = {}, % list of keywords
+	pdfcreator   = {}, % creator of the document
+	pdfproducer  = {}, % producer of the document
+	colorlinks   = false, % false: boxed links; true: colored links
+	linkcolor    = red, % color of internal links (change box color with linkbordercolor)
+    citecolor    = green, % color of links to bibliography
+    filecolor    = magenta, % color of file links
+    urlcolor     = cyan, % color of external links
+	%bookmarks    = true, % show bookmarks bar?
+	unicode	     = true, % non-Latin characters in Acrobat’s bookmarks
+	pdftoolbar   = true, % show Acrobat’s toolbar?
+	pdfmenubar   = true, % show Acrobat’s menu?
+    pdffitwindow = false, % window fit to page when opened
+	pdfnewwindow = true % links in new PDF window
+}
+
+%-----------------------------------------
+% ╔╗ ╔═╗╔═╗╦╔╗╔  ╔╦╗╔═╗╔═╗╦ ╦╔╦╗╔═╗╔╗╔╔╦╗
+% ╠╩╗║╣ ║ ╦║║║║   ║║║ ║║  ║ ║║║║║╣ ║║║ ║
+% ╚═╝╚═╝╚═╝╩╝╚╝  ═╩╝╚═╝╚═╝╚═╝╩ ╩╚═╝╝╚╝ ╩
+%-----------------------------------------
+
+\begin{document}
+\pagenumbering{Roman}
+
+\setcounter{section}{0}
+\include{preface/cover}
+
+\include{preface/abstract}
+\clearpage
+
+%
+% TABLE OF CONTENTS
+%
+\include{preface/tableofcontents}
+
+%
+% Abbildungsverzeichnis
+%
+\include{preface/listoffigures}
+
+%
+% Tabellenverzeichnis
+%
+\include{preface/listoftables}
+
+%
+% Listingverzeichnis
+%
+\include{preface/lstlistoflistings}
+
+
+%--------------------------
+% ╔═╗╦ ╦╔═╗╔═╗╔╦╗╔═╗╦═╗╔═╗
+% ║  ╠═╣╠═╣╠═╝ ║ ║╣ ╠╦╝╚═╗
+% ╚═╝╩ ╩╩ ╩╩   ╩ ╚═╝╩╚═╚═╝
+%--------------------------
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\pagestyle{default}
+%
+% CHAPTER Einleitung
+%
+\chapter{Einleitung}
+\label{chap:EINL}
+
+
+In dem fünften Versuch geht es um die Umwandlung von analogen in digitale Daten. Die Lernziele dieses Versuches sind zum einen die Messgenauigkeit der AD- und DA-Wandlung zu untersuchen, wie auch praktische Erfahrungen mit dem Abtasttheorem zu sammeln.
+
+Im ersten Versuch soll der theoretische Quantisierungsfehler des AD-Wandlers, wie auch die Standardabweichung für zwei verschiedene Messgeräte berechnet werden.
+
+Im zweiten Versuch werden die gleiche Berechnungen für ein DA-Wandler durchgeführt. Dabei wird die Standardabweichung eines Oszilloskops berechnet.
+
+Der letzte Teil der Versuchsreihe beschäftigt sich mit dem Abtasttheorem.
+
+%
+% CHAPTER Versuch 1
+%
+\chapter{Versuch 1: Genauigkeit der AD-Wandlung}
+\label{chap:VERSUCH_1}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_1_FRAGESTELLUNG}
+In diesem Versuch soll der theoretische Quantisierungsfehler eines 11-Bit-AD-Wandlers berechnet werden. Zusätzlich sollen verschiedene Spannungen mit einem Feinmessgerät Keithley TRMS 179, einem Multimeter Philips PM 2503 und mit dem AD-Wandler gemessen werden. Des Weiteren soll von dem Multimeter und dem AD-Wandler der Messfehler sowie die Standardabweichung zum Feinmessgerät bestimmt werden.
+
+\newpage
+\section{Messwerte}
+\label{chap:VERSUCH_1_MESSWERTE}
+
+In Tabelle \ref{fig:VERSUCH_1_messungen} werden die gemessene Spannungen zwischen 0V und 10V dargestellt.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Spannung {[}V{]}}} & \textbf{AD-Wandler {[}V{]}} & \textbf{PM 2503 {[}V{]}} & \textbf{TRMS 179 {[}V{]}} \\ \hline
+1                                               & 1.0166                      & 1.022                    & 1.027             \\ \hline
+2                                               & 2.07                        & 2.07                     & 2.079             \\ \hline
+3                                               & 3.076                       & 3.071                    & 3.084             \\ \hline
+4                                               & 4.082                       & 4.07                     & 4.09              \\ \hline
+5                                               & 5                           & 4.98                     & 5                 \\ \hline
+6                                               & 6.006                       & 5.98                     & 6.007             \\ \hline
+7                                               & 7.041                       & 7.04                     & 7.061             \\ \hline
+8                                               & 8.048                       & 8.04                     & 8.068             \\ \hline
+9                                               & 8.965                       & 8.95                     & 8.979             \\ \hline
+10                                              & 9.990                       & 10                       & 10.034            \\ \hline
+\end{tabular}
+\caption{Die gemessenen Spannungen der drei Geräten}
+\label{fig:VERSUCH_1_messungen}
+\end{table}
+
+\section{Auswertung}
+\label{chap:VERSUCH_1_AUSWERTUNG}
+In Tabelle \ref{fig:VERSUCH_1_auswertung} werden die berechneten Messfehler angezeigt.
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Spannung {[}V{]}}} & \textbf{e\textsubscript{i} AD-Wandler {[}V{]}} & \textbf{e\textsubscript{i} PM 2503 {[}V{]}} \\ \hline
+1                                               & 0,0104                         & 0,005                       \\ \hline
+2                                               & 0,009                          & 0,009                       \\ \hline
+3                                               & 0,008                          & 0,013                       \\ \hline
+4                                               & 0,008                          & 0,02                        \\ \hline
+5                                               & 0                              & 0,02                        \\ \hline
+6                                               & 0,001                          & 0,027                       \\ \hline
+7                                               & 0,02                           & 0,021                       \\ \hline
+8                                               & 0,021                          & 0,028                       \\ \hline
+9                                               & 0,014                          & 0,029                       \\ \hline
+10                                              & 0,044                          & 0,034                       \\ \hline
+\end{tabular}
+\caption{Die berechneten Messwerte der jeweiligen Geräten}
+\label{fig:VERSUCH_1_auswertung}
+\end{table}
+Der theoretische Quantisierungsfehler für den AD-Wandler beträgt
+\begin{equation*}
+\Delta U\textsubscript{AD} = \frac{10V - (-10V)}{2\textsuperscript{11}} = 0.0098V
+\end{equation*}
+Für das Multimeter ergibt sich aus den Messwerten die folgende Standardabweichung
+\begin{equation*}
+S\textsubscript{M} = 0.0207V
+\end{equation*}
+und für den AD-Wandler
+\begin{equation*}
+S\textsubscript{AD} = 0.0191V
+\end{equation*}
+
+\section{Interpretation}
+\label{chap:VERSUCH_1_INTERPRETATION}
+Anhand der Standardabweichung können wir daraus schließen, dass der AD-Wandler minimal genauer ist, als der Multimeter. Da die Standardabweichungen zueinander sehr ähnlich sind, lässt sich anhand dieser Messwerte nicht sagen, welches Messgerät die besseren Ergebnisse liefert. 
+Die Standardabweichung des Multimeters lässt sich wahrscheinlich, auf Fertigungstoleranzen zurückführen und die des AD-Wandlers auf das Auftreten von Jitter.
+
+%
+% CHAPTER Versuch 2
+%
+\chapter{Versuch 2: Genauigkeit der DA-Wandlung}
+\label{chap:VERSUCH_2}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_2_FRAGESTELLUNG}
+In diesem Versuch soll die Spannung eines 10-Bit-DA-Wandlers von 0.5V bis 5V mithilfe eines Oszilloskops gemessen werden. Dabei werden ebenfalls der theoretische Quantisierungsfehler und die Standardabweichung berechnet.
+
+\section{Messwerte}
+\label{chap:VERSUCH_2_MESSWERTE}
+In Tabelle \ref{fig:VERSUCH_2_messungen} werden die gemessenen Spannungen im Spannungsbereich von 0.5V bis 5V dargestellt.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{AD-Wandler {[}V{]}} & \textbf{Oszilloskop {[}V{]}} & \textbf{Abweichung {[}V{]}} \\ \hline
+0.5                         & 0.566                        & 0,066                       \\ \hline
+1                           & 1.072                        & 0,072                       \\ \hline
+1.5                         & 1.578                        & 0,078                       \\ \hline
+2                           & 2.096                        & 0,096                       \\ \hline
+2.5                         & 2.609                        & 0,109                       \\ \hline
+3                           & 3.121                        & 0,121                       \\ \hline
+3.5                         & 3.634                        & 0,134                       \\ \hline
+4                           & 4.139                        & 0,139                       \\ \hline
+4.5                         & 4.635                        & 0,135                       \\ \hline
+5                           & 5.127                        & 0,127                       \\ \hline
+\end{tabular}
+\caption{Die gemessenen Spannungen des DA-Wandlers}
+\label{fig:VERSUCH_2_messungen}
+\end{table}
+
+\section{Auswertung}
+\label{chap:VERSUCH_2_AUSWERTUNG}
+Der theoretische Quantisierungsfehler für den DA-Wandler beträgt
+\begin{equation*}
+\Delta U\textsubscript{DA} = \frac{5V - 0V}{2\textsuperscript{10}} = 0.00488V
+\end{equation*}
+Für den DA-Wandler ergibt sich aus den Messwerten die folgende Standardabweichung
+\begin{equation*}
+S\textsubscript{DA} = 0.1169V
+\end{equation*}
+
+\section{Interpretation}
+\label{chap:VERSUCH_2_INTERPRETATION}
+Die Standardabweichung liegt deutlich über dem theoretischen Quantisierungsfehler, was darauf schließen lässt, dass die Umwandlung eines digitalen in ein analoges Signal sehr ungenau ist. Thermisches Rauschen begünstigt den Fehler.
+
+%
+% CHAPTER Versuch 3
+%
+\chapter{Versuch 3: Abtasttheorem}
+\label{chap:VERSUCH_3}
+
+\section{Fragestellung, Messprinzip, Aufbau, Messmittel}
+\label{chap:VERSUCH_3_FRAGESTELLUNG}
+In diesem Versuch soll eine Abtastfrequenz im Intervall [6000, 8000] ausgewählt und mithilfe eines Python-Programms, die tatsächliche Abtastfrequenz des AD-Wandlers ausgelesen werden. Anschließend soll die Nyquist-Frequenz angegeben werden. Von der halben bis zur doppelten Nyquist-Frequenz soll die Frequenz variiert und mithilfe eines Sinusgenerators in 7 Schritten die Kurven geplottet werden. Des Weiteren soll eine Diskussion über die Ergebnisse stattfinden.
+
+\section{Messwerte}
+\label{chap:VERSUCH_3_MESSWERTE}
+Siehe Moodle plots\textunderscore aufg5\textunderscore abtasttheorem.pdf.
+
+\section{Auswertung}
+\label{chap:VERSUCH_3_AUSWERTUNG}
+In Tabelle \ref{fig:VERSUCH_3_auswertung} wird die ausgewählte und tatsächliche Abtastfrequenz gegenübergestellt, wie auch die Nyquist-Frequenz angegeben.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Ausgewählte Abtastfrequenz {[}Hz{]}} & \textbf{Tatsächliche Abtastfrequenz {[}Hz{]}} & \textbf{Nyquist-Frequenz {[}Hz{]}} \\ \hline
+7000                         & 7009                        & 3504.5                 \\ \hline
+8000                         & 8021                        & 4010.5 \\ \hline
+\end{tabular}
+\caption{Ausgewählte und reale Abtastfrequenz}
+\label{fig:VERSUCH_3_auswertung}
+\end{table}                   
+
+
+\section{Interpretation}
+\label{chap:VERSUCH_3_INTERPRETATION}
+Das Abtasttheorem besagt, dass die Abtastfrequenz mindestens das Doppelte der Bandbreite betragen, damit kein Aliasing auftritt. Die Bedindung wird in den Abbildungen 6.1 bis 6.3 für die Frequenzen 2005Hz, 3000Hz und 4010Hz erfüllt. In den Abbildungen 6.4 bis 6.7 ist die Bedingung nicht erfüllt und es kommt zu Aliasing. Dies bedeutet, dass das kontinuierliche Signal nicht mehr fehlerfrei aus dem abgetasteten Signal rekonstruiert werden kann.
+
+%
+% CHAPTER Anhang
+%
+\renewcommand\thesection{A.\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+
+\chapter*{Anhang}
+\label{chap:APPENDIX}
+\addcontentsline{toc}{chapter}{Anhang}
+%\setcounter{chapter}{0}
+\addtocounter{chapter}{1}
+\setcounter{section}{0}
+
+\section{Quellcode}
+\label{chap:APPENDIX_SOURCECODE}
+
+\subsection{Quellcode Versuch 2}
+\label{chap:APPENDIX_SOURCECODE_V2}
+\lstinputlisting[style=PYTHON, frame=single, caption=Skript Versuch 1a, captionpos=b, label=lst:APPENDIX_SOURCECODE_PLOT]{code/2.py}
+
+\subsection{Quellcode Versuch 3}
+\label{chap:APPENDIX_SOURCECODE_V3}
+\lstinputlisting[style=PYTHON, frame=single, caption=Skript Versuch 1b, captionpos=b, label=lst:APPENDIX_SOURCECODE_PLOT]{code/3.py}
+
+\section{Messergebnisse}
+\label{chap:APPENDIX_MEASUREMENT_SOURCE}
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.75\textwidth]{media/Messwerte1.png}
+\end{figure}
+
+\begin{figure}[H]
+	\centering\small
+	\includegraphics[width=0.75\textwidth]{media/Messwerte2.png}
+\end{figure}
+
+\end{document}
+%------------------------------------
+% ╔═╗╔╗╔╔╦╗  ╔╦╗╔═╗╔═╗╦ ╦╔╦╗╔═╗╔╗╔╔╦╗
+% ║╣ ║║║ ║║   ║║║ ║║  ║ ║║║║║╣ ║║║ ║
+% ╚═╝╝╚╝═╩╝  ═╩╝╚═╝╚═╝╚═╝╩ ╩╚═╝╝╚╝ ╩
+%------------------------------------
