@@ -1,0 +1,6 @@
+# How to build and run docker!
+
+# https://fredrikaverpil.github.io/2016/07/31/docker-for-mac-and-gui-applications/
+# https://apple.stackexchange.com/questions/328082/run-gui-application-in-macos-10-in-docker
+# In fish build: docker build -t blackjack:v1 .
+# In bash run: docker run -e DISPLAY=$ip:0 -v /tmp/.X11-unix:/tmp/.X11-unix -ti blackjack:v1
