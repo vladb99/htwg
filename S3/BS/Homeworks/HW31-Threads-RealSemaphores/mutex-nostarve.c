@@ -35,7 +35,7 @@ void ns_mutex_acquire(ns_mutex_t *m) {
 
     Sem_wait(&m->turnstile1);
     m->room2 += 1;  // transition in room2
-    Sem_wait(&m->mutex); // acquire lock, in order to decremt room1
+    Sem_wait(&m->mutex); // acquire lock, in order to decrement room1
     m->room1 -= 1;  // leave room1
 
     if (m->room1 == 0) { // last thread coming from room1
