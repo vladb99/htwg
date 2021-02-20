@@ -1,0 +1,30 @@
+http://sqlfiddle.com/#!9/84f950/3
+
+http://sqlfiddle.com/#!4/536d5/1
+
+
+CREATE TABLE L
+(
+a                 integer NOT NULL,
+b                 integer NOT NULL
+);
+
+CREATE TABLE R
+(
+c                 integer NOT NULL,
+b                 integer NOT NULL
+);
+
+INSERT INTO L(a, b) VALUES (1, 2);
+INSERT INTO L(a, b) VALUES (2, 3);
+INSERT INTO L(a, b) VALUES (3, 3);
+
+INSERT INTO R(c, b) VALUES (3, 6);
+INSERT INTO R(c, b) VALUES (3, 7);
+INSERT INTO R(c, b) VALUES (4, 5);
+
+
+select * 
+from L
+  INNER JOIN R on L.b = R.c
+--  WHERE a = 2;

@@ -1,0 +1,5 @@
+Project Setup:
+Die erste Aufgabe war unser Projekt einzurichten. Dabei haben wir die build.sbt Datei erstellt.
+Hier war es immer problematisch mit den Versionen, weil wir diese recherchieren mussten, damit alles kompatibel ist.
+Wir haben auch Zeile 14 hinzugefügt. Was das macht, ist dass es mehrere Warnings sichtbar macht.
+Das ist hilfreich wenn man das Projekt lokal mit sbt testet, weil dann kann man diese warnings auch gleich beheben. Das erhöht natürlich die wahrscheinlichkeit dass dann alles gut in travis läuft.
