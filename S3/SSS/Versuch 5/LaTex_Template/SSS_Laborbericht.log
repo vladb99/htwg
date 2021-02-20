@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.21)  15 JAN 2021 16:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.10.21)  24 JAN 2021 17:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1433,7 +1433,7 @@ File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
 
 LaTeX Warning: Label `lst:APPENDIX_SOURCECODE_PLOT' multiply defined.
 
-(./appendix/bibliography.aux))
+)
 \openout1 = `SSS_Laborbericht.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 187.
@@ -1455,8 +1455,7 @@ LaTeX Font Info:    ... okay on input line 187.
 LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 187.
 LaTeX Font Info:    Trying to load font information for LGR+cmr on input line 1
 87.
-
-(/usr/local/texlive/2020/texmf-dist/tex/latex/cbfonts-fd/lgrcmr.fd
+ (/usr/local/texlive/2020/texmf-dist/tex/latex/cbfonts-fd/lgrcmr.fd
 File: lgrcmr.fd 2017/07/29 v1.2 Greek European Computer Regular
 )
 LaTeX Font Info:    ... okay on input line 187.
@@ -1562,7 +1561,7 @@ your preamble.
 \openout2 = `preface/cover.aux'.
 
 (./preface/cover.tex
-<preface/htwg-logo.png, id=107, 298.716pt x 119.4864pt>
+<preface/htwg-logo.png, id=103, 298.716pt x 119.4864pt>
 File: preface/htwg-logo.png Graphic file (type png)
 <use preface/htwg-logo.png>
 Package pdftex.def Info: preface/htwg-logo.png  used on input line 7.
@@ -1702,7 +1701,7 @@ Kapitel 3.
 ] [6]
 Kapitel 4.
 
-Overfull \hbox (58.49323pt too wide) in paragraph at lines 386--392
+Overfull \hbox (58.49323pt too wide) in paragraph at lines 387--393
  [][] 
  []
 
@@ -1712,7 +1711,7 @@ Overfull \hbox (58.49323pt too wide) in paragraph at lines 386--392
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 419.
+nput line 420.
 
 (./code/2.py
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
@@ -1723,66 +1722,57 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 [9
 
 ] (./code/3.py)
-<media/Messwerte1.png, id=266, 605.26125pt x 713.66624pt>
+<media/Messwerte1.png, id=260, 605.26125pt x 713.66624pt>
 File: media/Messwerte1.png Graphic file (type png)
 <use media/Messwerte1.png>
-Package pdftex.def Info: media/Messwerte1.png  used on input line 430.
+Package pdftex.def Info: media/Messwerte1.png  used on input line 431.
 (pdftex.def)             Requested size: 330.76329pt x 390.00214pt.
  [10]
-<media/Messwerte2.png, id=296, 477.785pt x 763.85374pt>
+<media/Messwerte2.png, id=291, 477.785pt x 763.85374pt>
 File: media/Messwerte2.png Graphic file (type png)
 <use media/Messwerte2.png>
-Package pdftex.def Info: media/Messwerte2.png  used on input line 435.
+Package pdftex.def Info: media/Messwerte2.png  used on input line 436.
 (pdftex.def)             Requested size: 330.76329pt x 528.79631pt.
  [11 <./media/Messwerte1.png>]
 
 AED: lastpage setting LastPage
 [12 <./media/Messwerte2.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 438.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 438.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 439.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 439.
  (./SSS_Laborbericht.aux (./preface/cover.aux)
 (./preface/abstract.aux) (./preface/tableofcontents.aux)
 (./preface/listoffigures.aux) (./preface/listoftables.aux)
 (./preface/lstlistoflistings.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 438.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 438.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 439.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 439.
+Package rerunfilecheck Info: File `SSS_Laborbericht.out' has not changed.
+(rerunfilecheck)             Checksum: DC5CE5C347FA842C8845125B517D2E7B;3675.
 
-
-Package rerunfilecheck Warning: File `SSS_Laborbericht.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `SSS_Laborbericht.out':
-(rerunfilecheck)             Before: 4D7E967CF57A265EC74FF60E87ED8DCC;3821
-(rerunfilecheck)             After:  DC5CE5C347FA842C8845125B517D2E7B;3675.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 438.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 439.
  ) 
 Here is how much of TeX's memory you used:
- 39121 strings out of 480608
- 835002 string characters out of 5903629
- 1360445 words of memory out of 5000000
- 54090 multiletter control sequences out of 15000+600000
+ 39112 strings out of 480608
+ 834844 string characters out of 5903629
+ 1359886 words of memory out of 5000000
+ 54085 multiletter control sequences out of 15000+600000
  584296 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  64i,14n,98p,712b,1783s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{section*.13} has been referenced but does not exi
-st, replaced by a fixed one
-
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texl
-ive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texliv
-e/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
-/2020/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2020/texmf
--dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2020/texmf-dist/font
-s/type1/urw/times/utmr8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/ur
-w/times/utmri8a.pfb>
-Output written on SSS_Laborbericht.pdf (19 pages, 693975 bytes).
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
+ive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2020/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2020/tex
+mf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2020/texmf-dist/fo
+nts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/
+urw/times/utmri8a.pfb>
+Output written on SSS_Laborbericht.pdf (19 pages, 693823 bytes).
 PDF statistics:
- 362 PDF objects out of 1000 (max. 8388607)
- 324 compressed objects within 4 object streams
- 109 named destinations out of 1000 (max. 500000)
- 228 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 355 PDF objects out of 1000 (max. 8388607)
+ 317 compressed objects within 4 object streams
+ 108 named destinations out of 1000 (max. 500000)
+ 220 words of extra memory for PDF output out of 10000 (max. 10000000)
 

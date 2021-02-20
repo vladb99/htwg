@@ -11,7 +11,7 @@
 \contentsline {section}{\numberline {2.4}Interpretation}{4}{section.2.4}%
 \contentsline {chapter}{\numberline {3}Versuch 2: Genauigkeit der DA-Wandlung}{5}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Fragestellung, Messprinzip, Aufbau, Messmittel}{5}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Messwerte}{5}{section.3.2}%
+\contentsline {section}{\numberline {3.2}Messwerte}{6}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Auswertung}{6}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Interpretation}{6}{section.3.4}%
 \contentsline {chapter}{\numberline {4}Versuch 3: Abtasttheorem}{7}{chapter.4}%

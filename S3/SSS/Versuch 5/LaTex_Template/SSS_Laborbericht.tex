@@ -232,9 +232,9 @@ In dem fünften Versuch geht es um die Umwandlung von analogen in digitale Daten
 
 In dem fünften Versuch geht es um die Umwandlung von analogen in digitale Daten. Die Lernziele dieses Versuches sind zum einen die Messgenauigkeit der AD- und DA-Wandlung zu untersuchen, wie auch praktische Erfahrungen mit dem Abtasttheorem zu sammeln.
 
-Im ersten Versuch soll der theoretische Quantisierungsfehler des AD-Wandlers, wie auch die Standardabweichung für zwei verschiedene Messgeräte berechnet werden.
+Im ersten Teil soll der theoretische Quantisierungsfehler des AD-Wandlers, wie auch die Standardabweichung für zwei verschiedene Messgeräte berechnet werden.
 
-Im zweiten Versuch werden die gleiche Berechnungen für ein DA-Wandler durchgeführt. Dabei wird die Standardabweichung eines Oszilloskops berechnet.
+Im zweiten Teil werden die gleichen Berechnungen für ein DA-Wandler durchgeführt. Dabei wird die Standardabweichung eines Oszilloskops berechnet.
 
 Der letzte Teil der Versuchsreihe beschäftigt sich mit dem Abtasttheorem.
 
@@ -246,13 +246,13 @@ Der letzte Teil der Versuchsreihe beschäftigt sich mit dem Abtasttheorem.
 
 \section{Fragestellung, Messprinzip, Aufbau, Messmittel}
 \label{chap:VERSUCH_1_FRAGESTELLUNG}
-In diesem Versuch soll der theoretische Quantisierungsfehler eines 11-Bit-AD-Wandlers berechnet werden. Zusätzlich sollen verschiedene Spannungen mit einem Feinmessgerät Keithley TRMS 179, einem Multimeter Philips PM 2503 und mit dem AD-Wandler gemessen werden. Des Weiteren soll von dem Multimeter und dem AD-Wandler der Messfehler sowie die Standardabweichung zum Feinmessgerät bestimmt werden.
+In diesem Versuch wird der theoretische Quantisierungsfehler eines 11-Bit-AD-Wandlers berechnet. Zusätzlich sollen verschiedene Spannungen mit einem Feinmessgerät Keithley TRMS 179, einem Multimeter Philips PM 2503 und mit dem AD-Wandler gemessen werden. Des Weiteren soll von dem Multimeter und dem AD-Wandler der Messfehler sowie die Standardabweichung zum Feinmessgerät bestimmt werden.
 
 \newpage
 \section{Messwerte}
 \label{chap:VERSUCH_1_MESSWERTE}
 
-In Tabelle \ref{fig:VERSUCH_1_messungen} werden die gemessene Spannungen zwischen 0V und 10V dargestellt.
+In Tabelle \ref{fig:VERSUCH_1_messungen} werden die gemessenen Spannungen zwischen 0V und 10V dargestellt.
 
 \begin{table}[H]
 \centering
@@ -270,7 +270,7 @@ In Tabelle \ref{fig:VERSUCH_1_messungen} werden die gemessene Spannungen zwische
 9                                               & 8.965                       & 8.95                     & 8.979             \\ \hline
 10                                              & 9.990                       & 10                       & 10.034            \\ \hline
 \end{tabular}
-\caption{Die gemessenen Spannungen der drei Geräten}
+\caption{Die gemessenen Spannungen der drei Geräte}
 \label{fig:VERSUCH_1_messungen}
 \end{table}
 
@@ -293,26 +293,27 @@ In Tabelle \ref{fig:VERSUCH_1_auswertung} werden die berechneten Messfehler ange
 9                                               & 0,014                          & 0,029                       \\ \hline
 10                                              & 0,044                          & 0,034                       \\ \hline
 \end{tabular}
-\caption{Die berechneten Messwerte der jeweiligen Geräten}
+\caption{Die berechneten Messwerte der jeweiligen Geräte}
 \label{fig:VERSUCH_1_auswertung}
 \end{table}
-Der theoretische Quantisierungsfehler für den AD-Wandler beträgt
+\noindent
+Der theoretische Quantisierungsfehler für den AD-Wandler beträgt:
 \begin{equation*}
 \Delta U\textsubscript{AD} = \frac{10V - (-10V)}{2\textsuperscript{11}} = 0.0098V
 \end{equation*}
-Für das Multimeter ergibt sich aus den Messwerten die folgende Standardabweichung
+Für das Multimeter ergibt sich aus den Messwerten die folgende Standardabweichung:
 \begin{equation*}
 S\textsubscript{M} = 0.0207V
 \end{equation*}
-und für den AD-Wandler
+Und die des AD-Wandlers:
 \begin{equation*}
 S\textsubscript{AD} = 0.0191V
 \end{equation*}
 
 \section{Interpretation}
 \label{chap:VERSUCH_1_INTERPRETATION}
-Anhand der Standardabweichung können wir daraus schließen, dass der AD-Wandler minimal genauer ist, als der Multimeter. Da die Standardabweichungen zueinander sehr ähnlich sind, lässt sich anhand dieser Messwerte nicht sagen, welches Messgerät die besseren Ergebnisse liefert. 
-Die Standardabweichung des Multimeters lässt sich wahrscheinlich, auf Fertigungstoleranzen zurückführen und die des AD-Wandlers auf das Auftreten von Jitter.
+Anhand der Standardabweichung können wir daraus schließen, dass der AD-Wandler minimal genauer ist als das Multimeter. Da die Standardabweichungen zueinander sehr ähnlich sind, lässt sich anhand dieser Messwerte nicht sagen, welches Messgerät die besseren Ergebnisse liefert. 
+Die Standardabweichung des Multimeters lässt sich wahrscheinlich auf Fertigungstoleranzen zurückführen und die des AD-Wandlers auf das Auftreten von Jitter.
 
 %
 % CHAPTER Versuch 2
@@ -322,8 +323,8 @@ Die Standardabweichung des Multimeters lässt sich wahrscheinlich, auf Fertigung
 
 \section{Fragestellung, Messprinzip, Aufbau, Messmittel}
 \label{chap:VERSUCH_2_FRAGESTELLUNG}
-In diesem Versuch soll die Spannung eines 10-Bit-DA-Wandlers von 0.5V bis 5V mithilfe eines Oszilloskops gemessen werden. Dabei werden ebenfalls der theoretische Quantisierungsfehler und die Standardabweichung berechnet.
-
+In diesem Versuch sollen die Spannungen eines 10-Bit-DA-Wandlers von 0.5V bis 5V mithilfe eines Oszilloskops gemessen werden. Dabei wird ebenfalls der theoretische Quantisierungsfehler und die Standardabweichung berechnet.
+\newpage
 \section{Messwerte}
 \label{chap:VERSUCH_2_MESSWERTE}
 In Tabelle \ref{fig:VERSUCH_2_messungen} werden die gemessenen Spannungen im Spannungsbereich von 0.5V bis 5V dargestellt.
@@ -350,18 +351,18 @@ In Tabelle \ref{fig:VERSUCH_2_messungen} werden die gemessenen Spannungen im Spa
 
 \section{Auswertung}
 \label{chap:VERSUCH_2_AUSWERTUNG}
-Der theoretische Quantisierungsfehler für den DA-Wandler beträgt
+Der theoretische Quantisierungsfehler für den DA-Wandler beträgt:
 \begin{equation*}
 \Delta U\textsubscript{DA} = \frac{5V - 0V}{2\textsuperscript{10}} = 0.00488V
 \end{equation*}
-Für den DA-Wandler ergibt sich aus den Messwerten die folgende Standardabweichung
+Für den DA-Wandler ergibt sich aus den Messwerten die folgende Standardabweichung:
 \begin{equation*}
 S\textsubscript{DA} = 0.1169V
 \end{equation*}
 
 \section{Interpretation}
 \label{chap:VERSUCH_2_INTERPRETATION}
-Die Standardabweichung liegt deutlich über dem theoretischen Quantisierungsfehler, was darauf schließen lässt, dass die Umwandlung eines digitalen in ein analoges Signal sehr ungenau ist. Thermisches Rauschen begünstigt den Fehler.
+Die Standardabweichung liegt deutlich über dem theoretischen Quantisierungsfehler, was darauf schließen lässt, dass die Umwandlung digitaler in analoger Signale sehr ungenau ist. Thermisches Rauschen begünstigt den Fehler.
 
 %
 % CHAPTER Versuch 3
@@ -371,7 +372,7 @@ Die Standardabweichung liegt deutlich über dem theoretischen Quantisierungsfehl
 
 \section{Fragestellung, Messprinzip, Aufbau, Messmittel}
 \label{chap:VERSUCH_3_FRAGESTELLUNG}
-In diesem Versuch soll eine Abtastfrequenz im Intervall [6000, 8000] ausgewählt und mithilfe eines Python-Programms, die tatsächliche Abtastfrequenz des AD-Wandlers ausgelesen werden. Anschließend soll die Nyquist-Frequenz angegeben werden. Von der halben bis zur doppelten Nyquist-Frequenz soll die Frequenz variiert und mithilfe eines Sinusgenerators in 7 Schritten die Kurven geplottet werden. Des Weiteren soll eine Diskussion über die Ergebnisse stattfinden.
+In diesem Versuch wird eine Abtastfrequenz im Intervall [6000, 8000] ausgewählt und mithilfe eines Python-Programms die tatsächliche Abtastfrequenz des AD-Wandlers ausgelesen. Anschließend soll die Nyquist-Frequenz angegeben werden. Von der halben bis zur doppelten Nyquist-Frequenz soll die Frequenz variiert und mithilfe eines Sinusgenerators in 7 Schritten die Kurven geplottet werden. Des Weiteren soll eine Diskussion über die Ergebnisse stattfinden.
 
 \section{Messwerte}
 \label{chap:VERSUCH_3_MESSWERTE}
@@ -396,7 +397,7 @@ In Tabelle \ref{fig:VERSUCH_3_auswertung} wird die ausgewählte und tatsächlich
 
 \section{Interpretation}
 \label{chap:VERSUCH_3_INTERPRETATION}
-Das Abtasttheorem besagt, dass die Abtastfrequenz mindestens das Doppelte der Bandbreite betragen, damit kein Aliasing auftritt. Die Bedindung wird in den Abbildungen 6.1 bis 6.3 für die Frequenzen 2005Hz, 3000Hz und 4010Hz erfüllt. In den Abbildungen 6.4 bis 6.7 ist die Bedingung nicht erfüllt und es kommt zu Aliasing. Dies bedeutet, dass das kontinuierliche Signal nicht mehr fehlerfrei aus dem abgetasteten Signal rekonstruiert werden kann.
+Das Abtasttheorem besagt, dass die Abtastfrequenz mindestens das Doppelte der Bandbreite betragen muss, damit kein Aliasing auftritt. Die Bedindung wird in den Abbildungen 6.1 bis 6.3 für die Frequenzen 2005Hz, 3000Hz und 4010Hz erfüllt. In den Abbildungen 6.4 bis 6.7 ist die Bedingung nicht erfüllt und es kommt zu Aliasing. Dies bedeutet, dass das kontinuierliche Signal nicht mehr fehlerfrei aus dem abgetasteten Signal rekonstruiert werden kann.
 
 %
 % CHAPTER Anhang
