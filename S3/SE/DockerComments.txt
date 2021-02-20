@@ -1,6 +1,13 @@
 # How to build and run docker!
 
+# Done before
+# unset DISPLAY
+# export DISPLAY=:0
+# ip=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+# xhost + $ip
+# 10.23.0.225 being added to access control list
+
 # https://fredrikaverpil.github.io/2016/07/31/docker-for-mac-and-gui-applications/
 # https://apple.stackexchange.com/questions/328082/run-gui-application-in-macos-10-in-docker
-# In fish build: docker build -t blackjack:v1 .
+# In fish build: docker build -t blackjack .
 # In bash run: docker run -e DISPLAY=$ip:0 -v /tmp/.X11-unix:/tmp/.X11-unix -ti blackjack:v1
