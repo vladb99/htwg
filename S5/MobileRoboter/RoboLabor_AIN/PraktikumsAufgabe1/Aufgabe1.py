@@ -77,6 +77,7 @@ def main():
     print(po_homogenous)
 
     # c)
+    print("\nc)")
     r1_transposed = np.transpose(r1)
     toa_inverted = np.dot(trans(-np.dot(r1_transposed, t1)), rot2trans(r1_transposed))
     tab = np.dot(toa_inverted, tob)
