@@ -176,8 +176,6 @@ void bhamLine (Point p1, Point p2, Color c) {
     int y1 = p1.y;
     int y2 = p2.y;
     
-    
-    
     int t_x_1 = 0;
     int t_y_1 = 0;
     int t_x_2 = x2 - x1;
@@ -243,8 +241,6 @@ void bhamLine (Point p1, Point p2, Color c) {
         }
         y += y1;
         x += x1;
-        
-        
         
         Point p = Point(x, y);
         setPoint (p, c);
@@ -318,11 +314,11 @@ void display (void) {
     clearImage ();            // altes Bild l�schen
     
     Point p1(-10, -20);        // ersten Punkt f�r Gerade definieren
-    Point p2(-10, 25);        // ebenso den zweiten Punkt
+    Point p2(15, 25);        // ebenso den zweiten Punkt
     Color cl(1,0,0);        // es soll eine rote Gerade sein ...
     
     // ersten Punkt f�r Gerade definieren
-    Point p11(-10, 25);
+    Point p11(-10, -25);
     Point p21(26, 20);
     
     Point p12(-10, -20);        // ersten Punkt f�r Gerade definieren
@@ -330,12 +326,12 @@ void display (void) {
     
     bhamLine (p1, p2, cl);    // Gerade zeichnen ...
     
-    bhamLine (p11, p21, cl);    // Gerade zeichnen ...
+    //bhamLine (p11, p21, cl);    // Gerade zeichnen ...
     
-    bhamLine (p12, p22, cl);    // Gerade zeichnen ...
+    //bhamLine (p12, p22, cl);    // Gerade zeichnen ...
     
-    Point p(0, 5);        // Mittelpunkt f�r Kreis definieren
-    int r = 5;            // Radius festlegen
+    Point p(5, 0);        // Mittelpunkt f�r Kreis definieren
+    int r = 17;            // Radius festlegen
     Color cc(0,0,1);        // es soll ein blauer Kreis sein ...
     
     bhamCircle (p, r, cc);    // Kreis zeichnen ...

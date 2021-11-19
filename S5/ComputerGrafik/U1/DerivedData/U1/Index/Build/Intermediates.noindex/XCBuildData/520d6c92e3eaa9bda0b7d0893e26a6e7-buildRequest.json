@@ -1,0 +1,60 @@
+{
+  "_buildCommand2" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : true,
+    "targets" : null
+  },
+  "buildCommand" : "build",
+  "configuredTargets" : [
+    {
+      "guid" : "4af4c7e6fd5c469c1044d6190ea07dd7b331b191f884998539eb037c0d8385f3"
+    }
+  ],
+  "containerPath" : "/Users/vladb/Git/htwg/S5/ComputerGrafik/U1/U1.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "indexbuild",
+    "activeArchitecture" : "x86_64h",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "macosx",
+      "sdk" : "macosx11.3",
+      "sdkVariant" : "macos",
+      "supportedArchitectures" : [
+        "x86_64h",
+        "x86_64"
+      ],
+      "targetArchitecture" : "x86_64h"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/vladb/Git/htwg/S5/ComputerGrafik/U1/DerivedData/U1/Index/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/vladb/Git/htwg/S5/ComputerGrafik/U1/DerivedData/U1/Index/Build/Products",
+      "derivedDataPath" : "/Users/vladb/Git/htwg/S5/ComputerGrafik/U1/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/vladb/Git/htwg/S5/ComputerGrafik/U1/DerivedData/U1/Index/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/vladb/Git/htwg/S5/ComputerGrafik/U1/DerivedData/U1/Index/PrecompiledHeaders",
+      "pchPath" : "/Users/vladb/Git/htwg/S5/ComputerGrafik/U1/DerivedData/U1/Index/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO",
+          "INDEX_ARENA_INFO_REGULAR_BUILD_PRODUCTS_DIR" : "/Users/vladb/Git/htwg/S5/ComputerGrafik/U1/DerivedData/U1/Build/Products",
+          "ONLY_ACTIVE_ARCH" : "YES"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "schemeCommand2" : "launch",
+  "shouldCollectMetrics" : false,
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
