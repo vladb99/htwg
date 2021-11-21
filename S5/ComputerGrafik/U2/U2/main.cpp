@@ -48,12 +48,12 @@ float moon_angle_step;
 class Point {
 public:
     
-    Point (int x=0, int y=0) {
+    Point (float x=0, float y=0) {
         this->x = x;
         this->y = y;
     }
     
-    int x, y;
+    float x, y;
 };
 
 // Eine �beraus primitive Farbklasse
@@ -233,26 +233,72 @@ void display1 (void)
     glutSwapBuffers (); // swap front and back buffer
 }
 
+CMat3f translation(Point t, bool inverted) {
+    CMat3f matrix = CMat3f();
+    for (int i = 0; i < 3; i++) {
+        matrix.set(i, i, 1);
+    }
+    if (inverted) {
+        matrix.set(0, 2, -t.x);
+        matrix.set(1, 2, -t.y);
+    } else {
+        matrix.set(0, 2, t.x);
+        matrix.set(1, 2, t.y);
+    }
+    return matrix;
+}
+
+CVec3f homonize(Point p) {
+    CVec3f vector = CVec3f();
+    float data[3] = {static_cast<float>(p.x), static_cast<float>(p.y), 1};
+    vector.setData(data);
+    return vector;
+}
+
+CMat3f rotation(float angle) {
+    CMat3f matrix = CMat3f();
+    matrix.set(0, 0, cos(angle*3.14159/180));
+    matrix.set(0, 1, -sin(angle*3.14159/180));
+    matrix.set(1, 0, sin(angle*3.14159/180));
+    matrix.set(1, 1, cos(angle*3.14159/180));
+    matrix.set(2, 2, 1);
+    return matrix;
+}
+
+Point move_homogenous(Point ref, Point current_pos, float angle) {
+    CMat3f translation_matrix = translation(ref, false);
+    CMat3f rotation_matrix = rotation(angle);
+    CMat3f translation_inverted = translation(ref, true);
+    
+    CMat3f transformation_matrix = translation_matrix * rotation_matrix * translation_inverted;
+    
+    CVec3f rotated_point = transformation_matrix * homonize(current_pos);
+    
+    float data[3];
+    rotated_point.getData(data);
+    Point p = Point(data[0], data[1]);
+    return p;
+}
+
 // display callback function
 void display2 (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
     
-//    glBegin (GL_QUADS);
-//    glColor3f (1,0,0);
-//    glVertex2i (-g_vecPos(1), -g_vecPos(2));
-//    glColor3f (0,1,0);
-//    glVertex2i (g_vecPos(1), -g_vecPos(2));
-//    glColor3f (0,0,1);
-//    glVertex2i (g_vecPos(1), g_vecPos(2));
-//    glColor3f (1,1,0);
-//    glVertex2i (-g_vecPos(1), g_vecPos(2));
-//    glEnd ();
+    bhamCircle(sun_pos, sun_r, sun_color);
+    bhamCircle(earth_pos, earth_r, earth_color);
+    bhamCircle(moon_pos, moon_r, moon_color);
+        
+    earth_pos = move_homogenous(sun_pos, earth_pos, 1);
+    moon_pos = move_homogenous(sun_pos, moon_pos, 1);
+    moon_pos = move_homogenous(earth_pos, moon_pos, 7);
     
-    glVertex3i(0, 0, 0)
+    earth_angle_step += 1;
+    moon_angle_step += 7;
     
+    if(earth_angle_step > 360 ) {earth_angle_step -= 360;}
+    if(moon_angle_step > 360 ) {moon_angle_step -= 360;}
      
-    
     glFlush();
     glutSwapBuffers (); // swap front and back buffer
 }

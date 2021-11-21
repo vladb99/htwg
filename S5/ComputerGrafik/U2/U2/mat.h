@@ -73,6 +73,10 @@ public:
 				buf(i) += m_aatData[i][j]*vec(j);
 		return buf;
 	}
+    
+    void set(int x, int y, float value) {
+        m_aatData[x][y] = value;
+    }
 
 private:
 

@@ -37,9 +37,9 @@ public:
 		for (int i=0; i<SIZE; i++) m_atData[i] = atData[i];		
 	}
 
-	void getData (const T atData[SIZE]) 
+	void getData (T atData[SIZE]) 
 	{
-		for (int i=0; i<SIZE; i++) atData[i] = m_atData[i];		
+		for (int i=0; i<SIZE; i++) atData[i] = m_atData[i];
 	}
 
 	unsigned getDimension () 
