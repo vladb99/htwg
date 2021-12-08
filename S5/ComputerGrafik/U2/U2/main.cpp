@@ -208,8 +208,8 @@ void bhamCircle (Point p, int r, Color c) {
 }
 
 Point move(Point ref, int distance, float angle) {
-    float new_x = ref.x + distance * cos(angle*3.14159/180);
-    float new_y = ref.y + distance * sin(angle*3.14159/180);
+    float new_x = ref.x + distance * cos(angle*M_PI/180);
+    float new_y = ref.y + distance * sin(angle*M_PI/180);
     Point new_position = Point(new_x, new_y);
     return new_position;
 }
@@ -285,7 +285,7 @@ void display2 (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
     
-    bhamCircle(sun_pos, sun_r, sun_color);
+    bhamCircle(sun_pos, sun_r, Color(1, 0, 0));
     bhamCircle(earth_pos, earth_r, earth_color);
     bhamCircle(moon_pos, moon_r, moon_color);
         
