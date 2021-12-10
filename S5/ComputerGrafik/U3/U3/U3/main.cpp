@@ -1,14 +1,9 @@
 #include <stdlib.h>
 
-// Sample code for ‹bung 2
-
 #include "vec.h"
 #include "mat.h"
 #include <cmath>
 
-// might be you have to swith to
-// #include "glut.h" depending on your GLUT installation
-// #include "Uebung2/Uebung2/glut.h"
 #include "GLUT/glut.h"
 
 ////////////////////////////////////////////////////////////
@@ -22,6 +17,8 @@ const int g_iHeight = 1000;
 
 // global variable to tune the timer interval
 int g_iTimerMSecs;
+
+// https://math.stackexchange.com/questions/2305792/3d-projection-on-a-2d-plane-weak-maths-ressources
 
 //
 /////////////////////////////////////////////////////////////
@@ -44,7 +41,7 @@ float moon_angle_step;
 //
 /////////////////////////////////////////////////////////////
 
-// Eine �beraus primitive Punktklasse
+// Eine überaus primitive Punktklasse
 class Point {
 public:
     
@@ -56,7 +53,7 @@ public:
     float x, y;
 };
 
-// Eine �beraus primitive Farbklasse
+// Eine überaus primitive Farbklasse
 class Color {
 public:
     
@@ -68,61 +65,6 @@ public:
     
     float r, g, b;
 };
-
-Point earth_pos;
-Point sun_pos;
-Point moon_pos;
-
-int sun_to_earth ;
-int earth_to_moon ;
-
-int sun_r;
-Color sun_color;
-
-int earth_r;
-
-Color earth_color;
-
-int moon_r;
-Color moon_color;
-
-// function to initialize our own variables
-void init ()
-{
-    
-    // init timer interval
-    g_iTimerMSecs = 10;
-    
-    earth_pos = Point(300, 0);
-    sun_pos = Point(0, 0);
-    moon_pos = Point(400, 0);
-    
-    
-    sun_to_earth = sun_pos.x - earth_pos.x;
-    earth_to_moon = earth_pos.x - moon_pos.x;
-    // init variables for display1
-    g_iPos     = 0;
-    g_iPosIncr = 2;
-    
-    // init variables for display2
-    int aiPos    [2] = {0, 0};
-    int aiPosIncr[2] = {2, 2};
-    g_vecPos.setData (aiPos);
-    g_vecPosIncr.setData (aiPosIncr);
-    
-    earth_angle_step = 180;
-    moon_angle_step = 0;
-    
-    sun_r = 100;
-    sun_color = Color(255, 200, 0);
-
-    earth_r = 40;
-
-    earth_color = Color(0, 100, 255);
-
-    moon_r = 20;
-    moon_color = Color(100, 100, 100);
-}
 
 // function to initialize the view to ortho-projection
 void initGL ()
@@ -214,25 +156,6 @@ Point move(Point ref, int distance, float angle) {
     return new_position;
 }
 
-// display callback function
-void display1 (void)
-{
-    glClear (GL_COLOR_BUFFER_BIT);
-    
-    bhamCircle(sun_pos, sun_r, sun_color);
-    bhamCircle(earth_pos, earth_r, earth_color);
-    bhamCircle(moon_pos, moon_r, moon_color);
-    
-    earth_pos = move(sun_pos, sun_to_earth, earth_angle_step += 1);
-    moon_pos = move(earth_pos, earth_to_moon, moon_angle_step += 7);
-    
-    if(earth_angle_step > 360 ) {earth_angle_step -= 360;}
-    if(moon_angle_step > 360 ) {moon_angle_step -= 360;}
-    
-    glFlush ();
-    glutSwapBuffers (); // swap front and back buffer
-}
-
 CMat3f translation(Point t, bool inverted) {
     CMat3f matrix = CMat3f();
     for (int i = 0; i < 3; i++) {
@@ -280,48 +203,171 @@ Point move_homogenous(Point ref, Point current_pos, float angle) {
     return p;
 }
 
+void drawPoint(float x, float y) {
+    glVertex2f(x, y);
+}
+
+void bhamLine (CVec3f p1, CVec3f p2, Color c) {
+    glBegin (GL_POINT);
+    glColor3f (c.r, c.g, c.b);
+    
+    int x1 = p1(0);
+    int x2 = p2(0);
+    int y1 = p1(1);
+    int y2 = p2(1);
+    
+    int t_x_1 = 0;
+    int t_y_1 = 0;
+    int t_x_2 = x2 - x1;
+    int t_y_2 = y2 - y1;
+    
+    bool x_m = false;
+    bool y_m = false;
+    bool o_m = false;
+    
+    if (t_x_2 <= 0) {
+        x_m = true;
+        t_x_2 *= -1;
+    }
+    if (t_y_2 <= 0) {
+        y_m = true;
+        t_y_2 *= -1;
+    }
+    if (t_y_2 > t_x_2) {
+        o_m = true;
+        int temp = t_y_2;
+        t_y_2 = t_x_2;
+        t_x_2 = temp;
+    }
+    
+    int delta_x = t_x_2 - t_x_1;
+    int delta_y = t_y_2 - t_y_1;
+    
+    int delta_ne = 2 * (delta_y - delta_x);
+    int delta_e = 2 * delta_y;
+    int d = 2 * delta_y - delta_x;
+    
+    int y = 0;
+    int x = 0;
+    
+    // erster Punkt
+    drawPoint(p1(0), p1(1));
+    while (t_x_1 < t_x_2) {
+        
+        if (d >= 0) {
+            d += delta_ne;
+            t_x_1++;
+            t_y_1++;
+        } else {
+            d += delta_e;
+            t_x_1++;
+        }
+        
+        x = t_x_1;
+        y = t_y_1;
+        
+        if (o_m){
+            int temp = x;
+            x = y;
+            y = temp;
+        }
+        if (y_m){
+            y *= -1;
+        }
+        if (x_m){
+            x *= -1;
+        }
+        y += y1;
+        x += x1;
+        
+        Point p = Point(x, y);
+        drawPoint(p.x, p.y);
+    }
+    
+    // letzter Punkt
+    drawPoint(p2(0), p2(1));
+    glEnd ();
+}
+
+CVec4f projectZ(float fFocus, CVec4f pView) {
+    CVec4f projected_point;
+    float ratio = fFocus / pView(2);
+    projected_point(0) = pView(0) * ratio;
+    projected_point(1) = pView(1) * ratio;
+    projected_point(2) = 0;
+    projected_point(3) = 1;
+    return projected_point;
+}
+
+// A B C D E F G H
+// 0 1 2 3 4 5 6 7
+void drawProjektedZ(CVec3f points[8], Color c) {
+    bhamLine(points[0], points[1], c);
+    bhamLine(points[0], points[3], c);
+    bhamLine(points[2], points[1], c);
+    bhamLine(points[2], points[3], c);
+    
+    bhamLine(points[0], points[4], c);
+    bhamLine(points[1], points[5], c);
+    bhamLine(points[2], points[6], c);
+    bhamLine(points[3], points[7], c);
+    
+    bhamLine(points[4], points[5], c);
+    bhamLine(points[4], points[7], c);
+    bhamLine(points[6], points[5], c);
+    bhamLine(points[6], points[7], c);
+}
+
 // display callback function
-void display2 (void)
+void display (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
     
-    bhamCircle(sun_pos, sun_r, Color(1, 0, 0));
-    bhamCircle(earth_pos, earth_r, earth_color);
-    bhamCircle(moon_pos, moon_r, moon_color);
-        
-    earth_pos = move_homogenous(sun_pos, earth_pos, 1);
-    moon_pos = move_homogenous(sun_pos, moon_pos, 1);
-    moon_pos = move_homogenous(earth_pos, moon_pos, 7);
+    float vector[4] = {4, 8, -6 , 1};
+    CVec4f view = CVec4f(vector);
+    projectZ(3, view);
     
-    earth_angle_step += 1;
-    moon_angle_step += 7;
+    Color c = Color(1, 1, 1);
+    CVec3f quader[8];
+    float p0[3] = { 0, 20, 1 };
+    float p1[3] = { 20, 20, 1 };
+    float p2[3] = { 20, 0, 1 };
+    float p3[3] = { 0, 0, 1 };
+    float p4[3] = { 10, 30, 1 };
+    float p5[3] = { 30, 30, 1 };
+    float p6[3] = { 30, 10, 1 };
+    float p7[3] = { 10, 10, 1 };
+    quader[0] = CVec3f(p0);
+    quader[1] = CVec3f(p1);
+    quader[2] = CVec3f(p2);
+    quader[3] = CVec3f(p3);
+    quader[4] = CVec3f(p4);
+    quader[5] = CVec3f(p5);
+    quader[6] = CVec3f(p6);
+    quader[7] = CVec3f(p7);
     
-    if(earth_angle_step > 360 ) {earth_angle_step -= 360;}
-    if(moon_angle_step > 360 ) {moon_angle_step -= 360;}
-     
+    drawProjektedZ(quader, c);
+    
     glFlush();
     glutSwapBuffers (); // swap front and back buffer
 }
 
-void keyboard (unsigned char key, int x, int y)
+// function to initialize our own variables
+void init ()
 {
-    switch (key) {
-        case 'q':
-        case 'Q':
-            exit (0); // quit program
-            break;
-        case '1':
-            glutDisplayFunc (display1);
-            //glutPostRedisplay ();    // not needed since timer triggers redisplay
-            break;
-        case '2':
-            glutDisplayFunc (display2);
-            //glutPostRedisplay ();    // not needed since timer triggers redisplay
-            break;
-        default:
-            // do nothing ...
-            break;
-    };
+    
+    // init timer interval
+    g_iTimerMSecs = 10;
+    
+    // init variables for display1
+    g_iPos     = 0;
+    g_iPosIncr = 2;
+    
+    // init variables for display2
+    int aiPos    [2] = {0, 0};
+    int aiPosIncr[2] = {2, 2};
+    g_vecPos.setData (aiPos);
+    g_vecPosIncr.setData (aiPosIncr);
 }
 
 int main (int argc, char **argv)
@@ -337,8 +383,8 @@ int main (int argc, char **argv)
     
     // assign callbacks
     glutTimerFunc (10, timer, 0);
-    glutKeyboardFunc (keyboard);
-    glutDisplayFunc (display1);
+    //glutKeyboardFunc (keyboard);
+    glutDisplayFunc (display);
     // you might want to add a resize function analog to
     // ‹bung1 using code similar to the initGL function ...
     

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E5F94DB02760C07D0042575F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5F94DAF2760C07D0042575F /* main.cpp */; };
+		E5F94DBD2760C16D0042575F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F94DBB2760C16D0042575F /* OpenGL.framework */; };
+		E5F94DBE2760C16D0042575F /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F94DBC2760C16D0042575F /* GLUT.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +29,8 @@
 		E5F94DAF2760C07D0042575F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E5F94DB82760C0F10042575F /* mat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat.h; sourceTree = "<group>"; };
 		E5F94DB92760C1270042575F /* vec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec.h; sourceTree = "<group>"; };
+		E5F94DBB2760C16D0042575F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		E5F94DBC2760C16D0042575F /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +38,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5F94DBD2760C16D0042575F /* OpenGL.framework in Frameworks */,
+				E5F94DBE2760C16D0042575F /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +51,7 @@
 			children = (
 				E5F94DAE2760C07C0042575F /* U3 */,
 				E5F94DAD2760C07C0042575F /* Products */,
+				E5F94DBA2760C16D0042575F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +71,15 @@
 				E5F94DB92760C1270042575F /* vec.h */,
 			);
 			path = U3;
+			sourceTree = "<group>";
+		};
+		E5F94DBA2760C16D0042575F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E5F94DBC2760C16D0042575F /* GLUT.framework */,
+				E5F94DBB2760C16D0042575F /* OpenGL.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
