@@ -208,7 +208,7 @@ void drawPoint(float x, float y) {
 }
 
 void bhamLine (CVec3f p1, CVec3f p2, Color c) {
-    glBegin (GL_POINT);
+    glBegin (GL_POINTS);
     glColor3f (c.r, c.g, c.b);
     
     int x1 = p1(0);
@@ -291,7 +291,14 @@ void bhamLine (CVec3f p1, CVec3f p2, Color c) {
 
 CVec4f projectZ(float fFocus, CVec4f pView) {
     CVec4f projected_point;
-    float ratio = fFocus / pView(2);
+    // calculate ratio of:
+    // distance between eyepoint and origin (of camera and world coordinate system)
+    // and distance between eyepoint and object.
+    // projection happens on plane in origin (z = 0)
+    float ratio = fFocus / (fFocus - pView(2));
+    
+    // if you know the ratio of which z coordinate of object has to be changed to be on the plane
+    // then you can use that ratio to also calculate the rest of the coordinated, because the ray is a line.
     projected_point(0) = pView(0) * ratio;
     projected_point(1) = pView(1) * ratio;
     projected_point(2) = 0;
@@ -318,35 +325,80 @@ void drawProjektedZ(CVec3f points[8], Color c) {
     bhamLine(points[6], points[7], c);
 }
 
+void drawQuader(CVec3f cuboid[8], float fFocus, Color c) {
+    CVec3f projected_points[8];
+    for (int i = 0; i < 8; i++) {
+        float coords_to_array[4] = {cuboid[i](0), cuboid[i](1), cuboid[i](2), 1};
+        CVec4f view = CVec4f(coords_to_array);
+        CVec4f projected_point_homonized = projectZ(fFocus, view);
+        
+        float array[3] = {projected_point_homonized(0), projected_point_homonized(1), 1};
+        CVec3f projected_point = CVec3f(array);
+        projected_points[i] = projected_point;
+    }
+    drawProjektedZ(projected_points, c);
+}
+
 // display callback function
 void display (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
     
-    float vector[4] = {4, 8, -6 , 1};
-    CVec4f view = CVec4f(vector);
-    projectZ(3, view);
+//    float a1[3] = {0, 0, 1};
+//    float a2[3] = {20, 20, 1};
+//    CVec3f point1 = CVec3f(a1);
+//    CVec3f point2 = CVec3f(a2);
+//    bhamLine(point1, point2, c);
     
-    Color c = Color(1, 1, 1);
-    CVec3f quader[8];
-    float p0[3] = { 0, 20, 1 };
-    float p1[3] = { 20, 20, 1 };
-    float p2[3] = { 20, 0, 1 };
-    float p3[3] = { 0, 0, 1 };
-    float p4[3] = { 10, 30, 1 };
-    float p5[3] = { 30, 30, 1 };
-    float p6[3] = { 30, 10, 1 };
-    float p7[3] = { 10, 10, 1 };
-    quader[0] = CVec3f(p0);
-    quader[1] = CVec3f(p1);
-    quader[2] = CVec3f(p2);
-    quader[3] = CVec3f(p3);
-    quader[4] = CVec3f(p4);
-    quader[5] = CVec3f(p5);
-    quader[6] = CVec3f(p6);
-    quader[7] = CVec3f(p7);
+    //float vector[4] = {4, 8, -6 , 1};
+    //CVec4f view = CVec4f(vector);
+    //projectZ(3, view);
+
+    CVec3f quader1[8];
+    Color c1 = Color(1, 0, 0);
+    float q1_A[3] = {-200,-200,0};
+    float q1_B[3] = {-200,0,0};
+    float q1_C[3] = {0,0,0};
+    float q1_D[3] = {0,-200,0};
     
-    drawProjektedZ(quader, c);
+    float q1_E[3] = {-300, -100, -300};
+    float q1_F[3] = {-300, 100, -300};
+    float q1_G[3] = {-100 , 100, -300};
+    float q1_H[3] = {-100 , -100, -300};
+    quader1[0] = CVec3f(q1_A);
+    quader1[1] = CVec3f(q1_B);
+    quader1[2] = CVec3f(q1_C);
+    quader1[3] = CVec3f(q1_D);
+    quader1[4] = CVec3f(q1_E);
+    quader1[5] = CVec3f(q1_F);
+    quader1[6] = CVec3f(q1_G);
+    quader1[7] = CVec3f(q1_H);
+
+    drawQuader(quader1, 200, c1);
+    
+    CVec3f quader2[8];
+    Color c2 = Color(0, 1, 0);
+    float q2_A[3] = {-200,-100,0};
+    float q2_B[3] = {-200,100,0};
+    float q2_C[3] = {0,100,0};
+    float q2_D[3] = {0,-100,0};
+    
+    float q2_F[3] = {-100, 100, -200};
+    float q2_G[3] = {100, 100, -200};
+    float q2_H[3] = {100, -100, -200};
+    float q2_E[3] = {-100, -100, -200};
+    quader2[0] = CVec3f(q2_A);
+    quader2[1] = CVec3f(q2_B);
+    quader2[2] = CVec3f(q2_C);
+    quader2[3] = CVec3f(q2_D);
+    quader2[4] = CVec3f(q2_E);
+    quader2[5] = CVec3f(q2_F);
+    quader2[6] = CVec3f(q2_G);
+    quader2[7] = CVec3f(q2_H);
+
+    drawQuader(quader2, 200, c2);
+    
+    // auf der Z-Achse liegt
     
     glFlush();
     glutSwapBuffers (); // swap front and back buffer
@@ -355,7 +407,6 @@ void display (void)
 // function to initialize our own variables
 void init ()
 {
-    
     // init timer interval
     g_iTimerMSecs = 10;
     
