@@ -344,27 +344,16 @@ void display (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
     
-//    float a1[3] = {0, 0, 1};
-//    float a2[3] = {20, 20, 1};
-//    CVec3f point1 = CVec3f(a1);
-//    CVec3f point2 = CVec3f(a2);
-//    bhamLine(point1, point2, c);
-    
-    //float vector[4] = {4, 8, -6 , 1};
-    //CVec4f view = CVec4f(vector);
-    //projectZ(3, view);
-
     CVec3f quader1[8];
     Color c1 = Color(1, 0, 0);
-    float q1_A[3] = {-200,-200,0};
-    float q1_B[3] = {-200,0,0};
-    float q1_C[3] = {0,0,0};
-    float q1_D[3] = {0,-200,0};
-    
-    float q1_E[3] = {-300, -100, -300};
-    float q1_F[3] = {-300, 100, -300};
-    float q1_G[3] = {-100 , 100, -300};
-    float q1_H[3] = {-100 , -100, -300};
+    float q1_A[3] = {-200, 100, 0};
+    float q1_B[3] = {0, 100, 0};
+    float q1_C[3] = {0, 0, 0};
+    float q1_D[3] = {-200, 0, 0};
+    float q1_E[3] = {-200, 100, -50};
+    float q1_F[3] = {0, 100, -50};
+    float q1_G[3] = {0, 0, -50};
+    float q1_H[3] = {-200, 0, -50};
     quader1[0] = CVec3f(q1_A);
     quader1[1] = CVec3f(q1_B);
     quader1[2] = CVec3f(q1_C);
@@ -373,20 +362,18 @@ void display (void)
     quader1[5] = CVec3f(q1_F);
     quader1[6] = CVec3f(q1_G);
     quader1[7] = CVec3f(q1_H);
-
-    drawQuader(quader1, 200, c1);
+    drawQuader(quader1, 300, c1);
     
     CVec3f quader2[8];
     Color c2 = Color(0, 1, 0);
-    float q2_A[3] = {-200,-100,0};
-    float q2_B[3] = {-200,100,0};
-    float q2_C[3] = {0,100,0};
-    float q2_D[3] = {0,-100,0};
-    
-    float q2_F[3] = {-100, 100, -200};
-    float q2_G[3] = {100, 100, -200};
-    float q2_H[3] = {100, -100, -200};
-    float q2_E[3] = {-100, -100, -200};
+    float q2_A[3] = {-50, 400, 50};
+    float q2_B[3] = {50, 400, 50};
+    float q2_C[3] = {50, 200, 50};
+    float q2_D[3] = {-50, 200, 50};
+    float q2_E[3] = {-50, 400, -50};
+    float q2_F[3] = {50, 400, -50};
+    float q2_G[3] = {50, 200, -50};
+    float q2_H[3] = {-50, 200, -50};
     quader2[0] = CVec3f(q2_A);
     quader2[1] = CVec3f(q2_B);
     quader2[2] = CVec3f(q2_C);
@@ -395,14 +382,37 @@ void display (void)
     quader2[5] = CVec3f(q2_F);
     quader2[6] = CVec3f(q2_G);
     quader2[7] = CVec3f(q2_H);
-
-    drawQuader(quader2, 200, c2);
+    drawQuader(quader2, 300, c2);
+    
+    CVec3f quader3[8];
+    Color c3 = Color(0, 0, 1);
+    float q3_A[3] = {100, -50, 0};
+    float q3_B[3] = {200, -50, 0};
+    float q3_C[3] = {200, -250, 0};
+    float q3_D[3] = {100, -250, 0};
+    float q3_E[3] = {100, -50, -100};
+    float q3_F[3] = {200, -50, -100};
+    float q3_G[3] = {200, -250, -100};
+    float q3_H[3] = {100, -250, -100};
+    quader3[0] = CVec3f(q3_A);
+    quader3[1] = CVec3f(q3_B);
+    quader3[2] = CVec3f(q3_C);
+    quader3[3] = CVec3f(q3_D);
+    quader3[4] = CVec3f(q3_E);
+    quader3[5] = CVec3f(q3_F);
+    quader3[6] = CVec3f(q3_G);
+    quader3[7] = CVec3f(q3_H);
+    drawQuader(quader3, 300, c3);
     
     // auf der Z-Achse liegt
     
     glFlush();
     glutSwapBuffers (); // swap front and back buffer
 }
+
+//CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
+//
+//}
 
 // function to initialize our own variables
 void init ()
