@@ -1,6 +1,8 @@
 #ifndef _VEC_H_
 #define _VEC_H_
 
+#include <math.h>
+
 template<class T, unsigned SIZE> class CMatrix;
 
 // Vector class for SIMPLE data types
@@ -41,6 +43,23 @@ public:
 	{
 		for (int i=0; i<SIZE; i++) atData[i] = m_atData[i];
 	}
+    
+    float getAngle(CVector<T, SIZE> &vec) {
+        float scalar_product = (*this) * vec;
+        float length_this = getLength();
+        float length_vec = vec.getLength();
+        float angle_radians = acos(scalar_product / (length_this * length_vec));
+        if (angle_radians == 0 && scalar_product <= 0) {
+            return M_PI;
+        }
+        return angle_radians;
+    }
+    
+    float getLength() {
+        float sum = 0;
+        for (int i=0; i<SIZE; i++) sum += pow(m_atData[i], 2);
+        return sqrt(sum);
+    }
 
 	unsigned getDimension () 
 	{
@@ -147,6 +166,24 @@ public:
 				vec(j) += m_atData[i]*mat(i,j);
 		return vec;
 	}
+    
+    CVector<T, 4> operator % (const CVector<T, 4> &vec)
+    {
+        float a_x = m_atData[0];
+        float a_y = m_atData[1];
+        float a_z = m_atData[2];
+        
+        float b_x = vec.m_atData[0];
+        float b_y = vec.m_atData[1];
+        float b_z = vec.m_atData[2];
+        
+        float result_x = a_y * b_z - a_z * b_y;
+        float result_y = a_z * b_x - a_x * b_z;
+        float result_z = a_x * b_y - a_y * b_x;
+        
+        float result_array[4] = {result_x, result_y, result_z, 1};
+        return CVector(result_array);
+    }
 
 private:
 

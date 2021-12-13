@@ -325,12 +325,93 @@ void drawProjektedZ(CVec3f points[8], Color c) {
     bhamLine(points[6], points[7], c);
 }
 
-void drawQuader(CVec3f cuboid[8], float fFocus, Color c) {
+CVec3f dehomonize(CVec4f vec) {
+    float array[3] = {vec(0), vec(1), vec(2)};
+    return CVec3f(array);
+}
+
+CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
+    float x_array[3] = {1, 0, 0};
+    CVec3f x_vector = CVec3f(x_array);
+    float y_array[3] = {0, 1, 0};
+    CVec3f y_vector = CVec3f(y_array);
+    float z_array[3] = {0, 0, 1};
+    CVec3f z_vector = CVec3f(z_array);
+    
+    // Kreuzprodukt ist %
+    CVec4f viewLeft = viewUp % viewDir;
+    
+    float translation_matrix_array[4][4] = {
+        {1,0,0,-viewOrigin(0)},
+        {0,1,0,-viewOrigin(1)},
+        {0,0,1,-viewOrigin(2)},
+        {0,0,0,1}
+    };
+    
+    float x_axis_psi = dehomonize(viewLeft).getAngle(x_vector);
+    float y_axis_phi = -dehomonize(viewUp).getAngle(y_vector);
+    float z_axis_theta = -dehomonize(viewDir).getAngle(z_vector);
+    
+    float rotation_matrix_z_theta_array[4][4] = {
+        {cos(z_axis_theta), sin(z_axis_theta), 0, 0},
+        {-sin(z_axis_theta), cos(z_axis_theta), 0, 0},
+        {0,0,1,0},
+        {0,0,0,1}
+    };
+    
+    float rotation_matrix_y_phi_array[4][4] = {
+        {cos(y_axis_phi), 0, -sin(y_axis_phi), 0},
+        {0, 1, 0, 0},
+        {sin(y_axis_phi),0,cos(y_axis_phi),0},
+        {0,0,0,1}
+    };
+    
+    float rotation_matrix_x_psi_array[4][4] = {
+        {cos(x_axis_psi), -sin(x_axis_psi), 0, 0},
+        {sin(x_axis_psi), cos(x_axis_psi), 0, 0},
+        {0,0,1,0},
+        {0,0,0,1}
+    };
+
+    CMat4f translation_matrix = CMat4f(translation_matrix_array);
+    CMat4f rotation_matrix_z_theta = CMat4f(rotation_matrix_z_theta_array);
+    CMat4f rotation_matrix_y_phi = CMat4f(rotation_matrix_y_phi_array);
+    CMat4f rotation_matrix_x_psi = CMat4f(rotation_matrix_x_psi_array);
+    
+    CMat4f transformation_matrix = rotation_matrix_x_psi * rotation_matrix_y_phi * rotation_matrix_z_theta * translation_matrix;
+    //CMat4f transformation_matrix = translation_matrix * rotation_matrix_z_theta  * rotation_matrix_y_phi  * rotation_matrix_x_psi;
+    
+    //float y_array_2[4] = {0, 0, 0, 1};
+    //CVec4f y_vector_2 = CVec4f(y_array_2);
+    //CVec4f test = transformation_matrix * y_vector_2;
+    //int x = 2;
+    
+    //float a[4] = {viewOrigin(0),viewOrigin(1),viewOrigin(2), 1};
+    //CVec4f test = translation_matrix * CVec4f(a);
+    
+    //float array1[4] = {1, 0, 0};
+    //float array2[4] = {0, 1, 0};
+    
+    //CVec3f v1 = CVec3f(array1);
+    //CVec3f v2 = CVec3f(array2);
+    
+    //float test = v1.getAngle(v2) * (180.0/3.141592653589793238463);
+    return transformation_matrix;
+}
+
+CVec4f projectZallg(CMat4f matTransf, float fFocus, CVec4f pWorld) {
+    CVec4f point_in_camare_coordinate_system = matTransf * pWorld;
+    return projectZ(fFocus, point_in_camare_coordinate_system);
+}
+
+void drawQuader(CVec3f cuboid[8], float fFocus, Color c, CMat4f matTransf) {
     CVec3f projected_points[8];
     for (int i = 0; i < 8; i++) {
         float coords_to_array[4] = {cuboid[i](0), cuboid[i](1), cuboid[i](2), 1};
         CVec4f view = CVec4f(coords_to_array);
-        CVec4f projected_point_homonized = projectZ(fFocus, view);
+        
+        //CVec4f projected_point_homonized = projectZ(fFocus, view);
+        CVec4f projected_point_homonized = projectZallg(matTransf, fFocus, view);
         
         float array[3] = {projected_point_homonized(0), projected_point_homonized(1), 1};
         CVec3f projected_point = CVec3f(array);
@@ -343,6 +424,16 @@ void drawQuader(CVec3f cuboid[8], float fFocus, Color c) {
 void display (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
+    
+    float origin_array[4] = {0, 0, 0, 1};
+    CVec4f origin_vector = CVec4f(origin_array);
+    // 1 and -1 for x no difference!
+    float viewUp_array[4] = {1, 1, 0, 1};
+    CVec4f viewUp = CVec4f(viewUp_array);
+    float viewDir_array[4] = {0, 0, -1, 1};
+    CVec4f viewDir = CVec4f(viewDir_array);
+    
+    CMat4f matTransf = getTransform(origin_vector, viewDir, viewUp);
     
     CVec3f quader1[8];
     Color c1 = Color(1, 0, 0);
@@ -362,7 +453,7 @@ void display (void)
     quader1[5] = CVec3f(q1_F);
     quader1[6] = CVec3f(q1_G);
     quader1[7] = CVec3f(q1_H);
-    drawQuader(quader1, 300, c1);
+    drawQuader(quader1, 300, c1, matTransf);
     
     CVec3f quader2[8];
     Color c2 = Color(0, 1, 0);
@@ -382,7 +473,7 @@ void display (void)
     quader2[5] = CVec3f(q2_F);
     quader2[6] = CVec3f(q2_G);
     quader2[7] = CVec3f(q2_H);
-    drawQuader(quader2, 300, c2);
+    drawQuader(quader2, 300, c2, matTransf);
     
     CVec3f quader3[8];
     Color c3 = Color(0, 0, 1);
@@ -402,17 +493,26 @@ void display (void)
     quader3[5] = CVec3f(q3_F);
     quader3[6] = CVec3f(q3_G);
     quader3[7] = CVec3f(q3_H);
-    drawQuader(quader3, 300, c3);
+    drawQuader(quader3, 300, c3, matTransf);
+    
+//    float array1[4] = {1, 0, 0, 1}; // x
+//    float array2[4] = {0, 1, 0, 1}; // y
+//    float array3[4] = {0, 0, 1, 1}; // z
+//    float array4[4] = {4, 5, 0, 1};
+//
+//    CVec4f v1 = CVec4f(array1);
+//    CVec4f v2 = CVec4f(array2);
+//    CVec4f v3 = CVec4f(array3);
+//    CVec4f v4 = CVec4f(array4);
+//    CVec4f result = v1 % v2;
+    
+    //getTransform(v4, v3, v2); // origin z y
     
     // auf der Z-Achse liegt
     
     glFlush();
     glutSwapBuffers (); // swap front and back buffer
 }
-
-//CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
-//
-//}
 
 // function to initialize our own variables
 void init ()
