@@ -34,8 +34,7 @@ float g_iPosIncr;    // ... position increment (used in display1)
 CVec2i g_vecPos;        // same as above but in vector form ...
 CVec2i g_vecPosIncr;    // (used in display2)
 
-float earth_angle_step ;
-float moon_angle_step;
+float fFocus = 300;
 
 
 //
@@ -110,97 +109,11 @@ void timer (int value)
     glutTimerFunc (g_iTimerMSecs, timer, 0);    // call timer for next iteration
 }
 
-void drawSymetricPoints(int x, int y, Color c, int px, int py) {
-    glVertex2i((x+px), y+py);
-    glVertex2i(-x+px, y+py);
-    glVertex2i(-x+px, -y+py);
-    glVertex2i((x+px), -y+py);
-}
-
-void bhamCircle (Point p, int r, Color c) {
-    glBegin (GL_QUADS);
-    glColor3f (c.r, c.g, c.b);
-    
-    int x = 0;
-    int y = r;
-    int d = 5 - 4 * r;
-    int delta_se = 0;
-    int delta_e = 0;
-    
-    drawSymetricPoints(x, y, c, p.x, p.y);
-    drawSymetricPoints(y, x, c, p.x, p.y);
-    // Mittelpunkt
-    //glVertex2i(p.x, p.y);
-    
-    while (y > x) {
-        if (d >= 0) {
-            delta_se = 4*(2*(x-y)+5);
-            d += delta_se;
-            x++;
-            y--;
-        } else {
-            delta_e = 4*(2*x+3);
-            d += delta_e;
-            x++;
-        }
-        drawSymetricPoints(x, y, c, p.x, p.y);
-        drawSymetricPoints(y, x, c, p.x, p.y);
-    }
-    glEnd ();
-}
-
-Point move(Point ref, int distance, float angle) {
-    float new_x = ref.x + distance * cos(angle*M_PI/180);
-    float new_y = ref.y + distance * sin(angle*M_PI/180);
-    Point new_position = Point(new_x, new_y);
-    return new_position;
-}
-
-CMat3f translation(Point t, bool inverted) {
-    CMat3f matrix = CMat3f();
-    for (int i = 0; i < 3; i++) {
-        matrix.set(i, i, 1);
-    }
-    if (inverted) {
-        matrix.set(0, 2, -t.x);
-        matrix.set(1, 2, -t.y);
-    } else {
-        matrix.set(0, 2, t.x);
-        matrix.set(1, 2, t.y);
-    }
-    return matrix;
-}
-
 CVec3f homonize(Point p) {
     CVec3f vector = CVec3f();
     float data[3] = {static_cast<float>(p.x), static_cast<float>(p.y), 1};
     vector.setData(data);
     return vector;
-}
-
-CMat3f rotation(float angle) {
-    CMat3f matrix = CMat3f();
-    matrix.set(0, 0, cos(angle*3.14159/180));
-    matrix.set(0, 1, -sin(angle*3.14159/180));
-    matrix.set(1, 0, sin(angle*3.14159/180));
-    matrix.set(1, 1, cos(angle*3.14159/180));
-    matrix.set(2, 2, 1);
-    return matrix;
-}
-
-Point move_homogenous(Point ref, Point current_pos, float angle) {
-    CMat3f translation_matrix = translation(ref, false);
-    CMat3f rotation_matrix = rotation(angle);
-    CMat3f translation_inverted = translation(ref, true);
-    
-    CMat3f transformation_matrix = translation_matrix * rotation_matrix * translation_inverted;
-    
-    CVec3f rotated_point = transformation_matrix * homonize(current_pos);
-    
-    float data[3];
-    rotated_point.getData(data);
-    Point p = Point(data[0], data[1]);
-    return p;
 }
 
 void drawPoint(float x, float y) {
@@ -331,72 +244,37 @@ CVec3f dehomonize(CVec4f vec) {
 }
 
 CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
-    float x_array[3] = {1, 0, 0};
-    CVec3f x_vector = CVec3f(x_array);
-    float y_array[3] = {0, 1, 0};
-    CVec3f y_vector = CVec3f(y_array);
-    float z_array[3] = {0, 0, 1};
-    CVec3f z_vector = CVec3f(z_array);
+    // viewOrigin P1
+    // viewUp P2
+    // viewDir P3
     
-    // Kreuzprodukt ist %
-    CVec4f viewLeft = viewUp % viewDir;
+    CVec4f p2p1 = viewUp - viewOrigin;
+    CVec4f third_row = p2p1 / p2p1.getLength();
     
-    float translation_matrix_array[4][4] = {
-        {1,0,0,-viewOrigin(0)},
-        {0,1,0,-viewOrigin(1)},
-        {0,0,1,-viewOrigin(2)},
+    CVec4f p3p1 = viewDir - viewOrigin;
+    CVec4f scalar_product = p3p1 % p2p1;
+    CVec4f first_row = (scalar_product) / (scalar_product).getLength();
+    
+    CVec4f second_row = third_row % first_row;
+    second_row = second_row * -1;
+    
+    float transposed_rotation_array[4][4] = {
+        {first_row(0), second_row(0), third_row(0), 0},
+        {first_row(1), second_row(1), third_row(1), 0},
+        {first_row(2), second_row(2), third_row(2), 0},
         {0,0,0,1}
     };
+    CMat4f transposed_rotation_matrix = CMat4f(transposed_rotation_array);
+    CVec4f transpose_rotated_p1 = transposed_rotation_matrix * viewOrigin;
     
-    float x_axis_psi = dehomonize(viewLeft).getAngle(x_vector);
-    float y_axis_phi = -dehomonize(viewUp).getAngle(y_vector);
-    float z_axis_theta = -dehomonize(viewDir).getAngle(z_vector);
-    
-    float rotation_matrix_z_theta_array[4][4] = {
-        {cos(z_axis_theta), sin(z_axis_theta), 0, 0},
-        {-sin(z_axis_theta), cos(z_axis_theta), 0, 0},
-        {0,0,1,0},
+    float transformation_array[4][4] = {
+        {first_row(0), second_row(0), third_row(0), transpose_rotated_p1(0)},
+        {first_row(1), second_row(1), third_row(1), transpose_rotated_p1(1)},
+        {first_row(2), second_row(2), third_row(2), transpose_rotated_p1(2)},
         {0,0,0,1}
     };
-    
-    float rotation_matrix_y_phi_array[4][4] = {
-        {cos(y_axis_phi), 0, -sin(y_axis_phi), 0},
-        {0, 1, 0, 0},
-        {sin(y_axis_phi),0,cos(y_axis_phi),0},
-        {0,0,0,1}
-    };
-    
-    float rotation_matrix_x_psi_array[4][4] = {
-        {cos(x_axis_psi), -sin(x_axis_psi), 0, 0},
-        {sin(x_axis_psi), cos(x_axis_psi), 0, 0},
-        {0,0,1,0},
-        {0,0,0,1}
-    };
-
-    CMat4f translation_matrix = CMat4f(translation_matrix_array);
-    CMat4f rotation_matrix_z_theta = CMat4f(rotation_matrix_z_theta_array);
-    CMat4f rotation_matrix_y_phi = CMat4f(rotation_matrix_y_phi_array);
-    CMat4f rotation_matrix_x_psi = CMat4f(rotation_matrix_x_psi_array);
-    
-    CMat4f transformation_matrix = rotation_matrix_x_psi * rotation_matrix_y_phi * rotation_matrix_z_theta * translation_matrix;
-    //CMat4f transformation_matrix = translation_matrix * rotation_matrix_z_theta  * rotation_matrix_y_phi  * rotation_matrix_x_psi;
-    
-    //float y_array_2[4] = {0, 0, 0, 1};
-    //CVec4f y_vector_2 = CVec4f(y_array_2);
-    //CVec4f test = transformation_matrix * y_vector_2;
-    //int x = 2;
-    
-    //float a[4] = {viewOrigin(0),viewOrigin(1),viewOrigin(2), 1};
-    //CVec4f test = translation_matrix * CVec4f(a);
-    
-    //float array1[4] = {1, 0, 0};
-    //float array2[4] = {0, 1, 0};
-    
-    //CVec3f v1 = CVec3f(array1);
-    //CVec3f v2 = CVec3f(array2);
-    
-    //float test = v1.getAngle(v2) * (180.0/3.141592653589793238463);
-    return transformation_matrix;
+    CMat4f transformation_matrix_inversed = CMat4f(transformation_array);
+    return transformation_matrix_inversed;
 }
 
 CVec4f projectZallg(CMat4f matTransf, float fFocus, CVec4f pWorld) {
@@ -425,15 +303,15 @@ void display (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
     
-    float origin_array[4] = {0, 0, 0, 1};
-    CVec4f origin_vector = CVec4f(origin_array);
+    float origin_array[4] = {0, 0, 25, 1};
+    CVec4f viewOrigin = CVec4f(origin_array);
     // 1 and -1 for x no difference!
-    float viewUp_array[4] = {1, 1, 0, 1};
+    float viewUp_array[4] = {0, 1, 0, 1};
     CVec4f viewUp = CVec4f(viewUp_array);
-    float viewDir_array[4] = {0, 0, -1, 1};
+    float viewDir_array[4] = {0, 0, 1, 1};
     CVec4f viewDir = CVec4f(viewDir_array);
     
-    CMat4f matTransf = getTransform(origin_vector, viewDir, viewUp);
+    CMat4f matTransf = getTransform(viewOrigin, viewDir, viewUp);
     
     CVec3f quader1[8];
     Color c1 = Color(1, 0, 0);
@@ -453,7 +331,7 @@ void display (void)
     quader1[5] = CVec3f(q1_F);
     quader1[6] = CVec3f(q1_G);
     quader1[7] = CVec3f(q1_H);
-    drawQuader(quader1, 300, c1, matTransf);
+    drawQuader(quader1, fFocus, c1, matTransf);
     
     CVec3f quader2[8];
     Color c2 = Color(0, 1, 0);
@@ -473,7 +351,7 @@ void display (void)
     quader2[5] = CVec3f(q2_F);
     quader2[6] = CVec3f(q2_G);
     quader2[7] = CVec3f(q2_H);
-    drawQuader(quader2, 300, c2, matTransf);
+    drawQuader(quader2, fFocus, c2, matTransf);
     
     CVec3f quader3[8];
     Color c3 = Color(0, 0, 1);
@@ -493,18 +371,18 @@ void display (void)
     quader3[5] = CVec3f(q3_F);
     quader3[6] = CVec3f(q3_G);
     quader3[7] = CVec3f(q3_H);
-    drawQuader(quader3, 300, c3, matTransf);
+    drawQuader(quader3, fFocus, c3, matTransf);
     
-//    float array1[4] = {1, 0, 0, 1}; // x
-//    float array2[4] = {0, 1, 0, 1}; // y
-//    float array3[4] = {0, 0, 1, 1}; // z
-//    float array4[4] = {4, 5, 0, 1};
-//
-//    CVec4f v1 = CVec4f(array1);
-//    CVec4f v2 = CVec4f(array2);
-//    CVec4f v3 = CVec4f(array3);
-//    CVec4f v4 = CVec4f(array4);
-//    CVec4f result = v1 % v2;
+    //    float array1[4] = {1, 0, 0, 1}; // x
+    //    float array2[4] = {0, 1, 0, 1}; // y
+    //    float array3[4] = {0, 0, 1, 1}; // z
+    //    float array4[4] = {4, 5, 0, 1};
+    //
+    //    CVec4f v1 = CVec4f(array1);
+    //    CVec4f v2 = CVec4f(array2);
+    //    CVec4f v3 = CVec4f(array3);
+    //    CVec4f v4 = CVec4f(array4);
+    //    CVec4f result = v1 % v2;
     
     //getTransform(v4, v3, v2); // origin z y
     
@@ -512,6 +390,25 @@ void display (void)
     
     glFlush();
     glutSwapBuffers (); // swap front and back buffer
+}
+
+void keyboard (unsigned char key, int x, int y)
+{
+    switch (key) {
+        case 'q':
+        case 'Q':
+            exit (0); // quit program
+            break;
+        case 'f':
+            fFocus -= 10;
+            break;
+        case 'F':
+            fFocus += 10;
+            break;
+        default:
+            // do nothing ...
+            break;
+    };
 }
 
 // function to initialize our own variables
@@ -544,7 +441,7 @@ int main (int argc, char **argv)
     
     // assign callbacks
     glutTimerFunc (10, timer, 0);
-    //glutKeyboardFunc (keyboard);
+    glutKeyboardFunc (keyboard);
     glutDisplayFunc (display);
     // you might want to add a resize function analog to
     // ‹bung1 using code similar to the initGL function ...

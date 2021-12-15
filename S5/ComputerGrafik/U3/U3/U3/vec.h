@@ -157,6 +157,13 @@ public:
 		for (int i=0; i<SIZE; i++) atBuffer[i] = m_atData[i]*tScale;
 		return CVector<T, SIZE> (atBuffer);
 	}
+    
+    CVector<T, SIZE> operator / (T tScale)
+    {
+        T atBuffer[SIZE];
+        for (int i=0; i<SIZE; i++) atBuffer[i] = m_atData[i]/tScale;
+        return CVector<T, SIZE> (atBuffer);
+    }
 
 	CVector<T, SIZE> operator * (const CMatrix<T, SIZE> &mat) 
 	{
