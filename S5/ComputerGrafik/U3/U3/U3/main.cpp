@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include <iostream>
 #include "vec.h"
 #include "mat.h"
 #include <cmath>
@@ -35,7 +35,15 @@ CVec2i g_vecPos;        // same as above but in vector form ...
 CVec2i g_vecPosIncr;    // (used in display2)
 
 float fFocus = 300;
+float origin_array[4] = {0, 0, 25, 1};
+float viewUp_array[4] = {0, 1, 0, 1};
+float viewDir_array[4] = {0, 0, 1, 1};
 
+CVec4f viewOrigin = CVec4f(origin_array);
+CVec4f viewUp = CVec4f(viewUp_array);
+CVec4f viewDir = CVec4f(viewDir_array);
+
+CMat4f last_transformation_matrix;
 
 //
 /////////////////////////////////////////////////////////////
@@ -303,15 +311,8 @@ void display (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
     
-    float origin_array[4] = {0, 0, 25, 1};
-    CVec4f viewOrigin = CVec4f(origin_array);
-    // 1 and -1 for x no difference!
-    float viewUp_array[4] = {0, 1, 0, 1};
-    CVec4f viewUp = CVec4f(viewUp_array);
-    float viewDir_array[4] = {0, 0, 1, 1};
-    CVec4f viewDir = CVec4f(viewDir_array);
-    
     CMat4f matTransf = getTransform(viewOrigin, viewDir, viewUp);
+    last_transformation_matrix = matTransf;
     
     CVec3f quader1[8];
     Color c1 = Color(1, 0, 0);
@@ -392,6 +393,131 @@ void display (void)
     glutSwapBuffers (); // swap front and back buffer
 }
 
+CVec4f rotate_point_z_axis(CVec4f vector, float angle) {
+    float rotation_array[4][4] = {
+        {cos(angle), -sin(angle), 0, 0},
+        {sin(angle), cos(angle), 0, 0},
+        {0, 0, 1, 0},
+        {0,0,0,1}
+    };
+    CMat4f rotation_matrix = CMat4f(rotation_array);
+    return rotation_matrix * vector;
+}
+
+CVec4f rotate_point_x_axis(CVec4f vector, float angle) {
+    float rotation_array[4][4] = {
+        {1, 0, 0, 0},
+        {0, cos(angle), -sin(angle), 0},
+        {0, sin(angle), cos(angle), 0},
+        {0,0,0,1}
+    };
+    CMat4f rotation_matrix = CMat4f(rotation_array);
+    return rotation_matrix * vector;
+}
+
+CVec4f rotate_point_y_axis(CVec4f vector, float angle) {
+    float rotation_array[4][4] = {
+        {cos(angle), 0, sin(angle), 0},
+        {0, 1, 0, 0},
+        {-sin(angle), 0, cos(angle), 0},
+        {0,0,0,1}
+    };
+    CMat4f rotation_matrix = CMat4f(rotation_array);
+    return rotation_matrix * vector;
+}
+
+float degree2rad(float degrees) {
+    return degrees * M_PI / 180;
+}
+
+CVec4f rotate_around_axis(CVec4f axis_direction, CVec4f axis_offset, CVec4f point_to_rotate, float angle) {
+    // viewOrigin P1
+    // viewUp P2
+    // viewDir P3
+    
+    // Axis direction: G = axis_offset + lambda * axis_direction
+    
+    // Page 43
+    CVec4f normed_axis_direction = axis_direction / axis_direction.getLength();
+    
+    // Page 46
+    float d = sqrt(pow(normed_axis_direction(0), 2) + pow(normed_axis_direction(1), 2));
+    float rotation_z_negative_array[4][4] = {
+        {normed_axis_direction(0), normed_axis_direction(1), 0, 0},
+        {-normed_axis_direction(1), normed_axis_direction(0), 0, 0},
+        {0,0,d,0},
+        {0,0,0,d}
+    };
+    CMat4f rotation_z_negative_matrix = CMat4f(rotation_z_negative_array) / d;
+    
+    // Page 47
+    //CVec4f b_1 = rotation_z_negative_matrix * normed_axis_direction;
+    //float d_2 = b_1(0);
+    float rotation_y_negative_array[4][4] = {
+        {normed_axis_direction(2), 0, -d, 0},
+        {0, 1, 0, 0},
+        {d, 0, normed_axis_direction(2), 0},
+        {0, 0, 0, 1}
+    };
+    CMat4f rotation_y_negative_matrix = CMat4f(rotation_y_negative_array);
+    
+    // Page 48
+    float rotation_z_a_array[4][4] = {
+        {cos(angle), -sin(angle), 0, 0},
+        {sin(angle), cos(angle), 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}
+    };
+    CMat4f rotation_z_a_matrix = CMat4f(rotation_z_a_array);
+    
+    // Page 49
+    float rotation_z_positive_array[4][4] = {
+        {normed_axis_direction(0), -normed_axis_direction(1), 0, 0},
+        {normed_axis_direction(1), normed_axis_direction(0), 0, 0},
+        {0,0,d,0},
+        {0,0,0,d}
+    };
+    CMat4f rotation_z_positive_matrix = CMat4f(rotation_z_positive_array) / d;
+    
+    float rotation_y_positive_array[4][4] = {
+        {normed_axis_direction(2), 0, d, 0},
+        {0, 1, 0, 0},
+        {-d, 0, normed_axis_direction(2), 0},
+        {0, 0, 0, 1}
+    };
+    CMat4f rotation_y_positive_matrix = CMat4f(rotation_y_positive_array);
+    
+    // Page 50
+    float translation_positive_array[4][4] = {
+        {1, 0, 0, axis_offset(0)},
+        {0, 1, 0, axis_offset(1)},
+        {0, 0, 1, axis_offset(2)},
+        {0, 0, 0, 1}
+    };
+    CMat4f translation_positive_matrix = CMat4f(translation_positive_array);
+    
+    float translation_negative_array[4][4] = {
+        {1, 0, 0, -axis_offset(0)},
+        {0, 1, 0, -axis_offset(1)},
+        {0, 0, 1, -axis_offset(2)},
+        {0, 0, 0, 1}
+    };
+    CMat4f translation_negative_matrix = CMat4f(translation_negative_array);
+    
+    CMat4f mama_matrix;
+    
+    if (d == 0) {
+        mama_matrix = translation_positive_matrix * rotation_z_a_matrix *  translation_negative_matrix;
+        CVec4f test = mama_matrix * point_to_rotate;
+    } else {
+        mama_matrix = translation_positive_matrix * rotation_z_positive_matrix * rotation_y_positive_matrix * rotation_z_a_matrix * rotation_y_negative_matrix * rotation_z_negative_matrix * translation_negative_matrix;
+        CVec4f test = mama_matrix * point_to_rotate;
+    }
+    
+    //CMat4f
+    return mama_matrix * point_to_rotate;
+}
+
 void keyboard (unsigned char key, int x, int y)
 {
     switch (key) {
@@ -404,6 +530,53 @@ void keyboard (unsigned char key, int x, int y)
             break;
         case 'F':
             fFocus += 10;
+            break;
+        case 'x':
+            viewOrigin = rotate_point_x_axis(viewOrigin, degree2rad(-10));
+            viewUp = rotate_point_x_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_x_axis(viewDir, degree2rad(-10));
+            break;
+        case 'y':
+            viewOrigin = rotate_point_y_axis(viewOrigin, degree2rad(-10));
+            viewUp = rotate_point_y_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_y_axis(viewDir, degree2rad(-10));
+            break;
+        case 'z':
+            viewOrigin = rotate_point_z_axis(viewOrigin, degree2rad(-10));
+            viewUp = rotate_point_z_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_z_axis(viewDir, degree2rad(-10));
+            break;
+        case 'X':
+            viewOrigin = rotate_point_x_axis(viewOrigin, degree2rad(10));
+            viewUp = rotate_point_x_axis(viewUp, degree2rad(10));
+            viewDir = rotate_point_x_axis(viewDir, degree2rad(10));
+            break;
+        case 'Y':
+            viewOrigin = rotate_point_y_axis(viewOrigin, degree2rad(10));
+            viewUp = rotate_point_y_axis(viewUp, degree2rad(10));
+            viewDir = rotate_point_y_axis(viewDir, degree2rad(10));
+            break;
+        case 'Z':
+            viewOrigin = rotate_point_z_axis(viewOrigin, degree2rad(10));
+            viewUp = rotate_point_z_axis(viewUp, degree2rad(10));
+            viewDir = rotate_point_z_axis(viewDir, degree2rad(10));
+            break;
+        case 'A': {
+            CVec4f viewUp_before = viewUp;
+            viewUp = rotate_around_axis(viewDir, viewOrigin, viewUp, degree2rad(10));
+            CVec4f viewUp_after = viewUp;
+            break;
+        }
+        case 'B': {
+            // axis_direction, axis_offset, point to rotate
+            viewDir = rotate_around_axis(viewUp, viewOrigin, viewDir, degree2rad(10));
+            float viewDir_array2[4] = {0, 0, 1, 1};
+            CVec4f viewDir2 = CVec4f(viewDir_array2);
+            std::cout << viewDir.getAngle(viewDir2) << '\n';
+            break;
+        }
+        case 'C':
+            viewDir = rotate_around_axis(viewDir, viewOrigin, viewUp, degree2rad(10));
             break;
         default:
             // do nothing ...

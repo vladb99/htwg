@@ -65,6 +65,22 @@ public:
 					buf(i,j) += m_aatData[i][a] * mat(a,j);
 		return buf;
 	}
+    
+    CMatrix<T, SIZE> operator * (T tScale) {
+        CMatrix<T, SIZE> buf;
+        for (int i=0; i<SIZE; i++) // ZEILE i
+            for (int j=0; j<SIZE; j++) // Spalte j
+                buf(i,j) += m_aatData[i][j] * tScale;
+        return buf;
+    }
+    
+    CMatrix<T, SIZE> operator / (T tScale) {
+        CMatrix<T, SIZE> buf;
+        for (int i=0; i<SIZE; i++) // ZEILE i
+            for (int j=0; j<SIZE; j++) // Spalte j
+                buf(i,j) += m_aatData[i][j] / tScale;
+        return buf;
+    }
 
 	CVector<T, SIZE> operator * (const CVector<T, SIZE> &vec) {
 		CVector<T, SIZE> buf;
