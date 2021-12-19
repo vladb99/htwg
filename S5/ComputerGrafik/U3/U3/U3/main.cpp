@@ -34,16 +34,14 @@ float g_iPosIncr;    // ... position increment (used in display1)
 CVec2i g_vecPos;        // same as above but in vector form ...
 CVec2i g_vecPosIncr;    // (used in display2)
 
-float fFocus = 300;
+float fFocus = 250;
 float origin_array[4] = {0, 0, 25, 1};
 float viewUp_array[4] = {0, 1, 0, 1};
-float viewDir_array[4] = {0, 0, 1, 1};
+float viewDir_array[4] = {0, 0, -1, 1};
 
 CVec4f viewOrigin = CVec4f(origin_array);
 CVec4f viewUp = CVec4f(viewUp_array);
 CVec4f viewDir = CVec4f(viewDir_array);
-
-CMat4f last_transformation_matrix;
 
 //
 /////////////////////////////////////////////////////////////
@@ -129,6 +127,7 @@ void drawPoint(float x, float y) {
 }
 
 void bhamLine (CVec3f p1, CVec3f p2, Color c) {
+    if (p1(2) == -1 || p2(2) == -1) { return; }
     glBegin (GL_POINTS);
     glColor3f (c.r, c.g, c.b);
     
@@ -211,12 +210,22 @@ void bhamLine (CVec3f p1, CVec3f p2, Color c) {
 }
 
 CVec4f projectZ(float fFocus, CVec4f pView) {
-    CVec4f projected_point;
     // calculate ratio of:
     // distance between eyepoint and origin (of camera and world coordinate system)
     // and distance between eyepoint and object.
     // projection happens on plane in origin (z = 0)
     float ratio = fFocus / (fFocus - pView(2));
+    
+    CVec4f projected_point;
+    if (pView(2) > fFocus - fFocus / 4 ||
+        pView(0) * ratio > g_iWidth ||
+        pView(1) * ratio > g_iHeight) {
+        projected_point(0) = 0;
+        projected_point(1) = 0;
+        projected_point(2) = 0;
+        projected_point(3) = -1;
+        return projected_point;
+    }
     
     // if you know the ratio of which z coordinate of object has to be changed to be on the plane
     // then you can use that ratio to also calculate the rest of the coordinated, because the ray is a line.
@@ -299,7 +308,7 @@ void drawQuader(CVec3f cuboid[8], float fFocus, Color c, CMat4f matTransf) {
         //CVec4f projected_point_homonized = projectZ(fFocus, view);
         CVec4f projected_point_homonized = projectZallg(matTransf, fFocus, view);
         
-        float array[3] = {projected_point_homonized(0), projected_point_homonized(1), 1};
+        float array[3] = {projected_point_homonized(0), projected_point_homonized(1), projected_point_homonized(3)};
         CVec3f projected_point = CVec3f(array);
         projected_points[i] = projected_point;
     }
@@ -312,7 +321,6 @@ void display (void)
     glClear (GL_COLOR_BUFFER_BIT);
     
     CMat4f matTransf = getTransform(viewOrigin, viewDir, viewUp);
-    last_transformation_matrix = matTransf;
     
     CVec3f quader1[8];
     Color c1 = Color(1, 0, 0);
@@ -374,21 +382,6 @@ void display (void)
     quader3[7] = CVec3f(q3_H);
     drawQuader(quader3, fFocus, c3, matTransf);
     
-    //    float array1[4] = {1, 0, 0, 1}; // x
-    //    float array2[4] = {0, 1, 0, 1}; // y
-    //    float array3[4] = {0, 0, 1, 1}; // z
-    //    float array4[4] = {4, 5, 0, 1};
-    //
-    //    CVec4f v1 = CVec4f(array1);
-    //    CVec4f v2 = CVec4f(array2);
-    //    CVec4f v3 = CVec4f(array3);
-    //    CVec4f v4 = CVec4f(array4);
-    //    CVec4f result = v1 % v2;
-    
-    //getTransform(v4, v3, v2); // origin z y
-    
-    // auf der Z-Achse liegt
-    
     glFlush();
     glutSwapBuffers (); // swap front and back buffer
 }
@@ -431,10 +424,6 @@ float degree2rad(float degrees) {
 }
 
 CVec4f rotate_around_axis(CVec4f axis_direction, CVec4f axis_offset, CVec4f point_to_rotate, float angle) {
-    // viewOrigin P1
-    // viewUp P2
-    // viewDir P3
-    
     // Axis direction: G = axis_offset + lambda * axis_direction
     
     // Page 43
@@ -508,10 +497,8 @@ CVec4f rotate_around_axis(CVec4f axis_direction, CVec4f axis_offset, CVec4f poin
     
     if (d == 0) {
         mama_matrix = translation_positive_matrix * rotation_z_a_matrix *  translation_negative_matrix;
-        CVec4f test = mama_matrix * point_to_rotate;
     } else {
         mama_matrix = translation_positive_matrix * rotation_z_positive_matrix * rotation_y_positive_matrix * rotation_z_a_matrix * rotation_y_negative_matrix * rotation_z_negative_matrix * translation_negative_matrix;
-        CVec4f test = mama_matrix * point_to_rotate;
     }
     
     //CMat4f
@@ -562,22 +549,74 @@ void keyboard (unsigned char key, int x, int y)
             viewDir = rotate_point_z_axis(viewDir, degree2rad(10));
             break;
         case 'A': {
-            CVec4f viewUp_before = viewUp;
             viewUp = rotate_around_axis(viewDir, viewOrigin, viewUp, degree2rad(10));
-            CVec4f viewUp_after = viewUp;
             break;
         }
         case 'B': {
-            // axis_direction, axis_offset, point to rotate
             viewDir = rotate_around_axis(viewUp, viewOrigin, viewDir, degree2rad(10));
-            float viewDir_array2[4] = {0, 0, 1, 1};
-            CVec4f viewDir2 = CVec4f(viewDir_array2);
-            std::cout << viewDir.getAngle(viewDir2) << '\n';
             break;
         }
-        case 'C':
-            viewDir = rotate_around_axis(viewDir, viewOrigin, viewUp, degree2rad(10));
+        case 'C': {
+            CVec4f viewLeft = viewDir % viewUp;
+            viewDir = rotate_around_axis(viewLeft, viewOrigin, viewDir, degree2rad(10));
+            viewUp = rotate_around_axis(viewLeft, viewOrigin, viewUp, degree2rad(10));
             break;
+        }
+        case 'a': {
+            viewUp = rotate_around_axis(viewDir, viewOrigin, viewUp, degree2rad(-10));
+            break;
+        }
+        case 'b': {
+            viewDir = rotate_around_axis(viewUp, viewOrigin, viewDir, degree2rad(-10));
+            break;
+        }
+        case 'c': {
+            CVec4f viewLeft = viewDir % viewUp;
+            viewDir = rotate_around_axis(viewLeft, viewOrigin, viewDir, degree2rad(-10));
+            viewUp = rotate_around_axis(viewLeft, viewOrigin, viewUp, degree2rad(-10));
+            break;
+        }
+        case 'U': {
+            float array[4] = {viewOrigin(0) + 2, viewOrigin(1), viewOrigin(2), viewOrigin(3)};
+            viewOrigin = CVec4f(array);
+            break;
+        }
+        case 'V': {
+            float array[4] = {viewOrigin(0), viewOrigin(1) + 2, viewOrigin(2), viewOrigin(3)};
+            viewOrigin = CVec4f(array);
+            break;
+        }
+        case 'W': {
+            float array[4] = {viewOrigin(0), viewOrigin(1), viewOrigin(2) + 2, viewOrigin(3)};
+            viewOrigin = CVec4f(array);
+            break;
+        }
+        case 'u': {
+            float array[4] = {viewOrigin(0) - 2, viewOrigin(1), viewOrigin(2), viewOrigin(3)};
+            viewOrigin = CVec4f(array);
+            break;
+        }
+        case 'v': {
+            float array[4] = {viewOrigin(0), viewOrigin(1) - 2, viewOrigin(2), viewOrigin(3)};
+            viewOrigin = CVec4f(array);
+            break;
+        }
+        case 'w': {
+            float array[4] = {viewOrigin(0), viewOrigin(1), viewOrigin(2) - 2, viewOrigin(3)};
+            viewOrigin = CVec4f(array);
+            break;
+        }
+        case 'R': {
+            fFocus = 250;
+            float origin_array[4] = {0, 0, 25, 1};
+            float viewUp_array[4] = {0, 1, 0, 1};
+            float viewDir_array[4] = {0, 0, -1, 1};
+
+            viewOrigin = CVec4f(origin_array);
+            viewUp = CVec4f(viewUp_array);
+            viewDir = CVec4f(viewDir_array);
+            break;
+        }
         default:
             // do nothing ...
             break;
