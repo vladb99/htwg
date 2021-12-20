@@ -266,24 +266,13 @@ CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
     // viewOrigin P1
     // viewUp P2
     // viewDir P3
-    
-    //CVec4f p2p1 = viewUp - viewOrigin;
-    //CVec4f third_row = p2p1 / p2p1.getLength();
+
     CVec4f third_row = viewDir / viewDir.getLength();
     
-    //CVec4f p3p1 = viewDir - viewOrigin;
     CVec4f cross_product = viewDir % viewUp;
     CVec4f first_row = (cross_product) / (cross_product).getLength();
     
     CVec4f second_row = third_row % first_row;
-    //second_row = second_row * -1;
-    
-    //float transposed_rotation_array[4][4] = {
-    //    {first_row(0), first_row(1), first_row(2), 0},
-    //    {second_row(0), second_row(1), second_row(2), 0},
-    //    {third_row(0), third_row(1), third_row(2), 0},
-    //    {0,0,0,1}
-    //};
     
     float transposed_rotation_array[4][4] = {
         {first_row(0), second_row(0), third_row(0), 0},
@@ -299,24 +288,11 @@ CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
             newMat(i, j) = test(j, i);
         }
     }
-    
-    
-    
-    //CMat4f transposed_rotation_matrix = CMat4f(transposed_rotation_array);
+
     CVec4f transpose_rotated_p1 = newMat * viewOrigin;
-    
-    //float transformation_array[4][4] = {
-    //    {first_row(0), first_row(1), first_row(2), transpose_rotated_p1(0)},
-    //    {second_row(0), second_row(1), second_row(2), transpose_rotated_p1(1)},
-    //    {third_row(0), third_row(1), third_row(2), transpose_rotated_p1(2)},
-    //    {0,0,0,1}
-    //};
-    
     newMat(0, 3) = viewOrigin(0);
     newMat(1, 3) =viewOrigin(1);
     newMat(2, 3) =viewOrigin(2);
-    
-    //CMat4f transformation_matrix_inversed = CMat4f(transformation_array);
     return newMat;
 }
 
@@ -325,14 +301,13 @@ CVec4f projectZallg(CMat4f matTransf, float fFocus, CVec4f pWorld) {
     return projectZ(fFocus, point_in_camare_coordinate_system);
 }
 
-void drawQuader(CVec3f cuboid[8], float fFocus, Color c, CMat4f matTransf2) {
+void drawQuader(CVec3f cuboid[8], float fFocus, Color c) {
     CVec3f projected_points[8];
     for (int i = 0; i < 8; i++) {
         float coords_to_array[4] = {cuboid[i](0), cuboid[i](1), cuboid[i](2), 1};
         CVec4f view = CVec4f(coords_to_array);
         
         CMat4f matTransf = getTransform(viewOrigin, viewDir, viewUp);
-        //CVec4f projected_point_homonized = projectZ(fFocus, view);
         CVec4f projected_point_homonized = projectZallg(matTransf, fFocus, view);
         
         if (projected_point_homonized(0) < -1000 ||
