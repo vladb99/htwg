@@ -330,9 +330,7 @@ void drawQuader(CVec3f cuboid[8], float fFocus, Color c) {
 void display (void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
-    
-    CMat4f matTransf = getTransform(viewOrigin, viewDir, viewUp);
-    
+        
     CVec3f quader1[8];
     Color c1 = Color(1, 0, 0);
     float q1_A[3] = {-200, 100, 0};
@@ -351,7 +349,7 @@ void display (void)
     quader1[5] = CVec3f(q1_F);
     quader1[6] = CVec3f(q1_G);
     quader1[7] = CVec3f(q1_H);
-    drawQuader(quader1, fFocus, c1, matTransf);
+    drawQuader(quader1, fFocus, c1);
     
     CVec3f quader2[8];
     Color c2 = Color(0, 1, 0);
@@ -371,7 +369,7 @@ void display (void)
     quader2[5] = CVec3f(q2_F);
     quader2[6] = CVec3f(q2_G);
     quader2[7] = CVec3f(q2_H);
-    drawQuader(quader2, fFocus, c2, matTransf);
+    drawQuader(quader2, fFocus, c2);
     
     CVec3f quader3[8];
     Color c3 = Color(0, 0, 1);
@@ -391,7 +389,7 @@ void display (void)
     quader3[5] = CVec3f(q3_F);
     quader3[6] = CVec3f(q3_G);
     quader3[7] = CVec3f(q3_H);
-    drawQuader(quader3, fFocus, c3, matTransf);
+    drawQuader(quader3, fFocus, c3);
     
     glFlush();
     glutSwapBuffers (); // swap front and back buffer
