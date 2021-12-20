@@ -34,10 +34,10 @@ float g_iPosIncr;    // ... position increment (used in display1)
 CVec2i g_vecPos;        // same as above but in vector form ...
 CVec2i g_vecPosIncr;    // (used in display2)
 
-float fFocus = 250;
-float origin_array[4] = {0, 0, 25, 1};
+float fFocus = 320;
+float origin_array[4] = {0, 0, fFocus + 50, 1};
 float viewUp_array[4] = {0, 1, 0, 1};
-float viewDir_array[4] = {0, 0, -1, 1};
+float viewDir_array[4] = {0, 0, 1, 1};
 
 CVec4f viewOrigin = CVec4f(origin_array);
 CVec4f viewUp = CVec4f(viewUp_array);
@@ -113,13 +113,6 @@ void timer (int value)
     // the last two lines should always be
     glutPostRedisplay ();
     glutTimerFunc (g_iTimerMSecs, timer, 0);    // call timer for next iteration
-}
-
-CVec3f homonize(Point p) {
-    CVec3f vector = CVec3f();
-    float data[3] = {static_cast<float>(p.x), static_cast<float>(p.y), 1};
-    vector.setData(data);
-    return vector;
 }
 
 void drawPoint(float x, float y) {
@@ -214,12 +207,10 @@ CVec4f projectZ(float fFocus, CVec4f pView) {
     // distance between eyepoint and origin (of camera and world coordinate system)
     // and distance between eyepoint and object.
     // projection happens on plane in origin (z = 0)
-    float ratio = fFocus / (fFocus - pView(2));
+    //float ratio = fFocus / (fFocus - pView(2));
     
     CVec4f projected_point;
-    if (pView(2) > fFocus - fFocus / 4 ||
-        pView(0) * ratio > g_iWidth ||
-        pView(1) * ratio > g_iHeight) {
+    if (pView(2) <= 0) {
         projected_point(0) = 0;
         projected_point(1) = 0;
         projected_point(2) = 0;
@@ -227,13 +218,29 @@ CVec4f projectZ(float fFocus, CVec4f pView) {
         return projected_point;
     }
     
+    float matrix_array[4][4] = {
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 0, 0},
+        {0,0,-1 / fFocus,1}
+    };
+    CMat4f matrix = CMat4f(matrix_array);
+    CVec4f projected = matrix * pView;
+    
+    if (projected(3) != 0) {
+        projected(0) = projected(0) / projected(3);
+        projected(1) = projected(1) / projected(3);
+    }
+    
+    return projected;
+    
     // if you know the ratio of which z coordinate of object has to be changed to be on the plane
     // then you can use that ratio to also calculate the rest of the coordinated, because the ray is a line.
-    projected_point(0) = pView(0) * ratio;
-    projected_point(1) = pView(1) * ratio;
-    projected_point(2) = 0;
-    projected_point(3) = 1;
-    return projected_point;
+    //projected_point(0) = pView(0) * ratio;
+    //projected_point(1) = pView(1) * ratio;
+    //projected_point(2) = 0;
+    //projected_point(3) = 1;
+    //return projected_point;
 }
 
 // A B C D E F G H
@@ -255,25 +262,28 @@ void drawProjektedZ(CVec3f points[8], Color c) {
     bhamLine(points[6], points[7], c);
 }
 
-CVec3f dehomonize(CVec4f vec) {
-    float array[3] = {vec(0), vec(1), vec(2)};
-    return CVec3f(array);
-}
-
 CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
     // viewOrigin P1
     // viewUp P2
     // viewDir P3
     
-    CVec4f p2p1 = viewUp - viewOrigin;
-    CVec4f third_row = p2p1 / p2p1.getLength();
+    //CVec4f p2p1 = viewUp - viewOrigin;
+    //CVec4f third_row = p2p1 / p2p1.getLength();
+    CVec4f third_row = viewDir / viewDir.getLength();
     
-    CVec4f p3p1 = viewDir - viewOrigin;
-    CVec4f scalar_product = p3p1 % p2p1;
-    CVec4f first_row = (scalar_product) / (scalar_product).getLength();
+    //CVec4f p3p1 = viewDir - viewOrigin;
+    CVec4f cross_product = viewDir % viewUp;
+    CVec4f first_row = (cross_product) / (cross_product).getLength();
     
     CVec4f second_row = third_row % first_row;
-    second_row = second_row * -1;
+    //second_row = second_row * -1;
+    
+    //float transposed_rotation_array[4][4] = {
+    //    {first_row(0), first_row(1), first_row(2), 0},
+    //    {second_row(0), second_row(1), second_row(2), 0},
+    //    {third_row(0), third_row(1), third_row(2), 0},
+    //    {0,0,0,1}
+    //};
     
     float transposed_rotation_array[4][4] = {
         {first_row(0), second_row(0), third_row(0), 0},
@@ -281,17 +291,33 @@ CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
         {first_row(2), second_row(2), third_row(2), 0},
         {0,0,0,1}
     };
-    CMat4f transposed_rotation_matrix = CMat4f(transposed_rotation_array);
-    CVec4f transpose_rotated_p1 = transposed_rotation_matrix * viewOrigin;
     
-    float transformation_array[4][4] = {
-        {first_row(0), second_row(0), third_row(0), transpose_rotated_p1(0)},
-        {first_row(1), second_row(1), third_row(1), transpose_rotated_p1(1)},
-        {first_row(2), second_row(2), third_row(2), transpose_rotated_p1(2)},
-        {0,0,0,1}
-    };
-    CMat4f transformation_matrix_inversed = CMat4f(transformation_array);
-    return transformation_matrix_inversed;
+    CMat4f test = CMat4f(transposed_rotation_array);
+    CMat4f newMat = CMat4f();
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            newMat(i, j) = test(j, i);
+        }
+    }
+    
+    
+    
+    //CMat4f transposed_rotation_matrix = CMat4f(transposed_rotation_array);
+    CVec4f transpose_rotated_p1 = newMat * viewOrigin;
+    
+    //float transformation_array[4][4] = {
+    //    {first_row(0), first_row(1), first_row(2), transpose_rotated_p1(0)},
+    //    {second_row(0), second_row(1), second_row(2), transpose_rotated_p1(1)},
+    //    {third_row(0), third_row(1), third_row(2), transpose_rotated_p1(2)},
+    //    {0,0,0,1}
+    //};
+    
+    newMat(0, 3) = viewOrigin(0);
+    newMat(1, 3) =viewOrigin(1);
+    newMat(2, 3) =viewOrigin(2);
+    
+    //CMat4f transformation_matrix_inversed = CMat4f(transformation_array);
+    return newMat;
 }
 
 CVec4f projectZallg(CMat4f matTransf, float fFocus, CVec4f pWorld) {
@@ -299,18 +325,28 @@ CVec4f projectZallg(CMat4f matTransf, float fFocus, CVec4f pWorld) {
     return projectZ(fFocus, point_in_camare_coordinate_system);
 }
 
-void drawQuader(CVec3f cuboid[8], float fFocus, Color c, CMat4f matTransf) {
+void drawQuader(CVec3f cuboid[8], float fFocus, Color c, CMat4f matTransf2) {
     CVec3f projected_points[8];
     for (int i = 0; i < 8; i++) {
         float coords_to_array[4] = {cuboid[i](0), cuboid[i](1), cuboid[i](2), 1};
         CVec4f view = CVec4f(coords_to_array);
         
+        CMat4f matTransf = getTransform(viewOrigin, viewDir, viewUp);
         //CVec4f projected_point_homonized = projectZ(fFocus, view);
         CVec4f projected_point_homonized = projectZallg(matTransf, fFocus, view);
         
-        float array[3] = {projected_point_homonized(0), projected_point_homonized(1), projected_point_homonized(3)};
-        CVec3f projected_point = CVec3f(array);
-        projected_points[i] = projected_point;
+        if (projected_point_homonized(0) < -1000 ||
+            projected_point_homonized(0) > 1000 ||
+            projected_point_homonized(1) < -1000 ||
+            projected_point_homonized(1) > 1000) {
+            float array[3] = {0, 0, -1};
+            CVec3f projected_point = CVec3f(array);
+            projected_points[i] = projected_point;
+        } else {
+            float array[3] = {projected_point_homonized(0), projected_point_homonized(1), projected_point_homonized(3)};
+            CVec3f projected_point = CVec3f(array);
+            projected_points[i] = projected_point;
+        }
     }
     drawProjektedZ(projected_points, c);
 }
@@ -426,6 +462,7 @@ float degree2rad(float degrees) {
 CVec4f rotate_around_axis(CVec4f axis_direction, CVec4f axis_offset, CVec4f point_to_rotate, float angle) {
     // Axis direction: G = axis_offset + lambda * axis_direction
     
+    
     // Page 43
     CVec4f normed_axis_direction = axis_direction / axis_direction.getLength();
     
@@ -518,62 +555,64 @@ void keyboard (unsigned char key, int x, int y)
         case 'F':
             fFocus += 10;
             break;
-        case 'x':
-            viewOrigin = rotate_point_x_axis(viewOrigin, degree2rad(-10));
-            viewUp = rotate_point_x_axis(viewUp, degree2rad(-10));
-            viewDir = rotate_point_x_axis(viewDir, degree2rad(-10));
-            break;
-        case 'y':
-            viewOrigin = rotate_point_y_axis(viewOrigin, degree2rad(-10));
-            viewUp = rotate_point_y_axis(viewUp, degree2rad(-10));
-            viewDir = rotate_point_y_axis(viewDir, degree2rad(-10));
-            break;
-        case 'z':
-            viewOrigin = rotate_point_z_axis(viewOrigin, degree2rad(-10));
-            viewUp = rotate_point_z_axis(viewUp, degree2rad(-10));
-            viewDir = rotate_point_z_axis(viewDir, degree2rad(-10));
-            break;
-        case 'X':
+        case 'C':
             viewOrigin = rotate_point_x_axis(viewOrigin, degree2rad(10));
             viewUp = rotate_point_x_axis(viewUp, degree2rad(10));
             viewDir = rotate_point_x_axis(viewDir, degree2rad(10));
             break;
-        case 'Y':
+        case 'c':
+            viewOrigin = rotate_point_x_axis(viewOrigin, degree2rad(-10));
+            viewUp = rotate_point_x_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_x_axis(viewDir, degree2rad(-10));
+            break;
+        case 'B':
             viewOrigin = rotate_point_y_axis(viewOrigin, degree2rad(10));
             viewUp = rotate_point_y_axis(viewUp, degree2rad(10));
             viewDir = rotate_point_y_axis(viewDir, degree2rad(10));
             break;
-        case 'Z':
+        case 'b':
+            viewOrigin = rotate_point_y_axis(viewOrigin, degree2rad(-10));
+            viewUp = rotate_point_y_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_y_axis(viewDir, degree2rad(-10));
+            break;
+        case 'A':
             viewOrigin = rotate_point_z_axis(viewOrigin, degree2rad(10));
             viewUp = rotate_point_z_axis(viewUp, degree2rad(10));
             viewDir = rotate_point_z_axis(viewDir, degree2rad(10));
             break;
-        case 'A': {
-            viewUp = rotate_around_axis(viewDir, viewOrigin, viewUp, degree2rad(10));
+        case 'a':
+            viewOrigin = rotate_point_z_axis(viewOrigin, degree2rad(-10));
+            viewUp = rotate_point_z_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_z_axis(viewDir, degree2rad(-10));
+            break;
+        case 'Z': {
+            viewUp = rotate_point_z_axis(viewUp, degree2rad(10));
+            viewDir = rotate_point_z_axis(viewDir, degree2rad(10));
             break;
         }
-        case 'B': {
-            viewDir = rotate_around_axis(viewUp, viewOrigin, viewDir, degree2rad(10));
+        case 'z': {
+            viewUp = rotate_point_z_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_z_axis(viewDir, degree2rad(-10));
             break;
         }
-        case 'C': {
-            CVec4f viewLeft = viewDir % viewUp;
-            viewDir = rotate_around_axis(viewLeft, viewOrigin, viewDir, degree2rad(10));
-            viewUp = rotate_around_axis(viewLeft, viewOrigin, viewUp, degree2rad(10));
+        case 'Y': {
+            viewUp = rotate_point_y_axis(viewUp, degree2rad(10));
+            viewDir = rotate_point_y_axis(viewDir, degree2rad(10));
             break;
         }
-        case 'a': {
-            viewUp = rotate_around_axis(viewDir, viewOrigin, viewUp, degree2rad(-10));
+        case 'y': {
+            viewUp = rotate_point_y_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_y_axis(viewDir, degree2rad(-10));
             break;
         }
-        case 'b': {
-            viewDir = rotate_around_axis(viewUp, viewOrigin, viewDir, degree2rad(-10));
+        case 'X': {
+            viewUp = rotate_point_x_axis(viewUp, degree2rad(10));
+            viewDir = rotate_point_x_axis(viewDir, degree2rad(10));
             break;
         }
-        case 'c': {
-            CVec4f viewLeft = viewDir % viewUp;
-            viewDir = rotate_around_axis(viewLeft, viewOrigin, viewDir, degree2rad(-10));
-            viewUp = rotate_around_axis(viewLeft, viewOrigin, viewUp, degree2rad(-10));
+        case 'x': {
+            viewUp = rotate_point_x_axis(viewUp, degree2rad(-10));
+            viewDir = rotate_point_x_axis(viewDir, degree2rad(-10));
             break;
         }
         case 'U': {
@@ -607,10 +646,10 @@ void keyboard (unsigned char key, int x, int y)
             break;
         }
         case 'R': {
-            fFocus = 250;
-            float origin_array[4] = {0, 0, 25, 1};
+            fFocus = 320;
+            float origin_array[4] = {0, 0, fFocus + 50, 1};
             float viewUp_array[4] = {0, 1, 0, 1};
-            float viewDir_array[4] = {0, 0, -1, 1};
+            float viewDir_array[4] = {0, 0, 1, 1};
 
             viewOrigin = CVec4f(origin_array);
             viewUp = CVec4f(viewUp_array);

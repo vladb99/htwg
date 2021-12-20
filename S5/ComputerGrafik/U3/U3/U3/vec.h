@@ -57,7 +57,7 @@ public:
     
     float getLength() {
         float sum = 0;
-        for (int i=0; i<SIZE; i++) sum += pow(m_atData[i], 2);
+        for (int i=0; i<SIZE; i++) sum += m_atData[i] * m_atData[i];
         return sqrt(sum);
     }
 
