@@ -372,7 +372,7 @@ void display (void)
     drawQuader(quader2, fFocus, c2);
     
     CVec3f quader3[8];
-    Color c3 = Color(0, 0, 1);
+    Color c3 = Color(1, 1, 0);
     float q3_A[3] = {100, -50, 0};
     float q3_B[3] = {200, -50, 0};
     float q3_C[3] = {200, -250, 0};
