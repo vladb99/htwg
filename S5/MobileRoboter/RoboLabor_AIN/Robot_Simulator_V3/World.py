@@ -137,6 +137,16 @@ class World:
                 drawn_Polyline.append(l)
             self._drawnPolylines.append(drawn_Polyline)
 
+    def drawsimplelines(self, px,py,rx,ry, color='green'):
+        self.undrawLines()
+        drawn_Polyline = []
+        l = Line(Point(px, py), Point(rx, ry))
+        l.draw(self._win)
+        l.setFill(color)
+        l.setWidth(3)
+        drawn_Polyline.append(l)
+        self._drawnPolylines.append(drawn_Polyline)
+
     # # --------
     # # Draw a polyline.
     # #

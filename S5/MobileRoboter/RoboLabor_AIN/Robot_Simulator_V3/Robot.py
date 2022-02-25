@@ -37,8 +37,10 @@ class Robot:
         # Laser Sensor (x-axis is in forward direction):
         self._numberOfBeams = 28
         self._viewAngle = 270.0
+
         dTheta = self._viewAngle / (self._numberOfBeams - 1)
-        self._sensorDirections = [(-135.0 + dTheta * i) * (pi/180.0) for i in range(self._numberOfBeams)]
+        # todo  -135.0 = -self._viewAngle/2
+        self._sensorDirections = [(-self._viewAngle/2 + dTheta * i) * (pi/180.0) for i in range(self._numberOfBeams)]
         self._maxSenseValue = 5.0  # Maximum sensor value for each sensor beam
         self._sensorNoise = 0.01  # standard deviation of distance measurement for 1m
 

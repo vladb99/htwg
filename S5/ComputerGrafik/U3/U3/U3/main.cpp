@@ -262,6 +262,7 @@ void drawProjektedZ(CVec3f points[8], Color c) {
     bhamLine(points[6], points[7], c);
 }
 
+// Page 54
 CMat4f getTransform(CVec4f viewOrigin, CVec4f viewDir, CVec4f viewUp) {
     // viewOrigin P1
     // viewUp P2

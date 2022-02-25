@@ -22,6 +22,7 @@ while True:
     directions = myRobot.getSensorDirections()
     lines_l = sensorUtilities.extractSegmentsFromSensorData(dists, directions)
     lines_g = sensorUtilities.transformPolylinesL2G(lines_l, myWorld.getTrueRobotPose())
+    print(lines_g)
     myWorld.drawPolylines(lines_g)
 
 # Simulation schliessen:
