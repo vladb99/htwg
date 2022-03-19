@@ -8,6 +8,7 @@
 // we're on macOS and according to their documentation Apple hates developers
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
+//#include "GLUT/glut.h"
 #elif defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 // windows, even if it's case insensitive QT-Create might generate a warning
 #include <gl/GL.h>

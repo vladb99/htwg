@@ -166,8 +166,6 @@ DIST          = /Users/vladb/Qt/6.2.3/macos/mkspecs/features/spec_pre.prf \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quickwidgets.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_shadertools.pri \
-		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_shadertools_private.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_sql.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_sql_private.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_svg.pri \
@@ -346,8 +344,6 @@ Makefile: ../Exercise1/Exercise1.pro /Users/vladb/Qt/6.2.3/macos/mkspecs/macx-cl
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quickwidgets.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_shadertools.pri \
-		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_shadertools_private.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_sql.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_sql_private.pri \
 		/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_svg.pri \
@@ -498,8 +494,6 @@ Makefile: ../Exercise1/Exercise1.pro /Users/vladb/Qt/6.2.3/macos/mkspecs/macx-cl
 /Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri:
 /Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quickwidgets.pri:
 /Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_quickwidgets_private.pri:
-/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_shadertools.pri:
-/Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_shadertools_private.pri:
 /Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_sql.pri:
 /Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_sql_private.pri:
 /Users/vladb/Qt/6.2.3/macos/mkspecs/modules/qt_lib_svg.pri:

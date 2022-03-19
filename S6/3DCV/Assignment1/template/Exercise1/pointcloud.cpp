@@ -21,6 +21,7 @@ bool PointCloud::loadPLY(const QString& filePath)
     std::string line;
     std::getline(is, line);
     if (line != "ply") {
+      std::cout << line.length();
       throw std::runtime_error("not a ply file");
         return false;
     }
