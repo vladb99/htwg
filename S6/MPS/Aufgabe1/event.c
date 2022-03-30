@@ -6,15 +6,15 @@
  */
 
 #include <msp430.h>
-#include "..\base.h"
+#include "../base.h"
 #include "event.h"
 
 LOCAL volatile TEvent event  = NO_EVENTS;
 LOCAL volatile TEvent errflg = NO_EVENTS;
 
 /*
- * Um die Auslastung der Mikrokontrollers messen zu können,
- * benötugt man zwei Zeiten: die Dauer von Interrupt-Service-Routinen
+ * Um die Auslastung der Mikrokontrollers messen zu kï¿½nnen,
+ * benï¿½tugt man zwei Zeiten: die Dauer von Interrupt-Service-Routinen
  * und die Zeit, die die CPU in der while-Schleife der Fuunktion main
  * verbringt. Diese Zeiten kann man mit einem Osziloskopen messen,
  * wenn man am Eval-Board zwei Messpunkte (z.B. Pins) hat.
