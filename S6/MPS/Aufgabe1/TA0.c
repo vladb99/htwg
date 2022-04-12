@@ -11,6 +11,8 @@
 #include "event.h"
 #include "GPIO.h"
 
+#define MAX 4
+
 /*
  * Man soll sich eine geeignete Datenstruktur �berlegen,
  * die eine laufzeiteffiziente Ausf�hrung der ISR erm�glicht.
@@ -39,8 +41,60 @@ GLOBAL Void TA0_Init(Void) {
 
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt Void TA0_ISR(Void) {
+    static volatile Bool is_s1_btn1 = FALSE;
+    static volatile Bool is_s1_btn2 = FALSE;
+    static volatile UInt cnt_btn1 = 0;
+    static volatile UInt cnt_btn2 = 0;
 
-   /*
-    * Der Inhalt der ISR ist zu implementieren
-    */
+    // Entprellen Button 1
+    if (TSTBIT(P1IN, BIT1)) {
+        if (!is_s1_btn1) {
+            if (cnt_btn1 < MAX - 1) {
+                cnt_btn1++;
+            } else if (cnt_btn1 == MAX - 1) {
+                is_s1_btn1 = TRUE;
+                // Toggle
+                set_event(EVENT_BTN1);
+                __low_power_mode_off_on_exit();
+            }
+        } else if (cnt_btn1 < MAX - 1) {
+            cnt_btn1++;
+        }
+    } else {
+        if (!is_s1_btn1 && cnt_btn1 > 0) {
+            cnt_btn1--;
+        } else {
+            if (cnt_btn1 > 0) {
+                cnt_btn1--;
+            } else if (cnt_btn1 == 0) {
+                is_s1_btn1 = FALSE;
+            }
+        }
+    }
+
+    // Entprellen Button 2
+    if (TSTBIT(P1IN, BIT0)) {
+        if (!is_s1_btn2) {
+            if (cnt_btn2 < MAX - 1) {
+                cnt_btn2++;
+            } else if (cnt_btn2 == MAX - 1) {
+                is_s1_btn2 = TRUE;
+                // Blinkmuster wechseln
+                set_event(EVENT_BTN2);
+                __low_power_mode_off_on_exit();
+            }
+        } else if (cnt_btn2 < MAX - 1) {
+            cnt_btn2++;
+        }
+    } else {
+        if (!is_s1_btn2 && cnt_btn2 > 0) {
+            cnt_btn2--;
+        } else {
+            if (cnt_btn2 > 0) {
+                cnt_btn2--;
+            } else if (cnt_btn2 == 0) {
+                is_s1_btn2 = FALSE;
+            }
+        }
+    }
 }
