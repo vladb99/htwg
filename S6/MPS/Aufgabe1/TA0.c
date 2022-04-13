@@ -18,6 +18,16 @@
  * die eine laufzeiteffiziente Ausf�hrung der ISR erm�glicht.
  */
 
+// 10ms Schritte
+static const Int MUSTER_1[] = {8, 2, -1};
+static const Int MUSTER_2[] = {3, 3, -1};
+static const Int MUSTER_3[] = {1, 1, -1};
+static const Int MUSTER_4[] = {2, 8, -1};
+static const Int MUSTER_5[] = {2, 2, 2, 8, -1};
+static const Int MUSTER_6[] = {2, 2, 2, 2, 2, 8, -1};
+static const Int* P[] = {MUSTER_1, MUSTER_2, MUSTER_3, MUSTER_4, MUSTER_5, MUSTER_6};
+static UInt pattern_index_new = 0;
+
 GLOBAL Void set_blink_muster(UInt arg) {
 /*
  * Die Funktion muss so erweitert werden,
@@ -25,6 +35,7 @@ GLOBAL Void set_blink_muster(UInt arg) {
  * Diese L�sung h�ngt stark von der gew�hlten
  * Datenstruktur ab.
  */
+    pattern_index_new = arg;
 }
 
 // Der Timer A0 ist bereits initialisiert
@@ -46,7 +57,41 @@ __interrupt Void TA0_ISR(Void) {
     static volatile UInt cnt_btn1 = 0;
     static volatile UInt cnt_btn2 = 0;
 
-    // Entprellen Button 1
+    static volatile UInt step_count = 25;
+    static volatile UInt array_index = 0;
+    static volatile UInt cnt_led = 0;
+
+    static volatile UInt pattern_index = 0;
+    static volatile Int current_pattern_value = 0;
+
+    // Set LED bit on start of period
+    if (array_index EQ 0 AND cnt_led EQ 0) {
+        SETBIT(P1OUT, BIT2);
+    }
+
+    // Timer logic for 250ms step
+    step_count--;
+    // TODO alternative --step_count EQ 0?
+    if (step_count EQ 0) {
+        step_count = 25;
+
+        // TODO da passt was nicht mit dem Wechsel
+        current_pattern_value = P[pattern_index][array_index];
+        cnt_led++;
+
+        // LED2 Flash logic
+        if (current_pattern_value EQ -1) {
+            array_index = 0;
+            cnt_led = 0;
+            pattern_index = pattern_index_new;
+        } else if ( current_pattern_value EQ cnt_led) {
+            TGLBIT(P1OUT, BIT2);
+            array_index++;
+            cnt_led = 0;
+        }
+    }
+
+    // Debouncing BTN1
     if (TSTBIT(P1IN, BIT1)) {
         if (!is_s1_btn1) {
             if (cnt_btn1 < MAX - 1) {
@@ -72,14 +117,14 @@ __interrupt Void TA0_ISR(Void) {
         }
     }
 
-    // Entprellen Button 2
+    // Debouncing BTN2
     if (TSTBIT(P1IN, BIT0)) {
         if (!is_s1_btn2) {
             if (cnt_btn2 < MAX - 1) {
                 cnt_btn2++;
             } else if (cnt_btn2 == MAX - 1) {
                 is_s1_btn2 = TRUE;
-                // Blinkmuster wechseln
+                // Change flash pattern
                 set_event(EVENT_BTN2);
                 __low_power_mode_off_on_exit();
             }
