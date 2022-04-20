@@ -12,6 +12,7 @@
 #include "GPIO.h"
 
 #define MAX 4
+#define TIMER_COUNT 25
 
 /*
  * Man soll sich eine geeignete Datenstruktur �berlegen,
@@ -26,7 +27,8 @@ static const Int MUSTER_4[] = {2, 8, -1};
 static const Int MUSTER_5[] = {2, 2, 2, 8, -1};
 static const Int MUSTER_6[] = {2, 2, 2, 2, 2, 8, -1};
 static const Int* P[] = {MUSTER_1, MUSTER_2, MUSTER_3, MUSTER_4, MUSTER_5, MUSTER_6};
-static UInt pattern_index_new = 0;
+
+static UChar pattern_index_new;
 
 GLOBAL Void set_blink_muster(UInt arg) {
 /*
@@ -40,6 +42,8 @@ GLOBAL Void set_blink_muster(UInt arg) {
 
 // Der Timer A0 ist bereits initialisiert
 GLOBAL Void TA0_Init(Void) {
+   pattern_index_new = 0;
+
    TA0CCR0 = 0;                              // stopp Timer A
    CLRBIT(TA0CTL, TAIFG);                    // clear overflow flag
    CLRBIT(TA0CCR0, CCIFG);                   // clear CCI flag
@@ -48,6 +52,9 @@ GLOBAL Void TA0_Init(Void) {
    TA0CCR0 = 2*48;                           // set up CCR0 for 10 ms
    SETBIT(TA0CTL, TACLR);                    // clear and start Timer
    SETBIT(TA0CCTL0, CCIE);                   // enable Timer A interrupt
+
+   // Set LED2 once
+   SETBIT(P1OUT, BIT2);
 }
 
 #pragma vector = TIMER0_A0_VECTOR
@@ -57,37 +64,28 @@ __interrupt Void TA0_ISR(Void) {
     static volatile UInt cnt_btn1 = 0;
     static volatile UInt cnt_btn2 = 0;
 
-    static volatile UInt step_count = 25;
+    static volatile UInt step_count = TIMER_COUNT;
     static volatile UInt array_index = 0;
     static volatile UInt cnt_led = 0;
 
     static volatile UInt pattern_index = 0;
     static volatile Int current_pattern_value = 0;
 
-    // Set LED bit on start of period
-    if (array_index EQ 0 AND cnt_led EQ 0) {
-        SETBIT(P1OUT, BIT2);
-    }
-
     // Timer logic for 250ms step
-    step_count--;
-    // TODO alternative --step_count EQ 0?
-    if (step_count EQ 0) {
-        step_count = 25;
-
-        // TODO da passt was nicht mit dem Wechsel
+    if (--step_count EQ 0) {
+        step_count = TIMER_COUNT;
         current_pattern_value = P[pattern_index][array_index];
         cnt_led++;
 
         // LED2 Flash logic
-        if (current_pattern_value EQ -1) {
-            array_index = 0;
-            cnt_led = 0;
-            pattern_index = pattern_index_new;
-        } else if ( current_pattern_value EQ cnt_led) {
+        if (cnt_led EQ current_pattern_value) {
             TGLBIT(P1OUT, BIT2);
             array_index++;
             cnt_led = 0;
+            if (P[pattern_index][array_index] EQ -1) {
+                array_index = 0;
+                pattern_index = pattern_index_new;
+            }
         }
     }
 
