@@ -144,7 +144,6 @@ void GLWidget::drawFrameAxis()
   glEnd();
 }
 
-
 void GLWidget::resizeGL(int w, int h)
 {
   _projectionMatrix.setToIdentity();

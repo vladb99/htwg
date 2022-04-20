@@ -61,14 +61,14 @@ GLOBAL Void TA0_Init(Void) {
 __interrupt Void TA0_ISR(Void) {
     static volatile Bool is_s1_btn1 = FALSE;
     static volatile Bool is_s1_btn2 = FALSE;
-    static volatile UInt cnt_btn1 = 0;
-    static volatile UInt cnt_btn2 = 0;
+    static volatile UChar cnt_btn1 = 0;
+    static volatile UChar cnt_btn2 = 0;
 
-    static volatile UInt step_count = TIMER_COUNT;
-    static volatile UInt array_index = 0;
-    static volatile UInt cnt_led = 0;
+    static volatile UChar step_count = TIMER_COUNT;
+    static volatile UChar array_index = 0;
+    static volatile UChar cnt_led = 0;
 
-    static volatile UInt pattern_index = 0;
+    static volatile UChar pattern_index = 0;
     static volatile Int current_pattern_value = 0;
 
     // Timer logic for 250ms step
