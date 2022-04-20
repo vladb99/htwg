@@ -28,6 +28,15 @@ static const Int MUSTER_5[] = {2, 2, 2, 8, -1};
 static const Int MUSTER_6[] = {2, 2, 2, 2, 2, 8, -1};
 static const Int* P[] = {MUSTER_1, MUSTER_2, MUSTER_3, MUSTER_4, MUSTER_5, MUSTER_6};
 
+static Bool is_s1_btn1;
+static Bool is_s1_btn2;
+static UChar cnt_btn1;
+static UChar cnt_btn2;
+static UChar step_count;
+static UChar array_index;
+static UChar cnt_led;
+static UChar pattern_index;
+static Int current_pattern_value;
 static UChar pattern_index_new;
 
 GLOBAL Void set_blink_muster(UInt arg) {
@@ -42,35 +51,32 @@ GLOBAL Void set_blink_muster(UInt arg) {
 
 // Der Timer A0 ist bereits initialisiert
 GLOBAL Void TA0_Init(Void) {
-   pattern_index_new = 0;
+    is_s1_btn1 = FALSE;
+    is_s1_btn2 = FALSE;
+    cnt_btn1 = 0;
+    cnt_btn2 = 0;
+    step_count = TIMER_COUNT;
+    array_index = 0;
+    cnt_led = 0;
+    pattern_index = 0;
+    current_pattern_value = 0;
+    pattern_index_new = 0;
 
-   TA0CCR0 = 0;                              // stopp Timer A
-   CLRBIT(TA0CTL, TAIFG);                    // clear overflow flag
-   CLRBIT(TA0CCR0, CCIFG);                   // clear CCI flag
-   TA0CTL  = TASSEL__ACLK + MC__UP + ID__8;  // set up Timer A
-   TA0EX0  = TAIDEX_7;                       // set up expansion register
-   TA0CCR0 = 2*48;                           // set up CCR0 for 10 ms
-   SETBIT(TA0CTL, TACLR);                    // clear and start Timer
-   SETBIT(TA0CCTL0, CCIE);                   // enable Timer A interrupt
+    TA0CCR0 = 0;                              // stopp Timer A
+    CLRBIT(TA0CTL, TAIFG);                    // clear overflow flag
+    CLRBIT(TA0CCR0, CCIFG);                   // clear CCI flag
+    TA0CTL  = TASSEL__ACLK + MC__UP + ID__8;  // set up Timer A
+    TA0EX0  = TAIDEX_7;                       // set up expansion register
+    TA0CCR0 = 2*48;                           // set up CCR0 for 10 ms
+    SETBIT(TA0CTL, TACLR);                    // clear and start Timer
+    SETBIT(TA0CCTL0, CCIE);                   // enable Timer A interrupt
 
-   // Set LED2 once
-   SETBIT(P1OUT, BIT2);
+    // Set LED2 once
+    SETBIT(P1OUT, BIT2);
 }
 
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt Void TA0_ISR(Void) {
-    static volatile Bool is_s1_btn1 = FALSE;
-    static volatile Bool is_s1_btn2 = FALSE;
-    static volatile UChar cnt_btn1 = 0;
-    static volatile UChar cnt_btn2 = 0;
-
-    static volatile UChar step_count = TIMER_COUNT;
-    static volatile UChar array_index = 0;
-    static volatile UChar cnt_led = 0;
-
-    static volatile UChar pattern_index = 0;
-    static volatile Int current_pattern_value = 0;
-
     // Timer logic for 250ms step
     if (--step_count EQ 0) {
         step_count = TIMER_COUNT;
