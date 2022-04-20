@@ -19,6 +19,12 @@
  * die eine laufzeiteffiziente Ausf�hrung der ISR erm�glicht.
  */
 
+struct Button {
+    const UChar portid;
+    const UChar bitid;
+    const UInt msg;
+} btn1, btn2;
+
 // 10ms Schritte
 static const Char MUSTER_1[] = {8, 2, 0};
 static const Char MUSTER_2[] = {3, 3, 0};
@@ -38,6 +44,7 @@ static UChar cnt_led;
 static UChar pattern_index;
 static UChar current_pattern_value;
 static UChar pattern_index_new;
+//static const struct Button btn1 = {P1IN, BIT1, EVENT_BTN1};
 
 GLOBAL Void set_blink_muster(UInt arg) {
 /*
@@ -62,6 +69,10 @@ GLOBAL Void TA0_Init(Void) {
     current_pattern_value = 0;
     pattern_index_new = 0;
 
+    //int *cheat_x = btn1->portid;
+    //*cheat_x = P1IN;
+    //btn1.portid = P1IN;
+
     TA0CCR0 = 0;                              // stopp Timer A
     CLRBIT(TA0CTL, TAIFG);                    // clear overflow flag
     CLRBIT(TA0CCR0, CCIFG);                   // clear CCI flag
@@ -80,9 +91,9 @@ __interrupt Void TA0_ISR(Void) {
     //static volatile Int test = 0;
     // Timer logic for 250ms step
     if (--step_count EQ 0) {
-        //test = sizeof(MUSTER_1);
+        //test = *(*(P + pattern_index) + array_index);
         step_count = TIMER_COUNT;
-        current_pattern_value = P[pattern_index][array_index];
+        current_pattern_value = *(*(P + pattern_index) + array_index);
         cnt_led++;
 
         // LED2 Flash logic
@@ -90,7 +101,7 @@ __interrupt Void TA0_ISR(Void) {
             TGLBIT(P1OUT, BIT2);
             array_index++;
             cnt_led = 0;
-            if (P[pattern_index][array_index] EQ 0) {
+            if (*(*(P + pattern_index) + array_index) EQ 0) {
                 array_index = 0;
                 pattern_index = pattern_index_new;
             }
@@ -102,7 +113,7 @@ __interrupt Void TA0_ISR(Void) {
         if (!is_s1_btn1) {
             if (cnt_btn1 < MAX - 1) {
                 cnt_btn1++;
-            } else if (cnt_btn1 == MAX - 1) {
+            } else {
                 is_s1_btn1 = TRUE;
                 // Toggle
                 set_event(EVENT_BTN1);
@@ -117,7 +128,7 @@ __interrupt Void TA0_ISR(Void) {
         } else {
             if (cnt_btn1 > 0) {
                 cnt_btn1--;
-            } else if (cnt_btn1 == 0) {
+            } else {
                 is_s1_btn1 = FALSE;
             }
         }
@@ -128,7 +139,7 @@ __interrupt Void TA0_ISR(Void) {
         if (!is_s1_btn2) {
             if (cnt_btn2 < MAX - 1) {
                 cnt_btn2++;
-            } else if (cnt_btn2 == MAX - 1) {
+            } else {
                 is_s1_btn2 = TRUE;
                 // Change flash pattern
                 set_event(EVENT_BTN2);
@@ -143,7 +154,7 @@ __interrupt Void TA0_ISR(Void) {
         } else {
             if (cnt_btn2 > 0) {
                 cnt_btn2--;
-            } else if (cnt_btn2 == 0) {
+            } else {
                 is_s1_btn2 = FALSE;
             }
         }
