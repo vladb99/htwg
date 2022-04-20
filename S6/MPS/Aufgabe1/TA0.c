@@ -20,13 +20,13 @@
  */
 
 // 10ms Schritte
-static const Int MUSTER_1[] = {8, 2, -1};
-static const Int MUSTER_2[] = {3, 3, -1};
-static const Int MUSTER_3[] = {1, 1, -1};
-static const Int MUSTER_4[] = {2, 8, -1};
-static const Int MUSTER_5[] = {2, 2, 2, 8, -1};
-static const Int MUSTER_6[] = {2, 2, 2, 2, 2, 8, -1};
-static const Int* P[] = {MUSTER_1, MUSTER_2, MUSTER_3, MUSTER_4, MUSTER_5, MUSTER_6};
+static const Char MUSTER_1[] = {8, 2, 0};
+static const Char MUSTER_2[] = {3, 3, 0};
+static const Char MUSTER_3[] = {1, 1, 0};
+static const Char MUSTER_4[] = {2, 8, 0};
+static const Char MUSTER_5[] = {2, 2, 2, 8, 0};
+static const Char MUSTER_6[] = {2, 2, 2, 2, 2, 8, 0};
+static const Char* P[] = {MUSTER_1, MUSTER_2, MUSTER_3, MUSTER_4, MUSTER_5, MUSTER_6};
 
 static Bool is_s1_btn1;
 static Bool is_s1_btn2;
@@ -36,7 +36,7 @@ static UChar step_count;
 static UChar array_index;
 static UChar cnt_led;
 static UChar pattern_index;
-static Int current_pattern_value;
+static UChar current_pattern_value;
 static UChar pattern_index_new;
 
 GLOBAL Void set_blink_muster(UInt arg) {
@@ -77,8 +77,10 @@ GLOBAL Void TA0_Init(Void) {
 
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt Void TA0_ISR(Void) {
+    //static volatile Int test = 0;
     // Timer logic for 250ms step
     if (--step_count EQ 0) {
+        //test = sizeof(MUSTER_1);
         step_count = TIMER_COUNT;
         current_pattern_value = P[pattern_index][array_index];
         cnt_led++;
@@ -88,7 +90,7 @@ __interrupt Void TA0_ISR(Void) {
             TGLBIT(P1OUT, BIT2);
             array_index++;
             cnt_led = 0;
-            if (P[pattern_index][array_index] EQ -1) {
+            if (P[pattern_index][array_index] EQ 0) {
                 array_index = 0;
                 pattern_index = pattern_index_new;
             }
