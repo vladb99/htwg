@@ -41,6 +41,7 @@ GLOBAL Void main(Void) {
 }
 
 LOCAL Void CS_Init(Void) {
+    // Folie 20
    CSCTL0 = CSKEY;                                       // enable clock system
    CSCTL1 = DCOFSEL_3;                                   // DCO frequency = 8,0 MHz
    CSCTL2 = SELA__XT1CLK + SELS__DCOCLK + SELM__DCOCLK;  // select clock sources

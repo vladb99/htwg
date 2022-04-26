@@ -73,6 +73,7 @@ GLOBAL Void TA0_Init(Void) {
     //*cheat_x = P1IN;
     //btn1.portid = P1IN;
 
+    // Folie 27
     TA0CCR0 = 0;                              // stopp Timer A
     CLRBIT(TA0CTL, TAIFG);                    // clear overflow flag
     CLRBIT(TA0CCR0, CCIFG);                   // clear CCI flag
@@ -109,6 +110,7 @@ __interrupt Void TA0_ISR(Void) {
     }
 
     // Debouncing BTN1
+    // TODO anscheinend kann man dass über den Zähler auch den Zustand herausfinden
     if (TSTBIT(P1IN, BIT1)) {
         if (!is_s1_btn1) {
             if (cnt_btn1 < MAX - 1) {
@@ -123,14 +125,10 @@ __interrupt Void TA0_ISR(Void) {
             cnt_btn1++;
         }
     } else {
-        if (!is_s1_btn1 && cnt_btn1 > 0) {
+        if (cnt_btn1 > 0) {
             cnt_btn1--;
         } else {
-            if (cnt_btn1 > 0) {
-                cnt_btn1--;
-            } else {
-                is_s1_btn1 = FALSE;
-            }
+            is_s1_btn1 = FALSE;
         }
     }
 
@@ -149,14 +147,10 @@ __interrupt Void TA0_ISR(Void) {
             cnt_btn2++;
         }
     } else {
-        if (!is_s1_btn2 && cnt_btn2 > 0) {
+        if (cnt_btn2 > 0) {
             cnt_btn2--;
         } else {
-            if (cnt_btn2 > 0) {
-                cnt_btn2--;
-            } else {
-                is_s1_btn2 = FALSE;
-            }
+            is_s1_btn2 = FALSE;
         }
     }
 }
