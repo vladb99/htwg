@@ -34,8 +34,6 @@ static const Char MUSTER_5[] = {2, 2, 2, 8, 0};
 static const Char MUSTER_6[] = {2, 2, 2, 2, 2, 8, 0};
 static const Char* P[] = {MUSTER_1, MUSTER_2, MUSTER_3, MUSTER_4, MUSTER_5, MUSTER_6};
 
-static Bool is_s1_btn1;
-static Bool is_s1_btn2;
 static UChar cnt_btn1;
 static UChar cnt_btn2;
 static UChar step_count;
@@ -58,8 +56,6 @@ GLOBAL Void set_blink_muster(UInt arg) {
 
 // Der Timer A0 ist bereits initialisiert
 GLOBAL Void TA0_Init(Void) {
-    is_s1_btn1 = FALSE;
-    is_s1_btn2 = FALSE;
     cnt_btn1 = 0;
     cnt_btn2 = 0;
     step_count = TIMER_COUNT;
@@ -110,47 +106,30 @@ __interrupt Void TA0_ISR(Void) {
     }
 
     // Debouncing BTN1
-    // TODO anscheinend kann man dass über den Zähler auch den Zustand herausfinden
     if (TSTBIT(P1IN, BIT1)) {
-        if (!is_s1_btn1) {
-            if (cnt_btn1 < MAX - 1) {
-                cnt_btn1++;
-            } else {
-                is_s1_btn1 = TRUE;
-                // Toggle
+        if (cnt_btn1 LT MAX) {
+            if  (++cnt_btn1 EQ MAX) {
                 set_event(EVENT_BTN1);
                 __low_power_mode_off_on_exit();
             }
-        } else if (cnt_btn1 < MAX - 1) {
-            cnt_btn1++;
         }
     } else {
-        if (cnt_btn1 > 0) {
+        if (cnt_btn1 GT 0) {
             cnt_btn1--;
-        } else {
-            is_s1_btn1 = FALSE;
         }
     }
 
     // Debouncing BTN2
     if (TSTBIT(P1IN, BIT0)) {
-        if (!is_s1_btn2) {
-            if (cnt_btn2 < MAX - 1) {
-                cnt_btn2++;
-            } else {
-                is_s1_btn2 = TRUE;
-                // Change flash pattern
+        if (cnt_btn2 LT MAX) {
+            if  (++cnt_btn2 EQ MAX) {
                 set_event(EVENT_BTN2);
                 __low_power_mode_off_on_exit();
             }
-        } else if (cnt_btn2 < MAX - 1) {
-            cnt_btn2++;
         }
     } else {
-        if (cnt_btn2 > 0) {
+        if (cnt_btn2 GT 0) {
             cnt_btn2--;
-        } else {
-            is_s1_btn2 = FALSE;
         }
     }
 }
